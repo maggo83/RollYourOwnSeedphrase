@@ -3,7 +3,7 @@
    (Fill the Identifier with a name so you later know which seed this is)
    Each numbered bigger rectangle will represent be a word.
    The word will be noted in the lower wider rectangle.
-   The smaller 11 reectangles above, are the "bits" (each is either a "0" or a "1" at the end)
+   The smaller 11 rectangles above, are the "bits" (each is either a "0" or a "1" at the end)
    We will first fill the bits using the dice and then derive the words from the bits.
 3. Print BIP39_Wordlist_Binary_Decimal_Searchable.pdf
    This will help us derive the words from the bits.
