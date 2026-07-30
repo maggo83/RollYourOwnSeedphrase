@@ -1,0 +1,32 @@
+1. Get some (6-sided) dice, preferably casino rated. The more you have the quicker it will go
+2. Print one page of BitsToWords.pdf (which one depends on if you want 12 or 24 words. 12 is sufficient)
+   (Fill the Identifier with a name so you later know which seed this is)
+   Each numbered bigger rectangle will represent be a word.
+   The word will be noted in the lower wider rectangle.
+   The smaller 11 reectangles above, are the "bits" (each is either a "0" or a "1" at the end)
+   We will first fill the bits using the dice and then derive the words from the bits.
+3. Print BIP39_Wordlist_Binary_Decimal_Searchable.pdf
+   This will help us derive the words from the bits.
+   Important: Do print this out. Do NOT search in this file on your desktop for the bits you have rolled. Even partially. 
+4. Get into a room w/o cameras or phones nearby
+
+5. Roll all dice. Bring them into a line
+   (important: do not look at them during this procedure or order them. Do this always in the same way for each consecutive roll to not screw up your entropy)
+6. From left to right for each dice:
+   If it is a 1,2 or 3: enter a "0" into the next free small rectangle (bit)
+   If it is a 4,5 or 6: enter a "1" into the next free small rectangle (bit)
+Repeat 5. & 6. until you have filled all small rectangles/bits except the ones behind the last bold "|" of the last word
+(So for the 12 seed sheet this means all but the last 4, for the 24 seed sheet this is all but the last 8)
+
+7. For each word, look for the word that has the same 11 bits as you rolled in your printout of BIP39_Wordlist_Binary_Decimal_Searchable.pdf
+   The first three bits of the word tell you which page you need to look into.
+   The next three bits of the word tell you which column of that page you need to look into.
+   The last five bits of the word tell you which row of that page you need to look into.
+8. For the last word there are still some bits missing (4 bits for 12 words, 8 bits for 24 words).
+   To find them you will need the help of a hardware wallet.
+   (because they are checksum, i.e. they are fully determined by the other bits. The computation is quite complex)
+   The existing bits you have rolled limit the options to 16 (i.e. half a column for 12 words) / 256 (one page for 24 words) words.
+   You probably do not want to try all of these manually.
+   How to do this will depend on your concrete HW wallet.
+   Usually you enter the first eleven words as you normally would when entering an existing seedphrase and then the hw wallet will propose possible last words that lead to a valid checksum.
+   Choose one of those that is in the list of options you determined.
