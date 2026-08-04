@@ -9,21 +9,20 @@ Document navigation:
 
 ## Executive recommendation
 
-Under the provisional assumptions
+This synthesis applies four inputs owned by the preceding documents:
 
-- new casino-grade dice satisfy $\varepsilon<0.01$;
-- acceptable consumer dice satisfy $\varepsilon<0.10$;
-- at least approximately 110 bits of min-entropy are required;
-- rolls are independent;
-- every die used satisfies the applicable bound;
+- the conversion formulas and canonical entropy tables in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md);
+- the provisional $\varepsilon=0.01$ casino and $\varepsilon=0.10$ consumer scenarios in [Expected performance of real six-sided dice](ExpectedDicePerformace.md#4-plausible-analysis-scenarios);
+- the [preferred lidded-box rolling protocol](RollingTechnique.md#31-preferred-lidded-box-method);
+- the 112-bit conservative objective established in [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md#8-standards-comparison).
 
-both dice classes can safely generate 12-word and 24-word BIP-39 mnemonics.
+The scenario selection is deliberately asymmetric: $0.01$ is the central precision-dice scenario, while $0.10$ is the conservative consumer stress scenario. Neither is a product guarantee. All recommendations remain conditional on a valid final-outcome bound and independence between retained results.
 
 The default recommendation is:
 
 > Use base-4 rejection: map faces 1–4 to 00, 01, 10, and 11; discard faces 5–6; retain exactly 64 accepted symbols for 12 words or 128 for 24 words.
 
-Base-4 rejection is preferred as the default compromise because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses approximately 25% fewer physical rolls than binary quantization with ideal dice. After checksum completion, the resulting words can be restored on any BIP-39-compatible hardware wallet.
+Base-4 rejection is preferred because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses fewer expected physical results than binary quantization. Under the consumer stress scenario it remains above the 112-bit objective; 12-word binary quantization does not.
 
 Ordinary binary quantization remains the simplest no-rejection alternative. It always uses exactly 128 or 256 physical results, but its 12-word min-entropy margin is small under the consumer-dice assumption.
 
@@ -32,77 +31,38 @@ Base 6 remains useful in two forms:
 - **Full-integer conversion:** 50 or 100 results give the best roll efficiency and entropy margin, but converting a 50- or 100-digit base-6 integer manually is not realistically error-resistant. Use this only with verifiable hardware-wallet support (i.e. enter in two hardware-wallets from different vendors and compare results) or a small, reviewed, offline converter.
 - **Manual per-word conversion:** groups of five base-6 digits can be converted separately to BIP-39 word indices using ordinary integer arithmetic. This needs 58 results for 12 words or 117 for 24 words, has no rejection, and avoids arbitrary-precision arithmetic. It is feasible by hand if every calculation is independently checked (e.g. with an off-line calculator [not on your phone or laptop/PC!]).
 
-Under the consumer-dice assumption, binary leaves approximately 110.4 bits for 12 words, base-4 rejection leaves approximately 114.5 bits, and manual per-word base 6 retains approximately 119.0 bits. Base 4 therefore improves both roll count and margin without introducing arithmetic conversion.
-
-Because the consumer-dice assumption still needs validation, consumer dice should be preferred on cost only after their $\varepsilon<0.10$ bound has credible support. Otherwise use new casino-grade dice or treat the entropy guarantee as unproven.
+The consumer scenario is a stress assumption, not a product guarantee. If it lacks credible support for the actual dice-and-rolling setup, use a better-supported assumption or treat the numerical guarantee as unproven.
 
 ---
 
-## 1. Decision criteria
+## 1. Ownership of decision inputs
 
-The priorities are applied in this order:
+This document does not repeat the underlying derivations or evidence:
 
-1. **Safety:** reject a procedure if its conservative min-entropy is materially below approximately 110 bits.
-2. **Cost:** once safety is satisfied, prefer ordinary consumer dice over casino dice if their assumed performance has been validated.
-3. **Operational simplicity and roll count:** avoid rejection and complete retrials; accept some additional rolls to reduce mistakes, but reconsider a simple method when it requires more than twice as many results.
+- **Conversion behavior and entropy totals:** [DiceRollEntropyAnalysis.md](DiceRollEntropyAnalysis.md#5-results)
+- **Physical-die evidence, scenario calibration, and statistical bounds:** [ExpectedDicePerformace.md](ExpectedDicePerformace.md)
+- **Rolling dynamics, protocol, and process validation:** [RollingTechnique.md](RollingTechnique.md)
+- **Threat model and interpretation of entropy levels:** [AttackerCapabilties.md](AttackerCapabilties.md)
 
-The analysis uses min-entropy rather than Shannon entropy because min-entropy controls the probability of the attacker's best guess.
+The synthesis applies those inputs in this order:
 
-The recommendations are conditional. A label such as “casino grade” or “consumer die” is not itself a statistical proof of the assumed $\varepsilon$.
-
----
-
-## 2. Provisional dice classes
-
-For every face of every die, the bounded multiplicative model is
-
-$$
-\frac{1-\varepsilon}{6}\le p_i\le\frac{1+\varepsilon}{6}.
-$$
-
-The two working assumptions are:
-
-| Dice class | Provisional bound | Permitted face-probability range | Status |
-| --- | ---: | ---: | --- |
-| Casino-grade precision dice | $\varepsilon<0.01$ | approximately 0.16500–0.16833 | Plausible scenario; not established by dimensional tolerance alone |
-| Good consumer dice | $\varepsilon<0.10$ | approximately 0.15000–0.18333 | Stress scenario requiring validation for the actual dice and procedure |
-
-The casino assumption provides more entropy margin. The consumer assumption is sufficient for all methods retained in this document, but only narrowly sufficient for a 12-word binary mnemonic. Casino dice are not required solely to reach the 110-bit objective if the consumer bound is credible.
-
-Using several dice does not improve the guaranteed bound under the $\varepsilon$ model alone. Their imperfections may diversify in reality, but the conservative calculation allows aligned systematic bias. Multiple dice are still useful because they reduce the number of physical cup throws.
+1. reject a method if its conservative min-entropy is below 112 bits;
+2. among methods that pass, prefer the least error-prone workflow;
+3. then use cost and result count as tie-breakers.
 
 ---
 
-## 3. Compared procedures
+## 2. Compared procedures
 
-### 3.1 Binary quantization
+### 2.1 Binary quantization
 
-For each die result:
+Binary quantization emits one bit per die result and rejects nothing. Its [workflow](#61-binary-workflow) is the simplest fixed-length option, but the canonical entropy table shows that its 12-word result does not meet the 112-bit objective under the consumer stress scenario.
 
-- faces 1, 2, or 3 become bit 0;
-- faces 4, 5, or 6 become bit 1.
+### 2.2 Base-4 rejection
 
-The guaranteed min-entropy per retained bit is
+Base-4 rejection emits two bits from each accepted result and discards faces 5 and 6. Its [workflow](#7-default-base-4-rejection-procedure) is manually simple and never invalidates earlier accepted work, but completion time is variable.
 
-$$
-1-\log_2(1+\varepsilon).
-$$
-
-No results are rejected. A 12-word mnemonic needs 128 results; a 24-word mnemonic needs 256.
-
-### 3.2 Base-4 rejection
-
-For each die result:
-
-- face 1 becomes 00;
-- face 2 becomes 01;
-- face 3 becomes 10;
-- face 4 becomes 11;
-- faces 5 and 6 are discarded.
-
-A 12-word mnemonic needs 64 accepted symbols and a 24-word mnemonic needs 128. With ideal dice, two thirds of results are accepted, so the expected physical-roll counts are 96 and 192. Completion time is variable, but rejection occurs one result at a time and never invalidates earlier work.
-
-### 3.3 Full base 6 with global modulo conversion
+### 2.3 Full base 6 with global modulo conversion
 
 For each result, subtract one so the faces become digits 0–5. Concatenate 50 digits for 12 words or 100 digits for 24 words and interpret them as one base-6 integer $X$. Produce the BIP-39 entropy integer
 
@@ -112,27 +72,15 @@ $$
 
 where $L=128$ or $256$.
 
-This method is called “naive modulo” because $6^k$ is not an exact multiple of $2^L$. Even ideal dice therefore produce a very small output imbalance. The conservative min-entropy bound accounts for that imbalance.
+Because $6^k$ is not an exact multiple of $2^L$, this produces a small output imbalance even for ideal dice. The derivation and bound are maintained in the [conversion analysis](DiceRollEntropyAnalysis.md#41-naive-modulo-conversion).
 
 There is no rejection, so every completed roll series is usable.
 
 The mathematics is simple, but the hand computation is not. Repeatedly multiplying a 128- or 256-bit accumulator by six is too long and error-prone for a recommended paper-only procedure. This method therefore requires direct wallet support or a reviewed offline converter.
 
-### 3.4 Base 6 with manual per-word modulo conversion
+### 2.4 Base 6 with manual per-word modulo conversion
 
-Instead of converting one enormous integer, process five base-6 digits at a time. For digits $d_1,\ldots,d_5\in\{0,\ldots,5\}$, calculate
-
-$$
-x=1296d_1+216d_2+36d_3+6d_4+d_5
-$$
-
-and then calculate the BIP-39 index
-
-$$
-w=x\bmod2048.
-$$
-
-Because $0\le x\le7775$, the modulo operation is performed by subtracting 2048 repeatedly, at most three times. Each five-digit group directly produces one 11-bit BIP-39 group and hence one word-list index. No arbitrary-precision arithmetic is needed.
+Instead of converting one enormous integer, process five base-6 digits at a time into one word-list index. The arithmetic is specified once in Section 8.1 below. No arbitrary-precision arithmetic is needed.
 
 For the final word, only seven entropy bits are needed for a 12-word mnemonic and only three for a 24-word mnemonic. These use smaller versions of the same operation; the checksum occupies the remaining four or eight bits.
 
@@ -143,16 +91,11 @@ The method uses:
 
 It has no rejection. Its disadvantage is that every arithmetic result must be checked carefully.
 
-### 3.5 Base 6 with range rejection
+### 2.5 Base 6 with range rejection
 
-Range rejection can produce exactly uniform output from ideal dice, but a complete block may be rejected. The simple block algorithm accepts approximately:
+Range rejection can produce exactly uniform output from ideal dice, but a complete block may be rejected. It does not automatically remove aggregate final-outcome bias. The acceptance calculations are owned by the [conversion analysis](DiceRollEntropyAnalysis.md#42-range-rejection); this synthesis does not recommend the extra retry burden.
 
-- 84.2% of 50-digit blocks for 128 bits;
-- 88.6% of 100-digit blocks for 256 bits.
-
-It does not automatically remove physical die bias. Because the no-rejection modulo procedure already exceeds the required security level, the extra retry rule is not justified for this practical objective.
-
-### 3.6 Comparison
+### 2.6 Operational comparison
 
 | Target | Procedure | Retained die results | Rejection risk | Main operational burden |
 | ---: | --- | ---: | --- | --- |
@@ -167,236 +110,73 @@ It does not automatically remove physical die bias. Because the no-rejection mod
 | 24 words | Base-6 per-word modulo | 117 | None | Repeated small-integer arithmetic and checking |
 | 24 words | Base-6 rejection | 100 per attempt | 11.4% per complete attempt | Conversion plus possible complete retry |
 
-Binary requires
-
-$$
-\frac{128}{50}=\frac{256}{100}=2.56
-$$
-
-times as many retained results as global base-6 modulo. Binary requires approximately 2.2 times as many results as manual per-word base 6. Base-4 rejection avoids that conversion complexity while reducing expected physical rolls by approximately 25% compared with binary.
+The canonical quantitative comparison is in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#5-results). This table is intentionally limited to operational burden.
 
 ---
 
-## 4. Conservative entropy results
+## 3. Decision synthesis
 
-### 4.1 Binary quantization
-
-| Target | Dice assumption | Guaranteed min-entropy |
-| ---: | --- | ---: |
-| 12 words | Casino, $\varepsilon<0.01$ | greater than 126.16 bits |
-| 12 words | Consumer, $\varepsilon<0.10$ | greater than 110.40 bits |
-| 24 words | Casino, $\varepsilon<0.01$ | greater than 252.33 bits |
-| 24 words | Consumer, $\varepsilon<0.10$ | greater than 220.80 bits |
-
-The 12-word consumer case passes the approximate 110-bit requirement by only 0.40 bits. It should not be accepted if $\varepsilon=0.10$ is merely a point estimate rather than a defensible upper bound.
-
-### 4.2 Base-4 rejection
-
-For acceptance probability $A=p_1+p_2+p_3+p_4$, an accepted face has probability $p_i/A$. Under the bounded model,
-
-$$
-\frac{2-\varepsilon}{3}\le A\le\frac{2+\varepsilon}{3}
-$$
-
-and the min-entropy per accepted symbol is at least
-
-$$
-\log_2\frac{4-2\varepsilon}{1+\varepsilon}.
-$$
-
-| Target | Dice assumption | Accepted symbols | Conservative min-entropy | Worst expected physical rolls |
-| ---: | --- | ---: | ---: | ---: |
-| 12 words | Casino, $\varepsilon<0.01$ | 64 | greater than 126.62 bits | less than 96.49 |
-| 12 words | Consumer, $\varepsilon<0.10$ | 64 | greater than 114.46 bits | less than 101.06 |
-| 24 words | Casino, $\varepsilon<0.01$ | 128 | greater than 253.24 bits | less than 192.97 |
-| 24 words | Consumer, $\varepsilon<0.10$ | 128 | greater than 228.93 bits | less than 202.11 |
-
-The discarded results contribute no entropy. Rejection corrects the six-to-four radix mismatch, not unknown physical bias among faces 1–4.
-
-### 4.3 Base-6 modulo
-
-With $k$ base-6 digits, the raw min-entropy is at least
-
-$$
-k\left[\log_2 6-\log_2(1+\varepsilon)\right].
-$$
-
-Modulo conversion maps at most three 50-digit inputs to one 128-bit output and at most six 100-digit inputs to one 256-bit output. Therefore
-
-$$
-H_\infty(Y)\ge
-H_\infty(X)-
-\log_2\left\lceil\frac{6^k}{2^L}\right\rceil.
-$$
-
-| Target | Dice assumption | Conservative output min-entropy |
-| ---: | --- | ---: |
-| 12 words | Casino, $\varepsilon<0.01$ | greater than 126.95 bits |
-| 12 words | Consumer, $\varepsilon<0.10$ | greater than 120.79 bits |
-| 24 words | Casino, $\varepsilon<0.01$ | greater than 254.48 bits |
-| 24 words | Consumer, $\varepsilon<0.10$ | greater than 242.16 bits |
-
-All four cases exceed the 110-bit requirement comfortably. The 12-word consumer case has approximately 10.8 bits of margin, compared with only 0.4 bits under binary quantization.
-
-### 4.4 Manual per-word base-6 modulo
-
-Each full five-digit group has at least
-
-$$
-5[\log_2 6-\log_2(1+\varepsilon)]-\log_2 4
-$$
-
-bits of min-entropy after reduction modulo 2048, because no output has more than four preimages. The shortened final group is bounded similarly.
-
-| Target | Dice assumption | Results | Conservative output min-entropy |
-| ---: | --- | ---: | ---: |
-| 12 words | Casino, $\varepsilon<0.01$ | 58 | greater than 126.10 bits |
-| 12 words | Consumer, $\varepsilon<0.10$ | 58 | greater than 118.95 bits |
-| 24 words | Casino, $\varepsilon<0.01$ | 117 | greater than 252.44 bits |
-| 24 words | Consumer, $\varepsilon<0.10$ | 117 | greater than 238.03 bits |
-
-This loses somewhat more entropy than one global modulo operation, but it remains comfortably above the selected threshold and is genuinely feasible without arbitrary-precision arithmetic.
-
-### 4.5 Why not reduce the roll count further?
-
-It is mathematically possible to use fewer base-6 results and target only approximately 110 source bits. That would create a highly restricted subset of otherwise valid BIP-39 entropy strings and leave little safety margin for model or testing error.
-
-Using the conventional 50 or 100 global base-6 results, or 58 or 117 results for manual per-word conversion, is preferred because it:
-
-- preserves a substantial margin;
-- avoids conspicuous fixed leading portions of the entropy string;
-- keeps the procedure aligned with generating a full 128- or 256-bit BIP-39 entropy value;
-- still uses fewer than half as many results as binary quantization.
+| Situation | Recommended action |
+| --- | --- |
+| Consumer scenario $\varepsilon<0.10$ is credibly supported | Use base-4 rejection, global base-6 modulo, or manual per-word base 6 for 12 words; do not use 12-word binary as a 112-bit design |
+| Consumer-dice performance is unknown | Do not claim a numerical guarantee; use the [statistical methodology](ExpectedDicePerformace.md#5-testing-five-identified-dice) to establish a bound or use a better-supported assumption |
+| Maximum manual simplicity is preferred | Use base-4 rejection |
+| Fixed completion length with no rejected results is essential | Use binary only when its canonical entropy result clears the selected objective |
+| Minimum result count is preferred and a reviewed converter exists | Use global base-6 modulo |
+| Paper-only base conversion with fewer results is preferred | Use manual per-word base 6 and independently check every group |
+| No reviewed converter is available | Use base 4 or binary rather than improvised base conversion |
 
 ---
 
-## 5. Global base-6 option for a 12-word mnemonic
+## 4. Shared operational requirements
 
-### 5.1 Applicability
+### 4.1 Rolling
 
-Use 50 full base-6 results and reduce the resulting integer modulo $2^{128}$ only when the hardware wallet supports direct base-6 input or a reviewed offline converter is available. This is not the default paper-only recommendation.
+Every workflow below uses the [preferred lidded-box method](RollingTechnique.md#31-preferred-lidded-box-method), including its fixed reading order and invalid-batch rule. The [open-cast method](RollingTechnique.md#32-open-cast-alternative) is the documented fallback. Rolling details are not repeated here.
 
-Prefer good consumer dice if their $\varepsilon<0.10$ bound is credibly validated under the intended cup and surface procedure. Otherwise use new casino-grade precision dice under the provisional $\varepsilon<0.01$ assumption.
+### 4.2 Standard BIP-39 completion
 
-### 5.2 Reasoning
+After a workflow has produced exactly 128 or 256 entropy bits:
 
-- **Safety:** consumer dice at the assumed bound provide more than 120.79 bits of output min-entropy, comfortably above approximately 110 bits.
-- **Cost:** validated consumer dice meet the target, so more expensive casino dice add margin but are not necessary.
-- **Roll count:** only 50 results are needed instead of 128 for binary quantization.
-- **Compatibility:** most hardware wallets do not accept the 50 base-6 digits directly. The conversion must be completed before ordinary BIP-39 word entry.
-- **Simplicity:** there is no rejection decision and no possibility of discarding all 50 results, but full-integer conversion is not reasonably convenient by hand.
-- **Error resistance:** the required offline converter should display the entered base-6 string for verification before conversion.
+1. calculate SHA-256 of the corresponding 16 or 32 bytes using a trusted offline implementation;
+2. append the first four hash bits for 128-bit entropy or the first eight for 256-bit entropy;
+3. split the resulting 132 or 264 bits into 11-bit groups;
+4. interpret each group as a zero-based index into the official BIP-39 word list;
+5. verify the mnemonic and recovered entropy with a separate trusted offline implementation or hardware wallet before funding.
 
-### 5.3 Self-contained 12-word instructions
+### 4.3 Common security handling
 
-#### Materials for 12 words
-
-- one or more six-sided dice satisfying the selected bias assumption;
-- a dice cup;
-- a hard, level rolling surface with enough room for the dice to tumble;
-- paper and a pen;
-- the official BIP-39 word list printed on paper;
-- a verified offline tool capable of arbitrary-precision base conversion, SHA-256, and BIP-39 word lookup;
-- an offline device that can be wiped after use.
-
-#### Procedure for 12 words
-
-1. **Prepare the room.** Remove cameras, phones, smart speakers, and other recording devices. Close curtains if necessary. Do not perform the procedure where another person can observe it.
-2. **Prepare the offline device.** Disconnect networking before entering any secret values. Confirm that the converter has been tested with nonsecret test vectors. Do not use an online website.
-3. **Prepare a recording sheet.** Number 50 spaces from 1 through 50. Decide the reading order before rolling. If multiple dice are distinguishable, use a fixed die order. If they are indistinguishable, read them by a fixed physical rule such as left to right after they stop.
-4. **Roll vigorously.** Put all dice in the cup, shake thoroughly, and cast them so they tumble freely on the hard surface. Do not arrange or select dice based on their values.
-5. **Record base-6 digits.** For each die result, write face value minus one:
-
-   | Die face | Record |
-   | ---: | ---: |
-   | 1 | 0 |
-   | 2 | 1 |
-   | 3 | 2 |
-   | 4 | 3 |
-   | 5 | 4 |
-   | 6 | 5 |
-
-6. **Repeat until exactly 50 digits are recorded.** If the final batch contains more results than needed, retain the predetermined first positions and ignore the remainder. Never choose which results to retain after seeing their values.
-7. **Verify the transcription.** Read the 50 recorded digits back twice. Every character must be between 0 and 5. Preserve leading zeros.
-8. **Form the integer.** Enter the complete 50-character string into the verified offline tool as a base-6 integer $X$. Confirm that the tool echoes exactly the same string.
-9. **Reduce to 128 bits.** Calculate
-   $$Y=X\bmod2^{128}.$$
-   Render $Y$ as exactly 128 binary bits or 16 bytes. Keep leading zero bits or bytes.
-10. **Compute the BIP-39 checksum.** Calculate SHA-256 of the 16-byte value. Take the first four bits of the hash and append them to the 128 entropy bits. The result contains 132 bits.
-11. **Create the words.** Split the 132 bits from left to right into twelve 11-bit groups. Interpret each group as an integer from 0 through 2047 and select the word with that zero-based index from the official BIP-39 word list.
-12. **Verify independently offline.** Use a separate trusted offline wallet or implementation to check that the twelve words have a valid BIP-39 checksum and reproduce the expected entropy. Never submit the words to a website.
-13. **Make the permanent backup.** Copy the words accurately to the intended durable backup. Check spelling and order at least twice.
-14. **Remove temporary secrets.** Destroy the paper containing raw dice digits unless it is intentionally part of the security design. Securely wipe or physically retire temporary digital storage used for conversion. Reconnect the device only after secrets and recoverable temporary files are removed.
-15. **Test recovery before funding.** Restore the mnemonic on a trusted offline device and verify receive addresses before sending significant funds.
-
-There is no rejected range in this procedure. Every correctly recorded 50-digit series produces a result.
+Prepare the room and offline tools before generating secret values. Never submit dice results or mnemonic words to an online service. After independent verification, create and test the durable backup, then destroy unneeded paper and securely wipe or physically retire temporary digital storage.
 
 ---
 
-## 6. Global base-6 option for a 24-word mnemonic
+## 5. Global base-6 workflow
 
-### 6.1 Applicability
+Use this workflow only when direct base-6 wallet input or a reviewed offline arbitrary-precision converter is available. It is not the default paper-only recommendation.
 
-Use 100 full base-6 results and reduce the resulting integer modulo $2^{256}$ only when the hardware wallet supports direct base-6 input or a reviewed offline converter is available. This is not the default paper-only recommendation.
+| Target | Base-6 digits $k$ | Entropy length $L$ | Exact output width |
+| ---: | ---: | ---: | ---: |
+| 12 words | 50 | 128 bits | 16 bytes |
+| 24 words | 100 | 256 bits | 32 bytes |
 
-As with the 12-word case, prefer validated consumer dice for cost. Use casino-grade dice when the consumer bound is unavailable, insufficiently supported, or additional physical-quality margin is desired.
+Required materials are dice satisfying the selected aggregate assumption, the rolling equipment specified in Section 4.1, paper, the official word list, and a verified offline tool that can preserve leading zeros and be wiped after use.
 
-### 6.2 Reasoning
+1. Complete the preparation in Section 4.3 and test the converter with nonsecret vectors.
+2. Prepare $k$ numbered recording positions and a reading order fixed before rolling.
+3. Follow the rolling protocol in Section 4.1. For every result, record face value minus one, producing a digit from 0 through 5.
+4. Continue until exactly $k$ digits are recorded. In the final batch, retain only the predetermined first positions needed to reach $k$.
+5. Read the string back twice, verify every digit is 0–5, and preserve leading zeros.
+6. Enter the complete string into the verified offline tool as one base-6 integer $X$ and confirm that the displayed input matches the paper record.
+7. Calculate
+   $$Y=X\bmod2^L$$
+   and render $Y$ at exactly the width shown above, preserving leading zeros.
+8. Complete the standard BIP-39 and verification steps in Sections 4.2 and 4.3.
 
-- **Safety:** even consumer dice at $\varepsilon<0.10$ provide more than 242.16 bits of conservative output min-entropy.
-- **Overall Bitcoin strength:** this is far above the approximate 128-bit classical security of secp256k1. A 24-word mnemonic does not make the elliptic-curve layer stronger than approximately 128 bits.
-- **Cost:** consumer dice satisfy the entropy target under the assumption; casino dice are optional margin.
-- **Roll count:** 100 results replace 256 binary results.
-- **Compatibility:** most hardware wallets do not accept the 100 base-6 digits directly. The conversion must be completed before ordinary BIP-39 word entry.
-- **Simplicity:** no rejection or complete retry is possible, but the 256-bit hand conversion is not reasonably convenient.
-
-### 6.3 Self-contained 24-word instructions
-
-#### Materials for 24 words
-
-- one or more six-sided dice satisfying the selected bias assumption;
-- a dice cup;
-- a hard, level rolling surface with enough room for the dice to tumble;
-- paper and a pen;
-- the official BIP-39 word list printed on paper;
-- a verified offline tool capable of arbitrary-precision base conversion, SHA-256, and BIP-39 word lookup;
-- an offline device that can be wiped after use.
-
-#### Procedure for 24 words
-
-1. **Prepare the room.** Remove cameras, phones, smart speakers, and other recording devices. Prevent observation through doors or windows.
-2. **Prepare the offline device.** Disconnect all networking before entering secret values. Verify the converter with nonsecret test vectors. Never use an online conversion or mnemonic website.
-3. **Prepare a recording sheet.** Number 100 spaces from 1 through 100. Fix the reading order before rolling. Use fixed die identity order for distinguishable dice or a fixed physical order for indistinguishable dice.
-4. **Roll vigorously.** Shake all dice thoroughly in the cup and cast them so they tumble freely. Do not manipulate their orientation or select results based on value.
-5. **Record base-6 digits.** Convert every die face by subtracting one:
-
-   | Die face | Record |
-   | ---: | ---: |
-   | 1 | 0 |
-   | 2 | 1 |
-   | 3 | 2 |
-   | 4 | 3 |
-   | 5 | 4 |
-   | 6 | 5 |
-
-6. **Repeat until exactly 100 digits are recorded.** In an oversized final batch, keep only positions chosen by the fixed rule in advance. Ignore the other results regardless of their values.
-7. **Verify the transcription.** Read the entire 100-digit string back twice. Every digit must be 0–5. Do not remove leading zeros.
-8. **Form the integer.** Enter the exact 100-character string into the verified offline tool as one base-6 integer $X$. Compare the displayed input with the paper record.
-9. **Reduce to 256 bits.** Calculate
-   $$Y=X\bmod2^{256}.$$
-   Render $Y$ as exactly 256 binary bits or 32 bytes, preserving all leading zeros.
-10. **Compute the BIP-39 checksum.** Calculate SHA-256 of the 32-byte value. Take the first eight bits of the hash and append them to the 256 entropy bits. The result contains 264 bits.
-11. **Create the words.** Split the 264 bits from left to right into twenty-four 11-bit groups. Interpret each group as an integer from 0 through 2047 and select the word with that zero-based index from the official BIP-39 word list.
-12. **Verify independently offline.** Confirm the checksum and recovered entropy using a separate trusted offline wallet or implementation. Never type the mnemonic into an online service.
-13. **Make the permanent backup.** Transfer the 24 words to durable backup media and verify every word and its position at least twice.
-14. **Remove temporary secrets.** Destroy the raw-digit sheet unless intentionally retained. Securely wipe or physically retire temporary digital storage before reconnecting any device.
-15. **Test recovery before funding.** Restore the mnemonic offline and verify derived receive addresses before transferring significant value.
-
-There is no rejected range in this procedure. Every correctly recorded 100-digit series produces a result.
+There is no rejected range: every correctly recorded $k$-digit series produces an output.
 
 ---
 
-## 7. Binary procedure
+## 6. Binary procedure
 
 Use this procedure when broad BIP-39 hardware-wallet compatibility and minimizing conversion mistakes are more important than roll count. It requires no base-6 support and no base conversion.
 
@@ -407,32 +187,26 @@ The supplied files support this workflow:
 
 These are recording and lookup aids, not checksum calculators. The checksum still requires a trusted offline SHA-256 implementation or a hardware-wallet feature designed to complete or validate the final word.
 
-### 7.1 Self-contained binary instructions
+### 6.1 Binary workflow
 
-1. Use dice whose applicable $\varepsilon$ bound has credible support.
-2. Remove cameras, phones, observers, and networked devices from the generation area.
-3. Prepare 128 numbered bit positions for 12 words or 256 positions for 24 words.
-4. Decide the order in which multiple dice will be read before rolling.
-5. Shake the dice thoroughly in a cup and cast them so they tumble freely.
-6. Read the dice using the predetermined order.
-7. Record one bit per die:
+1. Complete the common preparation in Section 4.3 using dice whose applicable aggregate bound has credible support.
+2. Prepare 128 numbered bit positions for 12 words or 256 positions for 24 words.
+3. Follow the rolling and ordering protocol in Section 4.1.
+4. Record one bit per die:
    - face 1, 2, or 3: record 0;
    - face 4, 5, or 6: record 1.
-8. Repeat until exactly 128 or 256 bits have been recorded. If the final batch is larger than the remaining spaces, use predetermined positions and ignore the rest.
-9. For 128 bits, calculate SHA-256 of the corresponding 16 bytes and append the first four hash bits. For 256 bits, hash the corresponding 32 bytes and append the first eight hash bits.
-10. Split the resulting 132 or 264 bits into 11-bit groups and map each zero-based value to the official BIP-39 word list.
-11. Verify the checksum and recovery using a trusted offline wallet or implementation.
-12. Create and verify the durable backup, remove all temporary secret material, and test recovery before funding.
+5. Repeat until exactly 128 or 256 bits have been recorded. If the final batch is larger than the remaining spaces, use predetermined positions and ignore the rest.
+6. Complete Sections 4.2 and 4.3.
 
 This procedure never rejects a die result or a complete series. Its disadvantage is the larger number of results.
 
 ---
 
-## 8. Default base-4 rejection procedure
+## 7. Default base-4 rejection procedure
 
 This procedure uses the same bit sheets, word lookup, checksum process, and ordinary BIP-39 hardware-wallet entry as binary quantization.
 
-### 8.1 Encoding
+### 7.1 Encoding
 
 | Die face | Record |
 | ---: | :--- |
@@ -442,45 +216,32 @@ This procedure uses the same bit sheets, word lookup, checksum process, and ordi
 | 4 | 11 |
 | 5 or 6 | Nothing; reject this result |
 
-### 8.2 Procedure with one or more dice
+### 7.2 Procedure with one or more dice
 
-1. Use dice whose applicable $\varepsilon$ bound has credible support.
-2. Remove cameras, phones, observers, and networked devices from the generation area.
-3. Prepare 128 numbered entropy-bit positions for 12 words or 256 positions for 24 words. Do not fill the checksum positions yet.
-4. Before rolling, define a permanent order in which the dice will be read. Distinguishable dice can use identity order; otherwise use a fixed physical rule such as left to right.
-5. Shake all dice thoroughly in a cup and cast them so they tumble freely.
-6. Inspect every die in the predetermined order:
+1. Complete the common preparation in Section 4.3 using dice whose applicable aggregate bound has credible support.
+2. Prepare 128 numbered entropy-bit positions for 12 words or 256 positions for 24 words. Do not fill the checksum positions yet.
+3. Follow the rolling and ordering protocol in Section 4.1.
+4. Inspect every die in the predetermined order:
    - for face 1–4, write its two-bit pair into the next two empty positions;
    - for face 5 or 6, write nothing and continue to the next die.
-7. Roll the full batch again. Previously accepted dice are not removed; every die may supply another symbol on every batch.
-8. Continue until exactly 64 accepted symbols have filled 128 bits, or 128 accepted symbols have filled 256 bits.
-9. In the final batch, process accepted results in the predetermined order only until the bit sheet is full. Ignore all later dice, regardless of their values. Never select which accepted results to retain after seeing them.
-10. For 128 bits, calculate SHA-256 of the corresponding 16 bytes and append the first four hash bits. For 256 bits, hash the corresponding 32 bytes and append the first eight hash bits.
-11. Split the resulting 132 or 264 bits into 11-bit groups and use the supplied searchable BIP-39 table to find each word.
-12. Verify the checksum and recovery with a separate trusted offline implementation or hardware wallet before funding.
-13. Create and verify the durable backup, remove temporary secret material, and test recovery.
+5. Roll the full batch again. Previously accepted dice are not removed; every die may supply another symbol on every batch.
+6. Continue until exactly 64 accepted symbols have filled 128 bits, or 128 accepted symbols have filled 256 bits.
+7. In the final batch, process accepted results in the predetermined order only until the bit sheet is full. Ignore all later dice, regardless of their values.
+8. Complete Sections 4.2 and 4.3.
 
-### 8.3 Batch expectations
+### 7.3 Batch expectations
 
-With ideal dice:
-
-| Dice per batch | Accepted symbols per batch, average | Batch-equivalents, 12 words | Batch-equivalents, 24 words |
-| ---: | ---: | ---: | ---: |
-| 1 | 0.67 | 96.0 | 192.0 |
-| 5 | 3.33 | 19.2 | 38.4 |
-| 6 | 4.00 | 16.0 | 32.0 |
-
-The last two columns are expected physical-roll counts divided by the batch size, not exact expected whole-batch counts. A whole final batch creates a small unused-results overhead. A batch can contain zero accepted results or can accept every die. Under $\varepsilon<0.10$, the worst batch-equivalents rise to approximately 20.21 and 40.42 with five dice, or 16.84 and 33.68 with six dice.
+The canonical ideal and bounded-model expectations are in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#34-batch-count). The operational comparison in Section 2.6 lists the result counts used by this synthesis.
 
 Rejecting a result does not mean physically rerolling that die in isolation before reading the rest of the batch. Simply ignore its 5 or 6, finish processing the batch, and then roll the full set again. Rolling only the rejected dice would also work if die identities and order were handled consistently, but rerolling the full batch is simpler and less error-prone.
 
 ---
 
-## 9. Manually feasible base-6-to-BIP-39 procedure
+## 8. Manually feasible base-6-to-BIP-39 procedure
 
 This procedure converts base 6 directly into BIP-39 word indices one group at a time. It avoids both a large-integer converter and direct base-6 support in the hardware wallet. Once the checksum has been completed, the resulting mnemonic is entered as ordinary BIP-39 words.
 
-### 9.1 Common five-digit conversion
+### 8.1 Common five-digit conversion
 
 1. Convert each die face to a base-6 digit by subtracting one: face 1 becomes 0, face 2 becomes 1, through face 6 becoming 5.
 2. Take five digits in their recorded order and label them $d_1,d_2,d_3,d_4,d_5$.
@@ -508,12 +269,12 @@ $$
 
 No subtraction is needed, so the word index is 1865. The example is public and must not be reused as secret entropy.
 
-### 9.2 Twelve-word procedure
+### 8.2 Twelve-word procedure
 
-1. Prepare the private generation area, dice, cup, recording paper, checksum method, and printed lookup materials as described for the binary procedure.
-2. Roll and record exactly 58 base-6 digits using face minus one. Predetermine the reading order for multiple dice.
+1. Complete the common preparation in Section 4.3.
+2. Follow the rolling protocol in Section 4.1 and record exactly 58 base-6 digits using face minus one.
 3. Divide the first 55 digits into eleven consecutive groups of five.
-4. Convert each group using the common procedure in Section 9.1. The resulting indices select words 1 through 11.
+4. Convert each group using the common procedure in Section 8.1. The resulting indices select words 1 through 11.
 5. For the final three digits $a,b,c$, calculate
 
    $$
@@ -532,15 +293,16 @@ No subtraction is needed, so the word index is 1865. The example is public and m
 
 10. Look up $w_{12}$ in the supplied BIP-39 table and append that word.
 11. Verify the complete mnemonic's checksum on a separate trusted offline implementation or hardware wallet before funding it.
+12. Complete the backup and cleanup requirements in Section 4.3.
 
 This procedure has no rejection and always uses exactly 58 results.
 
-### 9.3 Twenty-four-word procedure
+### 8.3 Twenty-four-word procedure
 
-1. Prepare the private generation area, dice, cup, recording paper, checksum method, and printed lookup materials as described for the binary procedure.
-2. Roll and record exactly 117 base-6 digits using face minus one. Predetermine the reading order for multiple dice.
+1. Complete the common preparation in Section 4.3.
+2. Follow the rolling protocol in Section 4.1 and record exactly 117 base-6 digits using face minus one.
 3. Divide the first 115 digits into twenty-three consecutive groups of five.
-4. Convert each group using the common procedure in Section 9.1. The resulting indices select words 1 through 23.
+4. Convert each group using the common procedure in Section 8.1. The resulting indices select words 1 through 23.
 5. For the final two digits $a,b$, calculate $q=6a+b$.
 6. Calculate $r=q\bmod8$ by subtracting 8 repeatedly until the result is between 0 and 7. This gives the final three entropy bits.
 7. Concatenate the twenty-three 11-bit indices and the three-bit representation of $r$, preserving leading zeros. These are the 256 entropy bits.
@@ -553,18 +315,19 @@ This procedure has no rejection and always uses exactly 58 results.
 
 10. Look up $w_{24}$ in the supplied BIP-39 table and append that word.
 11. Verify the complete mnemonic's checksum on a separate trusted offline implementation or hardware wallet before funding it.
+12. Complete the backup and cleanup requirements in Section 4.3.
 
 This procedure has no rejection and always uses exactly 117 results.
 
-### 9.4 Practical assessment
+### 8.4 Practical assessment
 
 The small-block method is manually feasible, but not as simple as binary quantization. Its advantages are:
 
 - no arbitrary-precision arithmetic;
 - no software needed for base-6 conversion;
 - no direct base-6 wallet support needed;
-- approximately 55% fewer die results than binary;
-- more entropy margin than binary under the consumer-dice assumption.
+- fewer die results than binary;
+- more margin than binary in the canonical consumer-scenario calculation.
 
 Its disadvantages are:
 
@@ -577,40 +340,14 @@ The base-4 procedure therefore remains the default compromise. Binary is the sim
 
 ---
 
-## 10. Decision table
+## 9. Implementation qualifications
 
-| Situation | Recommended action |
-| --- | --- |
-| Consumer dice have a credible $\varepsilon<0.10$ bound | Prefer base-4 rejection for a simple method with approximately 114.5 bits of 12-word min-entropy |
-| Consumer-dice performance is unknown | Do not claim the calculated guarantee; test them or use credible casino-grade dice |
-| Casino dice plausibly satisfy $\varepsilon<0.01$ | Base 4 and binary both provide near-full target entropy; base 4 uses fewer expected rolls |
-| No verified offline big-integer converter is available | Use base 4, binary, or manual per-word base 6 |
-| Hardware wallet lacks direct base-6 input | Use base 4 or binary, or complete manual per-word conversion before entering ordinary BIP-39 words |
-| Avoiding complete-block retries is important | Use base 4, binary, or modulo; base 4 rejects only individual results |
-| Maximum simplicity with fewer expected rolls is preferred | Use base-4 rejection |
-| Fixed completion length with no rejected results is essential | Use binary quantization |
-| Rolling batches of five or six dice | Use base 4 with a fixed reading order; ignore 5–6 and roll the full batch again |
-| Minimum roll count is preferred and a reviewed converter or direct wallet support exists | Use global base-6 modulo |
-| Paper-only base conversion with fewer rolls is preferred | Use manual per-word base-6 modulo and independently check every group |
-| Dice identities are visible during generation | Use a fixed identity order; do not count permutation as entropy |
-| Dice identities are hidden | Hidden ordering may help, but do not credit it in the guaranteed bound |
-
----
-
-## 11. Important qualifications
-
-1. **The dice assumptions remain provisional.** Manufacturing descriptions do not establish $\varepsilon$ directly.
-2. **Independence is assumed.** Controlled throws or serial correlation invalidate the simple additive entropy calculation.
-3. **Any converter becomes security-critical.** It must preserve leading zeros, implement arithmetic exactly, hash the correct byte representation, and use the official word-list order.
-4. **Modulo is intentional.** Do not replace it with decimal truncation, floating-point conversion, or taking an arbitrary substring of a binary representation.
-5. **A BIP-39 passphrase is separate.** It may improve theft resistance but should not be used to excuse weak mnemonic generation.
-6. **Operational compromise dominates at high entropy.** Observation, malware, malicious hardware, and backup theft are much more plausible than brute force once min-entropy exceeds approximately 110 bits.
-7. **Test with nonsecret vectors first.** A tool that has not been independently verified should not receive real seed material.
-8. **“All wallets” means BIP-39-compatible wallets.** A wallet using another mnemonic standard cannot necessarily restore a BIP-39 mnemonic.
-9. **Base-4 rejection is conditional sampling, not bias removal.** It makes ideal dice exactly uniform over four symbols, but accepted outputs from biased dice remain biased.
+1. **Any converter becomes security-critical.** It must preserve leading zeros, implement arithmetic exactly, hash the correct byte representation, and use the official word-list order.
+2. **Modulo is intentional.** Do not replace it with decimal truncation, floating-point conversion, or an arbitrary substring of a binary representation.
+3. **Test with nonsecret vectors first.** A tool that has not been independently verified should not receive real seed material.
+4. **A BIP-39 passphrase is separate.** It may improve theft resistance but should not be used to excuse weak mnemonic generation.
+5. **Compatibility means BIP-39 compatibility.** A wallet using another mnemonic standard cannot necessarily restore these words.
 
 ## References
 
 - [BIP-39: Mnemonic code for generating deterministic keys](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
-- [NIST SP 800-57 Part 1 Revision 5: Recommendation for Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
-- [NIST SP 800-90B: Recommendation for Entropy Sources](https://csrc.nist.gov/pubs/sp/800/90/b/final)

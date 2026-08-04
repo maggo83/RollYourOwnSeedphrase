@@ -4,13 +4,13 @@ Document navigation:
 
 - [Overview](../README.md)
 - Previous: [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md)
-- Next: [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md)
+- Next: [Rolling technique and throw dynamics](RollingTechnique.md)
 
 ---
 
 ## Executive summary
 
-Public evidence that maps a commercial die category directly to six measured face probabilities is sparse. Precision casino dice have much tighter geometric manufacturing tolerances than ordinary consumer dice, but a dimensional tolerance does not by itself establish a probability bound. Published roll experiments provide some evidence that ordinary dice can perform close to ideal under suitable throwing conditions, but the available studies do not justify a universal value of the bias parameter $\varepsilon$ for all casino, board-game, or role-playing dice.
+Public evidence that maps a commercial die category directly to six measured face probabilities is sparse. Precision casino dice have much tighter geometric manufacturing tolerances than ordinary consumer dice, but a dimensional tolerance does not by itself establish a probability bound. Weldon's historical data, Labby's automated replication, and a multi-million-throw binary experiment show that ordinary dice can perform close to ideal under suitable agitation. In Labby's aggregate d6 data, the largest deviation corresponds to approximately $\varepsilon=0.013$, making $\varepsilon=0.02$ a useful evidence-anchored sensitivity case for that setup. This is stronger evidence than a purely hypothetical scenario, but it is not a universal product-class guarantee.
 
 For security analysis, the most useful model is therefore a **bounded multiplicative bias**:
 
@@ -20,7 +20,7 @@ $$
 
 for every face of every die. This model is auditable and produces conservative entropy bounds. Values such as $\varepsilon=0.005$, $0.01$, or $0.02$ for casino dice and $0.02$, $0.05$, or $0.10$ for consumer dice are useful **scenarios**, not empirically certified product specifications.
 
-A defensible claim about a particular set of dice requires either a manufacturer-supplied probabilistic guarantee or a roll test with simultaneous confidence bounds. Testing small bias rigorously is expensive: for five identifiable dice, approximately 80,000 joint cup throws are a reasonable planning figure for having a high chance to certify $\varepsilon<0.05$ when the dice are genuinely close to ideal.
+A defensible claim about a particular set of dice and rolling procedure requires either a manufacturer-supplied probabilistic guarantee or a roll test with simultaneous confidence bounds. Testing small bias rigorously is expensive: for five identifiable dice, approximately 80,000 joint throws are a reasonable planning figure for having a high chance to certify $\varepsilon<0.05$ when the complete setup is genuinely close to ideal. The next document explains why the rolling procedure used for testing and generation must match.
 
 ---
 
@@ -66,7 +66,7 @@ This is a statement about long-run roll probabilities under a specified rolling 
 
 ---
 
-## 2. Evidence found
+## 2. Evidence about marginal face bias
 
 ### 2.1 Manufacturing descriptions
 
@@ -80,16 +80,55 @@ $$
 \text{geometric tolerance}\not\Rightarrow\text{known probability tolerance}.
 $$
 
-Roll probabilities also depend on:
+Physical-die probabilities can be affected by:
 
 - density and center-of-mass uniformity;
 - pip excavation and filling;
 - edge and corner geometry;
-- wear and surface damage;
-- cup, surface, release height, and collision dynamics;
-- correlations or controlled throws.
+- wear and surface damage.
 
-### 2.2 Large historical roll experiment
+The rolling process is a separate contributor to the observed final distribution and is analyzed in [Rolling technique and throw dynamics](RollingTechnique.md).
+
+### 2.2 Weldon and Pearson
+
+W. F. R. Weldon reported 26,306 casts of twelve dice, giving 315,672 individual results. Only the number of 5-or-6 outcomes per cast was recorded. The combined observed probability was
+
+$$
+P(5\text{ or }6)=\frac{106{,}602}{315{,}672}\approx0.3377,
+$$
+
+slightly above the fair value $1/3$. Pearson's original chi-square analysis rejected the fair-binomial model; later reanalysis continued to support a small stable aggregate bias.
+
+The experiment does not identify the separate probabilities of faces 5 and 6. Consequently, a single-face maximum such as $0.1710$ can be obtained only by adding an allocation assumption about the excess; it is not a distribution-free bound from Weldon's recorded statistic. The study establishes modest aggregate bias in that setup, not a full six-face entropy estimate.
+
+### 2.3 Labby's automated per-face replication
+
+Labby automated Weldon's experiment with twelve inexpensive rounded plastic dice on a mechanically agitated platform. The experiment again produced 26,306 casts and 315,672 individual outcomes, this time recording every face:
+
+| Face | Aggregate probability |
+| ---: | ---: |
+| 1 | 0.1686 |
+| 2 | 0.1651 |
+| 3 | 0.1662 |
+| 4 | 0.1658 |
+| 5 | 0.1655 |
+| 6 | 0.1688 |
+
+The aggregate distribution is measurably nonuniform but close to ideal. Its maximum point estimate gives
+
+$$
+H_{\infty,6}=-\log_2(0.1688)\approx2.567
+$$
+
+raw bits per result, compared with the ideal $2.585$. The high-face probability corresponds to approximately $\varepsilon=0.013$ as a point estimate. It is not a simultaneous bound for every face of every die, and raw six-face min-entropy does not determine binary-group or base-4 entropy by itself.
+
+Labby measured the 1--6 axis as approximately $0.2\%$ shorter than the other axes, consistent with the two largest faces being favored by a small shape error. The cast sequence's reported autocorrelation and spectrum showed no evident serial structure under the machine's strong agitation. This is useful evidence about that set and apparatus, not a product-class guarantee or a study of a low-energy hand drop.
+
+The combined 5-or-6 probability was approximately $0.3343$, close to the fair value $1/3$; the automated replication therefore did not reproduce Weldon's particular 5-or-6 excess. Its detectable pattern was instead the small 1-and-6 elevation associated with the shorter axis.
+
+The smallest bounded-multiplicative model containing the aggregate point estimates has $\widehat\varepsilon=0.0128$. This is the empirical output this document passes to the conversion analysis. The method-specific entropy consequences are calculated once in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#55-worked-aggregate-final-outcome-vector).
+
+### 2.4 Large binary roll experiment
 
 Iversen, Longcor, Mosteller, Gilbert, and Youtz published “Bias and Runs in Dice Throwing and Recording: A Few Million Throws” in *Psychometrika* in 1971. The reported experiment used:
 
@@ -117,22 +156,24 @@ $$
 
 Even that substantial experiment cannot resolve extremely small binary biases for each individual die with high confidence.
 
-### 2.3 Bevelled versus sharp-edged dice
+### 2.5 Bevelled versus sharp-edged dice
 
 The preprint “How the Dice Fall: Investigating the Final State Probabilities of Bevelled Versus Non-bevelled Dice” reports greater final-state probability variation for bevelled dice than non-bevelled dice. It supports the physical intuition that edge geometry matters.
 
 Its evidential weight is limited because it is a preprint rather than an established product survey, and its particular dice and experimental setup do not define universal performance bounds for commercial categories.
 
-### 2.4 Evidence assessment
+### 2.6 Evidence assessment
 
 | Evidence | What it supports | What it does not support |
 | --- | --- | --- |
 | Casino dimensional tolerances | Casino dice are manufactured much more precisely | A numerical bound on $p_i$ or $\varepsilon$ |
 | Casino supplier statements | Precision and consistency are explicit design goals | Independent probabilistic certification |
+| Weldon/Pearson 5-or-6 counts | Small stable aggregate bias can occur | A separate probability for every face |
+| Labby automated per-face counts | Cheap dice can be close to ideal under strong mechanical agitation | A per-die or product-class bound; performance under another rolling procedure |
 | 1971 multi-million-throw experiment | Dice can produce near-ideal binary sequences | Modern six-face bounds by product class |
 | Bevelled/non-bevelled preprint | Geometry can influence final-state variation | A universal consumer-die bias distribution |
 
-The central evidence gap is a modern, independent dataset containing many identified dice from known product classes, a controlled but realistic cup-throw protocol, all six face outcomes, and enough repetitions per die to produce narrow simultaneous confidence intervals.
+The central evidence gap is a modern, independent dataset containing many identified dice from known product classes, a controlled but realistic box- or cup-rolling protocol, all six final-face outcomes, and enough repetitions per die to produce narrow simultaneous confidence intervals.
 
 ---
 
@@ -210,7 +251,7 @@ The following ranges are **sensitivity-analysis choices**, not measured guarante
 | Good branded consumer dice | $\varepsilon=0.02$ | $\varepsilon=0.05$ | $\varepsilon=0.10$ |
 | Cheap, decorative, damaged, or visibly irregular dice | $\varepsilon=0.10$ | $\varepsilon=0.20$ | higher or unrestricted |
 
-These values are reasonable for asking “what if?” They must not be phrased as “casino dice satisfy $\varepsilon=0.01$” or “ordinary dice satisfy $\varepsilon=0.05$” without supporting measurements.
+These values are reasonable for asking “what if?” They must not be phrased as “casino dice satisfy $\varepsilon=0.01$” or “ordinary dice satisfy $\varepsilon=0.05$” without supporting measurements. Labby's aggregate point estimate falls between the $\varepsilon=0.01$ and $0.02$ scenarios. It gives the $0.02$ consumer scenario a concrete empirical anchor under strong mechanical agitation, while $0.05$ and $0.10$ remain progressively conservative stress cases. One tested set under one machine cannot convert any of them into a general guarantee.
 
 For the one-heavy-face model, the corresponding heavy probability is
 
@@ -254,7 +295,7 @@ $$
 
 The constant $7.03$ uses a normal approximation with Bonferroni simultaneous coverage over $5\times6=30$ proportions at an overall 95% confidence level. The final analysis should use the exact intervals; this approximation is for planning sample size.
 
-| Desired confidence-bound margin | Joint cup throws | Total die outcomes |
+| Desired confidence-bound margin | Joint rolling batches | Total die outcomes |
 | ---: | ---: | ---: |
 | 0.10 | about 4,950 | 24,750 |
 | 0.05 | about 19,800 | 99,000 |
@@ -305,88 +346,42 @@ where $\varepsilon_0$ is the largest true bias for which approximately 95% passi
 
 No finite experiment can reliably distinguish $0.049999$ from $0.050001$. An indifference gap is unavoidable.
 
-### 5.3 Operational test requirements
+### 5.3 Statistical test requirements
 
-A test should reproduce the intended entropy-generation process:
+- Track every die separately during testing.
+- Predefine the sample size or use a valid sequential-testing design.
+- Use simultaneous confidence bounds rather than treating a nonsignificant goodness-of-fit test as proof of fairness.
+- Check serial dependence and changes over time, not only face counts.
+- Retest after damage or substantial wear.
 
-- use the same dice, cup, surface, release method, and approximate height;
-- track every die separately during testing;
-- predefine the sample size or use a valid sequential-testing design;
-- check serial dependence and changes over time, not only face counts;
-- do not reuse secret-generation outcomes as public test data;
-- retest after damage, substantial wear, or a changed procedure.
-
-Passing a chi-square test is not equivalent to obtaining a useful upper bound on $\varepsilon$.
+This section owns the statistical inference. The process-control requirement—using the same container, batch size, agitation, settling method, and reading rule during testing and generation—is specified in [Rolling technique and throw dynamics](RollingTechnique.md#34-repeat-consistently).
 
 ---
 
-## 6. Entropy relevance
+## 6. Handoff to the conversion analysis
 
-For binary quantization of 128 retained results, the bounded model gives
-
-$$
-H_\infty\ge128\left[1-\log_2(1+\varepsilon)\right].
-$$
-
-Base-4 rejection accepts faces 1–4 as 00, 01, 10, and 11 and discards faces 5–6. If
-
-$$
-A=p_1+p_2+p_3+p_4,
-$$
-
-then accepted face $i$ has conditional probability $p_i/A$. Under the bounded multiplicative model,
-
-$$
-\frac{2-\varepsilon}{3}\le A\le\frac{2+\varepsilon}{3}
-$$
-
-and
-
-$$
-H_{\infty,4}\ge
-\log_2\frac{4-2\varepsilon}{1+\varepsilon}
-$$
-
-bits per accepted two-bit symbol.
-
-| $\varepsilon$ | Binary, 12 words | Base 4, 12 words | Binary, 24 words | Base 4, 24 words |
-| ---: | ---: | ---: | ---: | ---: |
-| 0.01 | 126.16 bits | 126.62 bits | 252.33 bits | 253.24 bits |
-| 0.02 | 124.34 bits | 125.24 bits | 248.69 bits | 250.49 bits |
-| 0.05 | 118.99 bits | 121.16 bits | 237.98 bits | 242.32 bits |
-| 0.10 | 110.40 bits | 114.46 bits | 220.80 bits | 228.93 bits |
-| 0.20 | 94.33 bits | 101.44 bits | 188.66 bits | 202.88 bits |
-
-Thus a defensible $\varepsilon\le0.05$ bound leaves approximately 119 bits with binary quantization or 121 bits with base-4 rejection for 12 words. Operational compromise is then much more plausible than classical brute force. Base-4 rejection does not remove physical bias: it conditions the distribution on faces 1–4.
-
-Roll the full batch, read dice in a predetermined order, retain only faces 1–4, and then roll the full batch again. Continue until exactly 64 or 128 accepted symbols have been recorded. In the final batch, keep accepted symbols in the predetermined order only until the target is reached; ignore every later die.
-
-For ideal dice, the expected accepted symbols per batch are $2N/3$:
-
-| Dice per batch | Expected accepted symbols | Batch-equivalents, 12 words | Batch-equivalents, 24 words |
-| ---: | ---: | ---: | ---: |
-| 1 | 0.67 | 96.0 | 192.0 |
-| 5 | 3.33 | 19.2 | 38.4 |
-| 6 | 4.00 | 16.0 | 32.0 |
-
-These are expected physical-roll counts divided by the batch size, not exact expected whole-batch counts. A whole final batch creates a small unused-results overhead. At $\varepsilon=0.10$, the corresponding worst-case batch-equivalents are approximately 20.21 and 40.42 with five dice, or 16.84 and 33.68 with six dice. Actual completion time is random.
+This document produces evidence-based or hypothetical inputs such as a full face-probability vector, a per-die upper confidence bound, or a scenario value of $\varepsilon$. It does not own the entropy formulas for binary, base-4, or base-6 conversion. Those consequences—including the canonical tables—are calculated in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#5-results).
 
 ---
 
 ## 7. Conclusions
 
 1. Casino dice are physically more precise than ordinary dice, but available dimensional specifications do not establish numerical probability bounds.
-2. Existing roll studies support “often close to ideal,” not a universal $\varepsilon$ for a product category.
-3. The bounded multiplicative model is the correct primary model for conservative security analysis.
-4. Dirichlet and one-heavy-face models are useful illustrations, not security guarantees.
-5. Scenario values should remain explicitly hypothetical until supported by per-die measurements.
-6. Certifying small bias is data-intensive; testing methodology and independence matter as much as the number of throws.
-7. Base-4 rejection is a practical intermediate method: simple binary output, fewer expected rolls than binary quantization, and no large-integer conversion, but rejected outcomes contribute no entropy and bias among accepted faces remains.
+2. Weldon, Labby, and Iversen support “often close to ideal under suitable agitation,” not a universal $\varepsilon$ for a product category.
+3. Labby's aggregate point estimate is an empirical benchmark, not a simultaneous per-die guarantee.
+4. The bounded multiplicative model is the correct primary model for conservative marginal-bias analysis.
+5. Dirichlet and one-heavy-face models are useful illustrations, not security guarantees.
+6. Scenario values should remain explicitly hypothetical until supported by per-die measurements.
+7. Certifying small bias is data-intensive, and the tested rolling procedure must match the generation procedure.
+8. Conversion-method consequences are derived in the entropy analysis and synthesized into recommendations in [Practical implications](PracticalImplications.md).
 
 ## References
 
 - [Encyclopaedia Britannica: Dice](https://www.britannica.com/topic/dice)
 - [TCSJOHNHUXLEY: Precision Casino Dice](https://tcsjohnhuxley.com/product/precision-casino-dice/)
+- Karl Pearson, [“On the criterion that a given system of deviations from the probable in the case of a correlated system of variables is such that it can be reasonably supposed to have arisen from random sampling”](https://doi.org/10.1080/14786440009463897), *Philosophical Magazine* 50(302), 1900, pp. 157–175.
+- Zacariah Labby, [“Weldon's Dice, Automated”](https://doi.org/10.1080/09332480.2009.10722977), *CHANCE* 22(4), 2009, pp. 6–13.
 - G. R. Iversen, W. H. Longcor, F. Mosteller, J. P. Gilbert, and C. Youtz, [“Bias and Runs in Dice Throwing and Recording: A Few Million Throws”](https://doi.org/10.1007/BF02291418), *Psychometrika* 36, 1971, pp. 1–19.
 - D. N. Loria, [“How the Dice Fall: Investigating the Final State Probabilities of Bevelled Versus Non-bevelled Dice”](https://doi.org/10.21203/rs.3.rs-2069818/v1), preprint.
+- [orangesurf: Generating 128 bits of entropy from physical dice—a source-by-source analysis](https://gist.github.com/orangesurf/14f700323cb760d275d898418f6d8eab)
 - [NIST SP 800-90B: Recommendation for the Entropy Sources Used for Random Bit Generation](https://csrc.nist.gov/pubs/sp/800/90/b/final)

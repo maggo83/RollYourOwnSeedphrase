@@ -25,11 +25,12 @@ The main conclusions are:
   matters. Face-level bias can cancel perfectly if $a=1/2$, or it can be amplified if three high-probability faces fall in the same group.
 - Base 6 retains up to $\log_2 6\approx2.585$ bits per result, whereas binary quantization deliberately retains at most one bit. Base 6 can therefore provide a larger entropy budget from fewer results, but conversion into exactly 128 or 256 bits must be specified carefully.
 - Base-4 rejection accepts faces 1–4 as two-bit symbols and discards faces 5–6. It is directly compatible with a binary BIP-39 workflow, needs 64 or 128 accepted symbols, and requires 96 or 192 physical rolls on average with ideal dice.
+- All physical imperfections are represented here only through the final-outcome probability vectors. Their physical causes and empirical size are outside this document's scope.
 - The usual range-rejection conversion is exactly unbiased for ideal dice. It is **not** automatically unbiased for real dice. No fixed deterministic conversion can turn every unknown biased distribution into a uniform seed.
 - Batch size $N$ mainly changes convenience and the number of physical throws. It gives **no worst-case entropy improvement**: all $N$ dice may have the same aligned bias. If different dice have different biases and their identities really are unobservable, uniform random ordering can improve entropy, but that improvement must not be assumed without a model or measurements.
 - A 24-word mnemonic doubles the entropy-bearing input from 128 to 256 bits. It also approximately doubles the absolute entropy loss caused by a fixed per-result bias. The checksum adds no entropy.
 
-The most important practical message is that “independent rolls” and “many dice” are not substitutes for a quantitative bound or measurement of die bias.
+The most important mathematical message is that “independent rolls” and “many dice” are not substitutes for a quantitative bound on the final-outcome probabilities.
 
 ---
 
@@ -58,7 +59,9 @@ $$
 
 For an ideal die, $p_{ji}=1/6$ for every face. Outcomes of all dice and all repeated throws are assumed statistically independent conditional on the fixed vectors $\mathbf p_j$.
 
-Security calculations conservatively assume an attacker knows the probability vectors. Merely not knowing one's own dice biases is not counted as secret entropy.
+Each vector represents the aggregate distribution of **recorded final outcomes**. This document takes those vectors as inputs and does not decompose their physical causes. Evidence about inherent die imperfections is reviewed in [Expected performance of real six-sided dice](ExpectedDicePerformace.md); effects of the rolling process are analyzed in [Rolling technique and throw dynamics](RollingTechnique.md).
+
+Security calculations conservatively assume an attacker knows the applicable final-outcome probability vectors and the generation procedure. Merely not knowing one's own dice biases is not counted as secret entropy.
 
 ### 1.3 Batch ordering model
 
@@ -141,7 +144,8 @@ $$
 the conditional probability of accepted symbol $i$ is $p_i/A$. Therefore
 
 $$
-H_{\infty,4}=-\log_2\max_{i=1,\ldots,4}\frac{p_i}{A}.
+H_{\infty,4}=-\log_2\max_{i=1,\ldots,4}\frac{p_i}{A},
+\qquad A=p_1+p_2+p_3+p_4.
 $$
 
 For ideal dice, $A=2/3$ and all four accepted symbols have probability $1/4$, giving exactly two bits per accepted result. Rejection fixes the six-to-four radix mismatch, but it does not remove physical face bias.
@@ -365,20 +369,13 @@ For 128 bits, $Q=2$ and $K=3$. For 256 bits, $Q=5$ and $K=6$.
 
 ### 5.2 Illustrative model A: one heavy face
 
-Assume every die has the same distribution
-
-$$
-\left(q,\frac{1-q}{5},\ldots,\frac{1-q}{5}\right),
-\qquad q\ge\frac16,
-$$
-
-and the heavy face belongs to one binary group. The more likely binary value then has probability
+Apply the [one-heavy-face stress model](ExpectedDicePerformace.md#33-one-heavy-face-model-intuitive-stress-test) with heavy-face probability $q$, assuming the heavy face belongs to one binary group. The more likely binary value then has probability
 
 $$
 a=0.4+0.6q.
 $$
 
-Because all dice are identical and their biases are aligned, random permutation and batch size provide no entropy gain. This is a simple stress model, not a claim about the empirical distribution of manufactured dice. For fixed maximum face probability $q$, equal sharing among the other faces actually makes Shannon entropy relatively high; it is not a universal Shannon-worst distribution.
+Because all dice are identical and their biases are aligned, random permutation and batch size provide no entropy gain. For fixed maximum face probability $q$, equal sharing among the other faces makes Shannon entropy relatively high; it is not a universal Shannon-worst distribution.
 
 For base-4 rejection, the heavy face's location matters. If it is face 5 or 6, the four accepted faces are conditionally uniform and each accepted symbol has two bits of entropy. If it is one of faces 1–4, let $r=(1-q)/5$. Then
 
@@ -423,14 +420,7 @@ The base-6 thresholds concern the raw source; deterministic conversion can impos
 
 ### 5.3 Illustrative model B: bounded multiplicative bias
 
-Assume, for every die and every face,
-
-$$
-\frac{1-\varepsilon}{6}\le p_i\le\frac{1+\varepsilon}{6},
-\qquad 0\le\varepsilon\le1.
-$$
-
-This is a useful auditable guarantee if testing or a manufacturing specification can justify $\varepsilon$.
+Apply the [bounded multiplicative model](ExpectedDicePerformace.md#31-bounded-multiplicative-bias-best-for-security-guarantees), with $0\le\varepsilon\le1$, to the conversion formulas.
 
 The worst per-result min-entropies are
 
@@ -523,19 +513,7 @@ Base 6 tolerates a larger $\varepsilon$ in this raw-budget comparison because 50
 
 ### 5.4 Illustrative model C: random dice from a Dirichlet distribution
 
-For an ensemble model, let each physical die independently have
-
-$$
-\mathbf p_j\sim\operatorname{Dirichlet}(\alpha,\alpha,\alpha,\alpha,\alpha,\alpha).
-$$
-
-Larger $\alpha$ concentrates dice more tightly around $1/6$. The standard deviation of each face probability is
-
-$$
-\sigma_p=\sqrt{\frac{5}{36(6\alpha+1)}}.
-$$
-
-This is a model of possible dice, not a security guarantee. The attacker is still assumed to know each realized $\mathbf p_j$; uncertainty about which probability vector was manufactured is not added as secret entropy.
+Apply the [symmetric Dirichlet ensemble](ExpectedDicePerformace.md#32-symmetric-dirichlet-model-useful-for-populations-not-guarantees). The attacker is assumed to know each realized $\mathbf p_j$; uncertainty about which vector was drawn is not added as secret entropy.
 
 The expected conditional Shannon entropies have closed forms involving the digamma function $\psi$:
 
@@ -572,7 +550,21 @@ Expected min-entropies below were estimated with 300,000 deterministic-seed Mont
 
 For a 24-word target, double the six total-entropy columns. Because this is an average over an ensemble, an individual die set can be better or worse. The table should not be read as a lower bound. Base-4 totals concern accepted symbols; rejected faces affect the number of physical rolls, not the conditional entropy totals shown here.
 
-### 5.5 Comparison of all four factors
+### 5.5 Worked aggregate final-outcome vector
+
+As a concrete conversion example, apply the formulas to [Labby's aggregate final-outcome vector](ExpectedDicePerformace.md#23-labbys-automated-per-face-replication). Its values, provenance, and limitations are maintained there.
+
+| Quantity | Value |
+| --- | ---: |
+| Raw base-6 min-entropy for 50 results | 128.33 bits |
+| Binary group probability $P(1\text{--}3)$ | 0.4999 |
+| Binary min-entropy for 128 results | 127.96 bits |
+| Base-4 acceptance probability $P(1\text{--}4)$ | 0.6657 |
+| Base-4 min-entropy for 64 accepted symbols | 126.80 bits |
+
+These totals treat the supplied vector as a common independent distribution. They illustrate how the same aggregate face bias propagates differently through each conversion; they are not confidence bounds for an individual die.
+
+### 5.6 Comparison of all four factors
 
 | Factor | Effect on Shannon entropy | Effect on min-entropy | Security interpretation |
 | --- | --- | --- | --- |
@@ -585,7 +577,7 @@ For a 24-word target, double the six total-entropy columns. Because this is an a
 
 ---
 
-## 6. Interpretation and recommendations
+## 6. Interpretation of conversion schemes
 
 ### 6.1 Which entropy measure should drive a security statement?
 
@@ -621,15 +613,9 @@ Not in the worst case. If all dice share the same distribution, $N=1$, 5, 6, 10,
 
 If individual biases differ, invisible random ordering may increase entropy. The guaranteed gain from this fact alone is still zero because the biases could all align. It is prudent to use the labeled-dice lower benchmark unless the heterogeneity model and identity-hiding procedure have been justified.
 
-### 6.6 What would support a defensible real-dice number?
+### 6.6 Where do defensible probability inputs come from?
 
-At least one of the following is needed:
-
-1. **A worst-case bound**, such as the multiplicative $\varepsilon$ model, supported by a credible test or specification.
-2. **Measured per-die probabilities**, with uncertainty intervals and enough samples to make the bound meaningful. Estimating tiny bias accurately can require many test rolls; test rolls must be separate from secret-generation rolls.
-3. **A proven extraction protocol** whose assumptions match the physical process. “Convert base 6 to binary” or “hash the result” alone is not such a proof.
-
-Any empirical analysis should account for sampling uncertainty, changing surfaces and throwing technique, dependence, and possible die identification. Independence was assumed here; if rolls are correlated, the additive formulas overstate entropy.
+This document does not establish a numerical probability bound for physical dice. The empirical evidence, candidate imperfection models, and confidence-bound methodology are owned by [Expected performance of real six-sided dice](ExpectedDicePerformace.md). The requirement that a tested procedure match the generation procedure is owned by [Rolling technique and throw dynamics](RollingTechnique.md). Once a final-outcome vector or bound is supplied, the formulas above determine the consequences for each conversion scheme.
 
 ---
 
@@ -637,7 +623,7 @@ Any empirical analysis should account for sampling uncertainty, changing surface
 
 For a concrete set of dice, the calculation is:
 
-1. Estimate or bound each $p_{ji}$.
+1. Supply or assume each aggregate final-outcome vector $\mathbf p_j$.
 2. For base 6, calculate
    $$H_j=-\sum_ip_{ji}\log_2p_{ji},\qquad
    h_j=-\log_2\max_ip_{ji}.$$
@@ -657,7 +643,7 @@ For a concrete set of dice, the calculation is:
 ## 8. Limits of this analysis
 
 - Real dice probabilities were not measured here. All nonideal numerical results depend on explicitly labeled illustrative models.
-- Independence is assumed. Correlation, controlled throws, surfaces, cups, and handling can change the result.
+- Independence and valid aggregate final-outcome probability bounds are assumed. Correlation or model mismatch can change the result.
 - The simple range-rejection method restarts whole blocks. More efficient conversion methods may consume fewer expected rolls.
 - The analysis concerns randomness in the BIP-39 entropy input, not physical backup security, passphrase strength, side channels, malware, or hardware-wallet correctness.
 - The Dirichlet min-entropy values are simulation estimates and not guarantees.

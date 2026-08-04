@@ -1,7 +1,11 @@
-1. Get some (6-sided) dice, preferably casino rated. The more you have the quicker it will go
-2. Print one page of BitsToWords.pdf (which one depends on if you want 12 or 24 words. 
-   12 is sufficient if you use casino dice. For non casino dice it depends on the quality of hte dice.
-   if unsure rather go wiht 24 words)
+1. Get one or more six-sided dice, preferably but not mandatory casino rated, plus a clean shoe box
+   with a well-fitting lid or an opaque food-storage box of similar size. Don't use more dice than
+   can move freely in the chosen container. A large dice cup and hard rolling tray can be used as an
+   alternative.
+   
+2. Print one page of BitsToWords.pdf (which one depends on whether you want 12 or 24 words. Twelve
+   words are sufficient with well-characterized dice and a proper rolling technique. For
+   uncharacterized non-casino dice, use 24 words for additional margin.)
    (Fill the Identifier with a name so you later know which seed this is)
    Each numbered bigger rectangle will represent be a word.
    The word will be noted in the lower wider rectangle.
@@ -9,8 +13,9 @@
    We will first fill the bits using the dice and then derive the words from the bits.
 3. Print BIP39_Wordlist_Binary_Decimal_Searchable.pdf
    This will help us derive the words from the bits.
-   Important: Do print this out. Do NOT search in this file on your desktop for the bits you have rolled. Even partially. 
-4. Get into a room w/o cameras or phones nearby
+   Important: Do print this out. Do NOT search in this file on your desktop for the bits you have
+   rolled. Not even partially.
+4. Use a private room without cameras, phones, smart glasses, observers, or other recording devices.
 
 5. Choose one of these two bit encodings before rolling:
 
@@ -22,32 +27,61 @@
       If the die is 5 or 6: ignore it completely
 
       You need exactly 64 accepted dice for 12 words or 128 accepted dice for 24 words.
-      With ideal dice, this takes 96 respectively 192 physical dice results on average. The actual number varies.
+      With ideal dice, this takes 96 respectively 192 physical dice results on average. The actual
+      number varies.
 
    B. Binary quantization (no rejected results; fixed number of rolls):
+      ONLY use Binary quantization if you either
+            -have casino graded dice OR
+            -chose 24 words
+
       If the die is 1, 2 or 3: enter "0" into the next free bit rectangle
       If the die is 4, 5 or 6: enter "1" into the next free bit rectangle
 
       You need exactly 128 dice results for 12 words or 256 for 24 words.
 
-6. Roll all dice and bring them into a line.
-   Important: do not look at their values while arranging them.
-   Read every die from left to right and apply the encoding selected in step 5.
+6. Depending on your setup:
 
-   Repeat until you have filled all bit rectangles except the ones behind the last bold "|" of the last word.
+   A. Big box with a lid:
+      For every batch, put all dice into the box and close the lid. Shake it vigorously for at least
+      ten hard shakes. Each shake should make the dice travel and collide audibly inside; if they
+      are crowded and cannot move freely, use fewer dice or a larger box. Put the box down and
+      gently tip it so the settled dice slide toward one edge. Then open the lid and read them from
+      left to right; if some form a second row, read front to back. Do not move the dice into a line
+      by hand. The tipping step only creates the reading order and does not replace the vigorous
+      shaking.
+
+      If any die is cocked or cannot be read unambiguously, discard the entire batch regardless of
+      the visible values and shake the complete batch again.
+
+   B. Cup and tray:
+      Shake vigorously, cast with enough room and energy for several impacts, and read the dice
+      where they stop using a spatial rule chosen before the first roll.
+
+      Read every die using the fixed rule and apply the encoding selected in step 5. With base-4,
+      faces 5 and 6 consume no bit rectangles;
+
+   Repeat until you have filled all bit rectangles except the ones behind the last bold "|" of the
+   last word.
    For the 12-word sheet this means all but the last 4; for the 24-word sheet, all but the last 8.
-   In the final batch, use results in the predetermined order only until the sheet is full and ignore all later dice.
+   In the final batch, use results in the predetermined order only until this boudnary and ignore
+   all later dice.
    Never choose which results to retain based on their values.
 
-7. For each word, look for the word that has the same 11 bits as you rolled in your printout of BIP39_Wordlist_Binary_Decimal_Searchable.pdf
+7. For each word, look for the word that has the same 11 bits as you rolled in your printout of
+   BIP39_Wordlist_Binary_Decimal_Searchable.pdf
    The first three bits of the word tell you which page you need to look into.
    The next three bits of the word tell you which column of that page you need to look into.
    The last five bits of the word tell you which row of that page you need to look into.
+
 8. For the last word there are still some bits missing (4 bits for 12 words, 8 bits for 24 words).
    To find them you will need the help of a hardware wallet.
-   (because they are checksum, i.e. they are fully determined by the other bits. The computation is quite complex)
-   The existing bits you have rolled limit the options to 16 (i.e. half a column for 12 words) / 256 (one page for 24 words) words.
+   (Because they are checksum, i.e. they are fully determined by the other bits. The computation is
+   quite complex, but does not affect your entropy/randomness).
+   The existing bits you have rolled limit the options to 16 (i.e. half a column for 12 words) / 256
+   (one page for 24 words) words.
    You probably do not want to try all of these manually.
    How to do this will depend on your concrete HW wallet.
-   Usually you enter the first eleven words as you normally would when entering an existing seedphrase and then the hw wallet will propose possible last words that lead to a valid checksum.
+   Usually you enter the first eleven words as you normally would when entering an existing
+   seedphrase and then the hw wallet will propose possible last words that lead to a valid checksum.
    Choose one of those that is in the list of options you determined.

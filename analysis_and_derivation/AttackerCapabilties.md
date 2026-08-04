@@ -3,7 +3,7 @@
 Document navigation:
 
 - [Overview](../README.md)
-- Previous: [Expected performance of real six-sided dice](ExpectedDicePerformace.md)
+- Previous: [Rolling technique and throw dynamics](RollingTechnique.md)
 - Next: [Practical implications](PracticalImplications.md)
 
 ---
@@ -21,7 +21,7 @@ The relevant security quantity is **min-entropy**. As a practical scale:
 - 112 bits is an established conservative security strength;
 - 128 bits is the appropriate target and matches Bitcoin's approximate classical elliptic-curve security level.
 
-A 12-word dice sequence satisfying the bounded model with $\varepsilon\le0.05$ has at least approximately 119 bits of min-entropy with binary quantization or 121 bits with base-4 rejection. Both remain beyond plausible classical brute force; operational compromise becomes the dominant threat.
+A 12-word dice sequence whose final outcomes satisfy the bounded model with $\varepsilon\le0.05$ has at least approximately 119 bits of min-entropy with binary quantization or 121 bits with base-4 rejection. The bound must describe the actual dice-and-rolling process. Under that assumption, both remain beyond plausible classical brute force; operational compromise becomes the dominant threat.
 
 ---
 
@@ -33,6 +33,8 @@ This document analyzes an offline attacker who:
 - knows the generation procedure and source distribution;
 - guesses candidates in optimal probability order;
 - cannot observe or steal the original secret directly.
+
+The attacker is nevertheless assumed to know the generation method and its final-outcome probability model. Direct observation of the private generation process is outside this offline brute-force model because it can reveal the results themselves; it is listed below as an operational compromise.
 
 This is intentionally favorable to the attacker. It does not model vulnerabilities in wallet software, hardware, backups, passphrases, or user behavior.
 
@@ -197,31 +199,14 @@ There is no public evidence in that advisory that Lazarus Group can brute-force 
 
 ## 7. Applying the dice-bias model
 
-For 128 binary-quantized dice results under the bounded multiplicative model,
+The formulas and complete $\varepsilon$-to-entropy tables are maintained in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#53-illustrative-model-b-bounded-multiplicative-bias). This document consumes those entropy totals rather than deriving them again.
 
-$$
-H_\infty\ge128\left[1-\log_2(1+\varepsilon)\right].
-$$
+For threat interpretation, two representative outputs are sufficient:
 
-For 64 accepted base-4 symbols under the same model,
+- at $\varepsilon\le0.05$, the canonical analysis gives approximately 119 bits for binary quantization and 121 bits for base-4 rejection, both far beyond plausible classical exhaustive search;
+- at $\varepsilon=0.10$, binary falls slightly below the 112-bit benchmark while base 4 remains above it, making the distinction relevant to conservative long-term policy.
 
-$$
-H_\infty\ge
-64\log_2\frac{4-2\varepsilon}{1+\varepsilon}.
-$$
-
-| $\varepsilon$ | Binary min-entropy | Base-4 min-entropy | Assessment |
-| ---: | ---: | ---: | --- |
-| 0 | 128.00 bits | 128.00 bits | Full target |
-| 0.01 | 126.16 bits | 126.62 bits | Effectively full strength |
-| 0.02 | 124.34 bits | 125.24 bits | Effectively full strength |
-| 0.05 | 118.99 bits | 121.16 bits | Beyond plausible classical brute force |
-| 0.10 | 110.40 bits | 114.46 bits | Base 4 remains above the 112-bit benchmark |
-| 0.20 | 94.33 bits | 101.44 bits | Beyond realistic current brute force, reduced long-term margin |
-| 0.30 | 79.58 bits | 88.77 bits | Not a comfortable new cryptographic target |
-| 0.50 | 53.13 bits | 64.00 bits | In or near well-resourced classical-search territory |
-
-A certified $\varepsilon\le0.05$ therefore gives approximately 119 bits with binary quantization or 121 bits with base-4 rejection. Both are far beyond plausible classical search. Base-4 rejection does not eliminate die bias; the figures already account for the conditional bias among accepted faces.
+These statements require both the final-outcome bound and the independence assumption to hold. They do not establish either physical assumption.
 
 This does not eliminate operational risks such as:
 
