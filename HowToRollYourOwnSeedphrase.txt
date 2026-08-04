@@ -1,5 +1,7 @@
 1. Get some (6-sided) dice, preferably casino rated. The more you have the quicker it will go
-2. Print one page of BitsToWords.pdf (which one depends on if you want 12 or 24 words. 12 is sufficient)
+2. Print one page of BitsToWords.pdf (which one depends on if you want 12 or 24 words. 
+   12 is sufficient if you use casino dice. For non casino dice it depends on the quality of hte dice.
+   if unsure rather go wiht 24 words)
    (Fill the Identifier with a name so you later know which seed this is)
    Each numbered bigger rectangle will represent be a word.
    The word will be noted in the lower wider rectangle.
@@ -10,13 +12,32 @@
    Important: Do print this out. Do NOT search in this file on your desktop for the bits you have rolled. Even partially. 
 4. Get into a room w/o cameras or phones nearby
 
-5. Roll all dice. Bring them into a line
-   (important: do not look at them during this procedure or order them. Do this always in the same way for each consecutive roll to not screw up your entropy)
-6. From left to right for each dice:
-   If it is a 1,2 or 3: enter a "0" into the next free small rectangle (bit)
-   If it is a 4,5 or 6: enter a "1" into the next free small rectangle (bit)
-Repeat 5. & 6. until you have filled all small rectangles/bits except the ones behind the last bold "|" of the last word
-(So for the 12 seed sheet this means all but the last 4, for the 24 seed sheet this is all but the last 8)
+5. Choose one of these two bit encodings before rolling:
+
+   A. Base-4 rejection sampling (recommended compromise; fewer expected rolls):
+      If the die is 1: enter "00" into the next two free bit rectangles
+      If the die is 2: enter "01" into the next two free bit rectangles
+      If the die is 3: enter "10" into the next two free bit rectangles
+      If the die is 4: enter "11" into the next two free bit rectangles
+      If the die is 5 or 6: ignore it completely
+
+      You need exactly 64 accepted dice for 12 words or 128 accepted dice for 24 words.
+      With ideal dice, this takes 96 respectively 192 physical dice results on average. The actual number varies.
+
+   B. Binary quantization (no rejected results; fixed number of rolls):
+      If the die is 1, 2 or 3: enter "0" into the next free bit rectangle
+      If the die is 4, 5 or 6: enter "1" into the next free bit rectangle
+
+      You need exactly 128 dice results for 12 words or 256 for 24 words.
+
+6. Roll all dice and bring them into a line.
+   Important: do not look at their values while arranging them.
+   Read every die from left to right and apply the encoding selected in step 5.
+
+   Repeat until you have filled all bit rectangles except the ones behind the last bold "|" of the last word.
+   For the 12-word sheet this means all but the last 4; for the 24-word sheet, all but the last 8.
+   In the final batch, use results in the predetermined order only until the sheet is full and ignore all later dice.
+   Never choose which results to retain based on their values.
 
 7. For each word, look for the word that has the same 11 bits as you rolled in your printout of BIP39_Wordlist_Binary_Decimal_Searchable.pdf
    The first three bits of the word tell you which page you need to look into.
