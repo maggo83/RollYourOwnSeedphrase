@@ -2,7 +2,7 @@
 
 Document navigation:
 
-- [Overview](README.md)
+- [Overview](../README.md)
 - Previous: [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md)
 - Next: [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md)
 

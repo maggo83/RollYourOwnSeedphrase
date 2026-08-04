@@ -2,7 +2,7 @@
 
 Document navigation:
 
-- [Overview](README.md)
+- [Overview](../README.md)
 - Next: [Expected performance of real six-sided dice](ExpectedDicePerformace.md)
 
 ---

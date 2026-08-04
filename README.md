@@ -15,10 +15,10 @@ The analysis distinguishes between:
 
 The documents are intended to be read in this order:
 
-1. [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md) develops the statistical model and compares the entropy produced by binary, base-4, and base-6 methods under several dice-bias models.
-2. [Expected performance of real dice](ExpectedDicePerformace.md) reviews available evidence about physical dice, explains plausible bias assumptions, and discusses how difficult those assumptions are to validate experimentally.
-3. [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md) relates the resulting min-entropy values to classical brute-force capabilities and realistic cryptocurrency threat actors.
-4. [Practical implications](PracticalImplications.md) synthesizes the preceding results into method comparisons, recommendations, and detailed operational procedures.
+1. [Entropy from ideal and real dice](analysis_and_derivation/DiceRollEntropyAnalysis.md) develops the statistical model and compares the entropy produced by binary, base-4, and base-6 methods under several dice-bias models.
+2. [Expected performance of real dice](analysis_and_derivation/ExpectedDicePerformace.md) reviews available evidence about physical dice, explains plausible bias assumptions, and discusses how difficult those assumptions are to validate experimentally.
+3. [Attacker capabilities versus mnemonic entropy](analysis_and_derivation/AttackerCapabilties.md) relates the resulting min-entropy values to classical brute-force capabilities and realistic cryptocurrency threat actors.
+4. [Practical implications](analysis_and_derivation/PracticalImplications.md) synthesizes the preceding results into method comparisons, recommendations, and detailed operational procedures.
 
 ## Standalone practical guide
 

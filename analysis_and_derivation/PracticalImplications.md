@@ -2,7 +2,7 @@
 
 Document navigation:
 
-- [Overview](README.md)
+- [Overview](../README.md)
 - Previous: [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md)
 
 ---
@@ -402,8 +402,8 @@ Use this procedure when broad BIP-39 hardware-wallet compatibility and minimizin
 
 The supplied files support this workflow:
 
-- [BitsToWords.pdf](BitsToWords.pdf) or [BitsToWords.xlsx](BitsToWords.xlsx) provides spaces for the 11-bit word groups;
-- [BIP39_Wordlist_Binary_Decimal_Searchable.pdf](BIP39_Wordlist_Binary_Decimal_Searchable.pdf) or [BIP39_Wordlist_Binary_Decimal_Searchable.ods](BIP39_Wordlist_Binary_Decimal_Searchable.ods) maps each 11-bit or decimal zero-based index to its BIP-39 word.
+- [BitsToWords.pdf](../BitsToWords.pdf) or [BitsToWords.xlsx](../additional_ressources/BitsToWords.xlsx) provides spaces for the 11-bit word groups;
+- [BIP39_Wordlist_Binary_Decimal_Searchable.pdf](../BIP39_Wordlist_Binary_Decimal_Searchable.pdf) or [BIP39_Wordlist_Binary_Decimal_Searchable.ods](../additional_ressources/BIP39_Wordlist_Binary_Decimal_Searchable.ods) maps each 11-bit or decimal zero-based index to its BIP-39 word.
 
 These are recording and lookup aids, not checksum calculators. The checksum still requires a trusted offline SHA-256 implementation or a hardware-wallet feature designed to complete or validate the final word.
 
