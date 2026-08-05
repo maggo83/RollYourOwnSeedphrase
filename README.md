@@ -26,6 +26,10 @@ The documents are intended to be read in this order:
 
 [How to roll your own seed phrase](HowToRollYourOwnSeedphrase.txt) is the concise standalone result for someone who wants to generate a mnemonic using dice and the supplied printable worksheets. It describes direct bit-generation procedures and hardware-wallet-assisted checksum completion without requiring the reader to work through the full analysis first.
 
+### Visual guide
+
+The interactive version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Read it before generating a real seed phrase, or use it for a dry run first.
+
 Supporting printable material:
 
 - [Bit-to-word worksheets](BitsToWords.pdf) for recording 12- or 24-word entropy bits;
