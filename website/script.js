@@ -46,7 +46,7 @@
   function isStepChecklistComplete(step) {
     const panel = document.querySelector(`[data-step-panel="${step}"]`);
     const checks = [...panel.querySelectorAll('input[type="checkbox"]')];
-    return checks.every(check => check.checked);
+    return checks.every(check => check.disabled || check.checked);
   }
 
   function resetCheckpointsFrom(step) {
@@ -116,6 +116,14 @@
     document.querySelectorAll('[data-container-visual]').forEach(panel => {
       panel.hidden = panel.dataset.containerVisual !== selectedContainer;
     });
+    document.querySelectorAll('[data-container-check]').forEach(label => {
+      const isActive = label.dataset.containerCheck === selectedContainer;
+      const check = label.querySelector('input[type="checkbox"]');
+      label.hidden = !isActive;
+      check.disabled = !isActive;
+      if (!isActive) check.checked = false;
+    });
+    document.querySelector('.compact-checklist').classList.toggle('has-box-clearance', selectedContainer === 'box');
 
     const isBase4 = selectedEncoding === 'base4';
     document.querySelectorAll('[data-bits-per-result]').forEach(el => el.textContent = isBase4 ? 2 : 1);
@@ -198,6 +206,7 @@
     button.addEventListener('click', () => {
       if (selectedContainer !== button.dataset.container) {
         resetCheckpoint('rolling-setup');
+        resetCheckpoint('box-clearance');
         resetCheckpointsAfter(1);
       }
       selectedContainer = button.dataset.container;
