@@ -24,7 +24,7 @@ The documents are intended to be read in this order:
 
 ## Standalone practical guide
 
-[How to roll your own seed phrase](HowToRollYourOwnSeedphrase.txt) is the concise standalone result for someone who wants to generate a mnemonic using dice and the supplied printable worksheets. It describes direct bit-generation procedures and hardware-wallet-assisted checksum completion without requiring the reader to work through the full analysis first.
+[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets. The original [plain-text version](HowToRollYourOwnSeedphrase.txt) remains available for simple offline reading.
 
 ### Visual guide
 

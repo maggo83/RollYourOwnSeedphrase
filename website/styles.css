@@ -37,6 +37,7 @@ h2 { max-width: 710px; margin: 0; font-size: clamp(2.25rem, 4vw, 3.75rem); lette
 h3 { margin: 0 0 .65rem; font-size: 1.35rem; }
 .hero-text { max-width: 610px; color: var(--muted); font-size: 1.12rem; margin: 1.4rem 0 1.8rem; }
 .hero-safety-note { max-width: 610px; padding: .9rem 1rem; margin: -.5rem 0 1.8rem; color: #436055; background: #fff6db; border-radius: 9px; font-size: .92rem; }
+.hero-print-note { max-width: 610px; margin: -1rem 0 1.8rem; color: var(--muted); font-size: .92rem; }
 .hero-actions, .step-controls { display: flex; gap: .8rem; flex-wrap: wrap; }
 .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .67rem 1.1rem; border: 1px solid transparent; border-radius: 10px; font-weight: 700; text-decoration: none; cursor: pointer; transition: transform .18s ease, background .18s ease; }
 .button:hover { transform: translateY(-2px); }

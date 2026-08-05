@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -R website _site/website
-          cp HowToRollYourOwnSeedphrase.txt BitsToWords.pdf BIP39_Wordlist_Binary_Decimal_Searchable.pdf _site/
+          cp HowToRollYourOwnSeedphrase.html HowToRollYourOwnSeedphrase.pdf HowToRollYourOwnSeedphrase.txt BitsToWords.pdf BIP39_Wordlist_Binary_Decimal_Searchable.pdf _site/
           cat > _site/index.html <<'EOF'
           <!doctype html>
           <html lang="en">
