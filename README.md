@@ -1,5 +1,16 @@
 # Roll your own BIP-39 seed phrase with dice
 
+Roll Your Own Seedphrase aims at providing a simple guide on how to obtain your own bitcoin seedphrase from dice
+- in a simple-as-possible way
+- with clear emphasis on what is needed to stay secure (i.e. generate sufficient entropy)
+- with tools most people have readily available (hence 6-sided dice, possibly non-casino-grade)
+- with as little dependence on third parties as possible (hence e.g. no reliance on hw wallets converting dice rolls to bits/seed words)
+- while still being grounded / backed by actual research to ensure it is secure enough
+
+# Derivation from analysis
+
+If you only want to generate your seed and care only about the "how" and not so much about the "why", you can skip this chapter and go directly to the next.
+
 This project examines how to generate a BIP-39 mnemonic from six-sided dice, including the effects of imperfect dice, rolling technique and throw dynamics, different methods for converting rolls into bits, practical attacker capabilities, and the operational tradeoffs of each procedure.
 
 The analysis distinguishes between:
@@ -22,19 +33,19 @@ The documents are intended to be read in this order:
 4. [Attacker capabilities versus mnemonic entropy](analysis_and_derivation/AttackerCapabilties.md) relates the resulting min-entropy values to classical brute-force capabilities and realistic cryptocurrency threat actors.
 5. [Practical implications](analysis_and_derivation/PracticalImplications.md) synthesizes the preceding results into method comparisons, recommendations, and detailed operational procedures.
 
-## Standalone practical guide
+# Standalone practical guide
 
-[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets. The original [plain-text version](HowToRollYourOwnSeedphrase.txt) remains available for simple offline reading.
-
-### Visual guide
-
-The interactive version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Read it before generating a real seed phrase, or use it for a dry run first.
+[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets. The original [plain-text version](HowToRollYourOwnSeedphrase.txt) remains available for simple offline reading, but is not mandatory to read.
 
 Supporting printable material:
 
 - [Bit-to-word worksheets](BitsToWords.pdf) for recording 12- or 24-word entropy bits;
 - [Searchable BIP-39 binary and decimal word list](BIP39_Wordlist_Binary_Decimal_Searchable.pdf) for converting each 11-bit index into its BIP-39 word.
 
-## Important qualification
+## Visual guide
+
+The interactive version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Read it before generating a real seed phrase, or use it for a dry run first.
+
+# Important qualification
 
 The numerical guarantees depend on explicit assumptions about the dice, the way they are rolled, and independence between results. Product labels alone do not prove those assumptions. Regardless of the mathematical method, observation, malware, compromised hardware, transcription mistakes, and insecure backups can be more realistic threats than brute force.
