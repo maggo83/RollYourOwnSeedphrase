@@ -43,7 +43,7 @@ Removable media is itself an input into the offline machine. Use simple data-onl
 
 ## 3. Authenticate the release key on the offline machine
 
-On another device, such as a smartphone, find the complete release-key fingerprint published on [@MarcoKruse6 on X](https://x.com/MarcoKruse6), then record it on paper. The expected fingerprint is:
+On another device, such as a smartphone, display the complete release-key fingerprint published on [@MarcoKruse6 on X](https://x.com/MarcoKruse6). The expected fingerprint is:
 
 ```text
 F621 C843 74E5 2EF6 F0F9  B6FA A310 A531 2D2E E2C5
@@ -57,7 +57,7 @@ On the offline machine, inspect the fingerprint of the downloaded key:
 gpg --show-keys --fingerprint release-key.asc
 ```
 
-Compare it character for character with the paper copy. Stop if any character differs.
+Compare the complete fingerprint shown on the offline machine character for character with the independently published fingerprint on the other device. Stop if any character differs.
 
 Import the key only after this comparison:
 

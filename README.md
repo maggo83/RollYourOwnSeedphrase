@@ -47,11 +47,10 @@ Supporting printable material:
 
 ### Offline edition
 
-An English-only, self-contained edition of the visual guide converts entered dice results into bits and BIP39 words, including the deterministic final-word checksum, on a permanently offline machine. It has automated verification, but it is **not independently reviewed, signed, or released yet**. THIS IS ONLY INTENDED FOR KNOWLEDGEABLE USERS WHO CAN SETUP AND MAINTAIN A PERMANENTLY OFFLINE MACHINE. IF YOU DO NOT KNOW HOW TO DO THAT, DO NOT USE THE OFFLINE EDITION. YOU WILL LOSE ALL YOUR BITCOIN.
+The English-only, self-contained offline edition converts entered dice results into bits and BIP39 words, including the deterministic final-word checksum. It is intended exclusively for a dedicated, permanently offline machine that has never connected and will never connect to the internet or another untrusted network.
+IF YOU DO NOT KNOW WHAT THIS MEANS, DO NOT USE THE OFFLINE EDITION. The offline edition is a convenience tool for experts. It is not intended for the average user or use on a connected development machine or any other computer that has ever been online. IF YOU USE IT WRONGLY ALL YOUR BITCOIN MAY BE LOST.
 
-Before any future release is used, follow the complete [offline-edition acquisition, GPG verification, transfer, and startup instructions](offline-package/README.md). The offline edition is intended only for a dedicated machine that has never been connected and will never be connected to the internet or another untrusted network; otherwise, funds may be at risk.
-
-For development and review with **dummy data only**, run `python3 build-guides.py offline` from the repository root, then open `dist/offline/index.html` directly in a browser. No web server is required. Do not use this locally generated, unsigned build with real seed material.
+The implementation has automated verification but has not received independent security review. Use it at your own risk under the project's [Grug 2-Clause License](LICENSE). See the [offline-edition README](offline-package/README.md) for its scope and the complete acquisition, GPG verification, transfer, and startup instructions.
 
 ## Source and builds
 
