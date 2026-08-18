@@ -4,7 +4,7 @@
     24: { base4: 128, average: 192, binary: 256, checksum: 8 }
   };
 
-  let currentStep = 1;
+  let currentStep;
   let selectedLength = 12;
   let selectedEncoding = 'base4';
   let selectedDice = 'casino';
@@ -16,8 +16,20 @@
   const progressStep = document.querySelector('[data-current-step]');
   const progressBar = document.querySelector('.progress-track span');
   const forwardNote = document.querySelector('[data-forward-note]');
-  const titles = ['Prepare privately', 'Make your choices', 'Roll in batches', 'Record on paper', 'Complete safely', 'Your seed phrase is ready'];
+  const titles = {
+    0: 'Permanent air gap required',
+    1: 'Prepare privately',
+    2: 'Make your choices',
+    3: 'Roll in batches',
+    4: 'Record on paper',
+    5: 'Complete safely',
+    6: 'Your seed phrase is ready'
+  };
+  const stepNumbers = stepPanels.map(panel => Number(panel.dataset.stepPanel));
+  const firstStep = stepNumbers[0];
+  const lastStep = stepNumbers[stepNumbers.length - 1];
   const totalSteps = stepPanels.length;
+  currentStep = firstStep;
 
   function bitCells(values, extraClass = '') {
     return `<div class="bit-cells ${extraClass}">${values.map((value, index) => `<i class="${typeof value === 'object' ? value.className : ''}">${typeof value === 'object' ? value.value : value}</i>`).join('')}</div>`;
@@ -28,19 +40,18 @@
   }
 
   function setupRollingEntryVisuals() {
-    const cup = document.querySelector('.cup-method');
-    cup.innerHTML = '<b class="visual-step-number">1</b><div class="cup-shake"><span class="cup-hand" aria-hidden="true"><span class="hand-finger finger-two"></span><span class="hand-finger finger-three"></span><span class="hand-finger finger-four"></span></span><div class="cup-icon"><span>⚄</span><span>⚂</span><span>⚀</span></div></div><b class="visual-step-number read-number">2</b><div class="tray-dice"><span>⚄</span><span>⚂</span><span>⚀</span></div><p>Shake, then cast onto a hard tray or mat.<br>Read in your fixed spatial order.</p>';
-    const entryTarget = document.querySelector('.boundary-shot');
-    const finalTarget = document.querySelector('.stop-condition-shot');
+    const entryContent = document.querySelector('[data-entry-content]');
+    const finalContent = document.querySelector('[data-final-content]');
+    if (!entryContent || !finalContent) return; // absent in offline combined step
     const filled = ['1', '0', '1', '0', '1'];
     const blanks = count => Array.from({ length: count }, () => '');
     const entryBase4 = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, { value: '0', className: 'new-bit' }, ...blanks(4)], 'entry-base4');
     const entryBinary = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, ...blanks(5)], 'entry-binary');
-    entryTarget.outerHTML = `<div class="bit-entry-shot"><b class="visual-step-number">4</b><div data-base4-entry>${entryBase4}</div><div data-binary-entry hidden>${entryBinary}</div></div>`;
+    entryContent.innerHTML = `<div class="bit-entry-shot"><div data-base4-entry>${entryBase4}</div><div data-binary-entry hidden>${entryBinary}</div></div>`;
 
     const final12 = wordBox(12, ['1', '0', '1', '0', ...Array.from({ length: 7 }, () => ({ value: '', className: 'locked-bit' }))], 'final-boundary-12');
     const final24 = wordBox(24, ['1', '0', '1', ...Array.from({ length: 8 }, () => ({ value: '', className: 'locked-bit' }))], 'final-boundary-24');
-    finalTarget.outerHTML = `<div class="final-boundary-shot"><b class="visual-step-number">5</b><div data-final-boundary-12>${final12}</div><div data-final-boundary-24 hidden>${final24}</div></div>`;
+    finalContent.innerHTML = `<div class="final-boundary-shot"><div data-final-boundary-12>${final12}</div><div data-final-boundary-24 hidden>${final24}</div></div>`;
   }
 
   function isStepChecklistComplete(step) {
@@ -81,7 +92,7 @@
       forwardNote.textContent = 'Tick every checklist item above to continue.';
       forwardNote.classList.remove('is-hidden');
     } else {
-      next.textContent = currentStep === totalSteps ? 'Start again ↺' : 'Continue →';
+      next.textContent = stepNumbers.indexOf(currentStep) === stepNumbers.length - 1 ? 'Start again ↺' : 'Continue →';
       forwardNote.textContent = '';
       forwardNote.classList.add('is-hidden');
     }
@@ -89,6 +100,8 @@
 
   function updateSelections() {
     const values = lengths[selectedLength];
+    document.body.dataset.phraseLength = String(selectedLength);
+    document.body.dataset.encoding = selectedEncoding;
     document.querySelectorAll('[data-base4-count]').forEach(el => el.textContent = values.base4);
     document.querySelectorAll('[data-base4-average]').forEach(el => el.textContent = values.average);
     document.querySelectorAll('[data-binary-count]').forEach(el => el.textContent = values.binary);
@@ -98,13 +111,18 @@
     document.querySelectorAll('[data-prior-word-count]').forEach(el => el.textContent = selectedLength - 1);
     document.querySelectorAll('[data-found-words]').forEach(el => el.textContent = selectedLength - 1);
     document.querySelectorAll('[data-final-options]').forEach(el => el.textContent = selectedLength === 12 ? 16 : 256);
-    document.querySelector('[data-checksum-caption]').textContent = `${values.checksum} checksum bits`;
+    const checksumCaption = document.querySelector('[data-checksum-caption]');
+    if (checksumCaption) checksumCaption.textContent = `${values.checksum} checksum bits`;
     document.querySelectorAll('[data-final-range-12]').forEach(el => { el.hidden = selectedLength !== 12; });
     document.querySelectorAll('[data-final-range-24]').forEach(el => { el.hidden = selectedLength !== 24; });
     document.querySelectorAll('[data-final-range-instructions-12]').forEach(el => { el.hidden = selectedLength !== 12; });
     document.querySelectorAll('[data-final-range-instructions-24]').forEach(el => { el.hidden = selectedLength !== 24; });
-    document.querySelector('[data-final-boundary-12]').hidden = selectedLength !== 12;
-    document.querySelector('[data-final-boundary-24]').hidden = selectedLength !== 24;
+    const fb12 = document.querySelector('[data-final-boundary-12]');
+    const fb24 = document.querySelector('[data-final-boundary-24]');
+    if (fb12) fb12.hidden = selectedLength !== 12;
+    if (fb24) fb24.hidden = selectedLength !== 24;
+    document.querySelectorAll('[data-worksheet-12]').forEach(el => { el.hidden = selectedLength !== 12; });
+    document.querySelectorAll('[data-worksheet-24]').forEach(el => { el.hidden = selectedLength !== 24; });
 
     const unsafeBinary = selectedDice === 'consumer' && selectedLength === 12 && selectedEncoding === 'binary';
     document.querySelector('[data-binary-warning]').hidden = !unsafeBinary;
@@ -129,44 +147,63 @@
     document.querySelectorAll('[data-bits-per-result]').forEach(el => el.textContent = isBase4 ? 2 : 1);
     document.querySelectorAll('[data-bit-word]').forEach(el => el.textContent = isBase4 ? 'bits' : 'bit');
     document.querySelectorAll('[data-bit-boxes]').forEach(el => el.textContent = isBase4 ? 'the next free boxes' : 'the next free box');
-    document.querySelector('[data-base4-visual]').hidden = !isBase4;
-    document.querySelector('[data-binary-visual]').hidden = isBase4;
-    document.querySelector('[data-base4-example]').hidden = !isBase4;
-    document.querySelector('[data-binary-example]').hidden = isBase4;
-    document.querySelector('[data-base4-entry]').hidden = !isBase4;
-    document.querySelector('[data-binary-entry]').hidden = isBase4;
-    document.querySelector('[data-encoding-caption]').textContent = isBase4
+    const b4v = document.querySelector('[data-base4-visual]');
+    const bnv = document.querySelector('[data-binary-visual]');
+    const b4ex = document.querySelector('[data-base4-example]');
+    const bnex = document.querySelector('[data-binary-example]');
+    const b4ent = document.querySelector('[data-base4-entry]');
+    const bnent = document.querySelector('[data-binary-entry]');
+    const encCap = document.querySelector('[data-encoding-caption]');
+    if (b4v) b4v.hidden = !isBase4;
+    if (bnv) bnv.hidden = isBase4;
+    if (b4ex) b4ex.hidden = !isBase4;
+    if (bnex) bnex.hidden = isBase4;
+    if (b4ent) b4ent.hidden = !isBase4;
+    if (bnent) bnent.hidden = isBase4;
+    if (encCap) encCap.textContent = isBase4
       ? 'Base-4: 1–4 become bits; 5–6 are skipped.'
       : 'Binary: 1–3 become 0; 4–6 become 1.';
+    document.dispatchEvent(new CustomEvent('guide:selectionchange', { detail: { length: selectedLength } }));
     updateForwardState();
   }
 
   function selectStep(step) {
+    const stepIndex = stepNumbers.indexOf(step);
+    if (stepIndex === -1) return;
+    const previousStep = currentStep;
     currentStep = step;
     stepPanels.forEach(panel => panel.classList.toggle('is-active', Number(panel.dataset.stepPanel) === step));
-    previous.disabled = step === 1;
+    previous.disabled = step === firstStep;
     progressStep.textContent = step;
-    progressTitle.textContent = titles[step - 1];
-    progressBar.style.width = `${(step / totalSteps) * 100}%`;
+    progressTitle.textContent = stepPanels[stepIndex].dataset.stepTitle || titles[step];
+    if (!document.body.classList.contains('offline-edition')) {
+      progressBar.style.width = `${((stepIndex + 1) / totalSteps) * 100}%`;
+    }
+    document.body.dataset.stepIndex = String(stepIndex); // CSS fallback for offline progress bar
     updateSelections();
     updateForwardState();
+    document.dispatchEvent(new CustomEvent('guide:stepchange', { detail: { previousStep, step } }));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   document.querySelector('.start-guide').addEventListener('click', () => {
     document.body.classList.add('wizard-active');
-    selectStep(1);
+    selectStep(firstStep);
   });
-  previous.addEventListener('click', () => selectStep(Math.max(1, currentStep - 1)));
+  previous.addEventListener('click', () => {
+    const stepIndex = stepNumbers.indexOf(currentStep);
+    selectStep(stepNumbers[Math.max(0, stepIndex - 1)]);
+  });
   next.addEventListener('click', () => {
     updateForwardState();
     if (next.disabled) return;
-    if (currentStep === totalSteps) {
-      resetCheckpointsFrom(1);
-      selectStep(1);
+    if (currentStep === lastStep) {
+      resetCheckpointsFrom(firstStep);
+      selectStep(firstStep);
       return;
     }
-    selectStep(currentStep + 1);
+    const stepIndex = stepNumbers.indexOf(currentStep);
+    selectStep(stepNumbers[stepIndex + 1]);
   });
 
   document.querySelectorAll('.toggle').forEach(toggle => {
@@ -240,4 +277,5 @@
   });
   setupRollingEntryVisuals();
   updateSelections();
+  if (document.body.classList.contains('offline-edition')) selectStep(firstStep);
 })();

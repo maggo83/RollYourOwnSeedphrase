@@ -1,0 +1,83 @@
+        <article class="guide-step" data-step-panel="2">
+          <div class="step-copy"><p class="step-number">Step 2 · decide</p><h2>Choose your phrase length and encoding.</h2><p>Make both choices now, before any rolling. Your selection controls every instruction that follows.</p>
+            <h3 class="choice-heading">Phrase length</h3><div class="toggle-group" role="group" aria-label="Phrase length"><button class="toggle is-selected" type="button" data-length="12" aria-pressed="true">12 words <small>128 random bits</small></button><button class="toggle" type="button" data-length="24" aria-pressed="false">24 words <small>256 random bits</small></button></div><p class="quiet"><strong>Before rolling:</strong> select the matching Bit-to-word worksheet and fill its Identifier field with a name (non-secret) so you can recognize this seed backup later.</p>
+            <h3 class="choice-heading">Dice-to-bit method</h3><div class="encoding-tabs" role="tablist" aria-label="Encoding methods"><button class="encoding-tab is-selected" type="button" data-encoding="base4" role="tab" aria-selected="true">Recommended: base-4</button><button class="encoding-tab" type="button" data-encoding="binary" role="tab" aria-selected="false">Alternative: binary</button></div>
+            <div class="encoding-explanation is-visible" data-encoding-panel="base4"><p><strong>Base-4 rejection sampling</strong> gives two bits from each accepted roll. Faces 5 and 6 are ignored.</p><p class="quiet">You will collect <strong data-base4-count>64</strong> accepted results. Expect about <strong data-base4-average>96</strong> physical rolls on average.</p></div><div class="encoding-explanation" data-encoding-panel="binary"><p><strong>Binary quantization</strong> uses every result: faces 1–3 mean 0, and faces 4–6 mean 1.</p><p class="quiet">You will make exactly <strong data-binary-count>128</strong> rolls. Use this only with casino-grade dice, or select 24 words for more margin.</p></div><p class="selection-warning" data-binary-warning hidden><strong>Choose another combination.</strong> Binary quantization with consumer-grade dice requires the 24-word option. Select 24 words or use base-4.</p>
+            <label class="checkpoint"><input type="checkbox"><span>I selected my phrase length and encoding.</span></label><label class="checkpoint"><input type="checkbox"><span>I filled the worksheet Identifier with a non-secret name.</span></label>
+          </div>
+          <div class="step-visual encoding-visual" aria-label="Selected die conversion visual">
+          <div class="visual-stage">
+            <b class="visual-step-number">1</b>
+            <div class="visual-stage-content">
+              <div class="die-grid" data-base4-visual>
+                <div><b>⚀</b><span>00</span></div>
+                <div><b>⚁</b><span>01</span></div>
+                <div><b>⚂</b><span>10</span></div>
+                <div><b>⚃</b><span>11</span></div>
+                <div class="rejected"><b>⚄</b><span>skip</span></div>
+                <div class="rejected"><b>⚅</b><span>skip</span></div>
+              </div>
+              <div class="die-grid binary-grid" data-binary-visual hidden>
+                <div><b>⚀</b><span>0</span></div>
+                <div><b>⚁</b><span>0</span></div>
+                <div><b>⚂</b><span>0</span></div>
+                <div><b>⚃</b><span>1</span></div>
+                <div><b>⚄</b><span>1</span></div>
+                <div><b>⚅</b><span>1</span></div>
+              </div>
+              <p class="visual-label" data-encoding-caption>Base-4: 1–4 become bits; 5–6 are skipped.</p>
+            </div>
+          </div>
+          <div class="visual-stage">
+            <b class="visual-step-number">2</b>
+            <div class="visual-stage-content">
+              <div class="worksheet-preview">
+                <div class="worksheet-field">
+                  <span class="worksheet-label">Identifier:</span>
+                  <span class="worksheet-input">My hardware wallet backup</span>
+                </div>
+                <div class="worksheet-grid" data-worksheet-24>
+                  <div class="ws-cell"><span>1</span><span></span></div>
+                  <div class="ws-cell"><span>2</span><span></span></div>
+                  <div class="ws-cell"><span>3</span><span></span></div>
+                  <div class="ws-cell"><span>4</span><span></span></div>
+                  <div class="ws-cell"><span>5</span><span></span></div>
+                  <div class="ws-cell"><span>6</span><span></span></div>
+                  <div class="ws-cell"><span>7</span><span></span></div>
+                  <div class="ws-cell"><span>8</span><span></span></div>
+                  <div class="ws-cell"><span>9</span><span></span></div>
+                  <div class="ws-cell"><span>10</span><span></span></div>
+                  <div class="ws-cell"><span>11</span><span></span></div>
+                  <div class="ws-cell"><span>12</span><span></span></div>
+                  <div class="ws-cell"><span>13</span><span></span></div>
+                  <div class="ws-cell"><span>14</span><span></span></div>
+                  <div class="ws-cell"><span>15</span><span></span></div>
+                  <div class="ws-cell"><span>16</span><span></span></div>
+                  <div class="ws-cell"><span>17</span><span></span></div>
+                  <div class="ws-cell"><span>18</span><span></span></div>
+                  <div class="ws-cell"><span>19</span><span></span></div>
+                  <div class="ws-cell"><span>20</span><span></span></div>
+                  <div class="ws-cell"><span>21</span><span></span></div>
+                  <div class="ws-cell"><span>22</span><span></span></div>
+                  <div class="ws-cell"><span>23</span><span></span></div>
+                  <div class="ws-cell"><span>24 / checksum</span><span></span></div>
+                </div>
+                <div class="worksheet-grid" data-worksheet-12>
+                  <div class="ws-cell"><span>1</span><span></span></div>
+                  <div class="ws-cell"><span>2</span><span></span></div>
+                  <div class="ws-cell"><span>3</span><span></span></div>
+                  <div class="ws-cell"><span>4</span><span></span></div>
+                  <div class="ws-cell"><span>5</span><span></span></div>
+                  <div class="ws-cell"><span>6</span><span></span></div>
+                  <div class="ws-cell"><span>7</span><span></span></div>
+                  <div class="ws-cell"><span>8</span><span></span></div>
+                  <div class="ws-cell"><span>9</span><span></span></div>
+                  <div class="ws-cell"><span>10</span><span></span></div>
+                  <div class="ws-cell"><span>11</span><span></span></div>
+                  <div class="ws-cell"><span>12 / checksum</span><span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>

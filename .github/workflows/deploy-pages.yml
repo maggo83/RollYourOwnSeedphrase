@@ -29,25 +29,22 @@ jobs:
         with:
           enablement: true
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned test reference
+        run: python -m pip install --require-hashes -r offline-package/test-requirements.txt
+
+      - name: Verify guide builds and offline derivation
+        run: python offline-package/verify.py
+
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -R website _site/website
+          cp -R dist/online/. _site/
           cp HowToRollYourOwnSeedphrase.html HowToRollYourOwnSeedphrase.pdf HowToRollYourOwnSeedphrase.txt BitsToWords.pdf BIP39_Wordlist_Binary_Decimal_Searchable.pdf _site/
-          cat > _site/index.html <<'EOF'
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8">
-              <meta http-equiv="refresh" content="0; url=website/">
-              <link rel="canonical" href="website/">
-              <title>Roll Your Own Seed Phrase</title>
-            </head>
-            <body>
-              <p><a href="website/">Open the visual guide</a></p>
-            </body>
-          </html>
-          EOF
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

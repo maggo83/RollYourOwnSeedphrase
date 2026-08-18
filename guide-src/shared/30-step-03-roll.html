@@ -1,0 +1,56 @@
+        <article class="guide-step" data-step-panel="3">
+          <div class="step-copy"><p class="step-number">Step 3 · roll and record</p><h2>Roll, convert, and repeat.</h2><div data-container-panel="box"><ol class="instruction-list"><li><span>1</span> Put all dice in the lidded box. Shake hard at least ten times; each shake should make the dice travel and collide audibly inside. Then gently tip the settled dice to one edge.</li><li><span>2</span> Open the box without moving dice by hand. Read left to right; if needed, read the next row front to back.</li><li><span>3</span> Convert each result using the selected method, shown on the right.</li><li><span>4</span> Write <strong data-bits-per-result>2</strong> <strong data-bit-word>bits</strong> in <span data-bit-boxes>the next free boxes</span>.</li></ol></div><div data-container-panel="cup" hidden><ol class="instruction-list"><li><span>1</span> Shake the dice in the cup, then cast them with enough room and energy for several impacts on the hard rolling tray or mat.</li><li><span>2</span> Read every die using the fixed spatial order chosen before the first throw.</li><li><span>3</span> Convert each result using the selected method, shown on the right.</li><li><span>4</span> Write <strong data-bits-per-result>2</strong> <strong data-bit-word>bits</strong> in <span data-bit-boxes>the next free boxes</span>.</li></ol></div><p class="callout"><strong>Unclear result?</strong> If a die is cocked or ambiguous, discard the whole batch and roll the complete batch again.</p><p class="repeat-instruction"><strong>Repeat:</strong> steps 1-4, until you reach the stopping boundary in the last word.</p><label class="checkpoint"><input type="checkbox"><span>I rolled <strong data-required-bits>128</strong> bits with this same rolling method, reading order, and conversion rule throughout.</span></label></div>
+          <div class="step-visual rolling-visual" aria-label="Selected rolling method and bit-entry visual">
+          <div class="visual-stage roll-stage">
+            <b class="visual-step-number">1</b>
+            <div class="visual-stage-content">
+              <div class="roll-method box-method" data-container-visual="box">
+                <div class="mini-box"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Shake hard at least ten times.</p>
+              </div>
+              <div class="roll-method cup-method" data-container-visual="cup" hidden>
+                <div class="cup-shake"><span class="cup-hand" aria-hidden="true"><span class="hand-finger finger-two"></span><span class="hand-finger finger-three"></span><span class="hand-finger finger-four"></span></span><div class="cup-icon"><span>⚄</span><span>⚂</span><span>⚀</span></div></div>
+                <p>Shake the dice in the cup.</p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-stage read-stage">
+            <b class="visual-step-number">2</b>
+            <div class="visual-stage-content">
+              <div class="read-method box-method" data-container-visual="box">
+                <div class="aligned-dice"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Tip to align, then read left → right.</p>
+              </div>
+              <div class="read-method cup-method" data-container-visual="cup" hidden>
+                <div class="tray-dice"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Cast onto a hard tray, read in fixed order.</p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-stage convert-stage">
+            <b class="visual-step-number">3</b>
+            <div class="visual-stage-content">
+              <div class="face-mapping" data-base4-example>
+                <div class="mapping-heading"><span>Convert the face value</span></div>
+                <div class="mapping-row faces"><b>⚀</b><b>⚁</b><b>⚂</b><b>⚃</b><b>⚄</b><b>⚅</b></div>
+                <div class="mapping-row arrows"><span>↓</span><span>↓</span><span>↓</span><span>↓</span><span>↓</span><span>↓</span></div>
+                <div class="mapping-row results"><span>00</span><span>01</span><span>10</span><span>11</span><span class="skip">skip</span><span class="skip">skip</span></div>
+              </div>
+              <div class="face-mapping" data-binary-example hidden>
+                <div class="mapping-heading"><span>Convert the face value</span></div>
+                <div class="mapping-row faces"><b>⚀</b><b>⚁</b><b>⚂</b><b>⚃</b><b>⚄</b><b>⚅</b></div>
+                <div class="mapping-row arrows"><span>↓</span><span>↓</span><span>↓</span><span>↓</span><span>↓</span><span>↓</span></div>
+                <div class="mapping-row results"><span>0</span><span>0</span><span>0</span><span>1</span><span>1</span><span>1</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="visual-stage entry-stage" data-entry-stage>
+            <b class="visual-step-number">4</b>
+            <div class="visual-stage-content" data-entry-content></div>
+          </div>
+          <div class="visual-stage final-stage" data-final-stage>
+            <b class="visual-step-number">5</b>
+            <div class="visual-stage-content" data-final-content></div>
+          </div>
+        </div>
+      </article>

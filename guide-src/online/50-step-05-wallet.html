@@ -1,0 +1,20 @@
+        <article class="guide-step" data-step-panel="5">
+          <div class="step-copy"><p class="step-number">Step 5 · finish</p><h2>Let the checksum finish the last word.</h2><p>For your selected <strong data-selected-length>12</strong>-word phrase, keep the bits you rolled and leave the final <strong data-checksum-bits>4</strong> checksum bits for the wallet.</p><ol class="instruction-list"><li><span>1</span> Identify the <strong class="no-wrap" data-final-options>16</strong> allowed last-word choices matching your rolled bits.<div class="final-range-breakdown" data-final-range-instructions-12><ul><li>The first 3 bits determine the page.</li><li>The next 3 bits determine the column.</li><li>Bit 7 selects the upper half (0) or lower half (1) of that column.</li></ul></div><span data-final-range-instructions-24 hidden>The first 3 bits determine the page.</span></li><li><span>2</span> Enter the first <strong data-prior-word-count>11</strong> words as an existing seed phrase.</li><li><span>3</span> Depending on your wallet select a final word (consult its documentation if needed).</li><li><span>4</span> Verify the wallet's proposed final word against that range.</li></ol>
+            <p class="callout"><strong>Remember:</strong> checksum bits are determined by the earlier bits. They do not reduce the randomness you created with dice.</p>
+            <label class="checkpoint"><input type="checkbox"><span>I identified the valid range of final words.</span></label>
+            <label class="checkpoint"><input type="checkbox"><span>I verified the final word proposed by the wallet keeps my rolled bits and is in the valid range.</span></label>
+          </div>
+          <div class="step-visual finish-visual" aria-label="Final word selection visual">
+          <div class="visual-stage">
+            <b class="visual-step-number">1</b>
+            <div class="visual-stage-content">
+              <div class="final-bits-stage">
+                <div class="final-bits"><span class="rolled-bits">rolled bits</span><span class="checksum-bits" data-checksum-caption>4 checksum bits</span></div>
+                <span class="lookup-arrow">→</span>
+                <div class="final-candidate candidate-12" data-final-range-12><div class="sheet-highlight final-range-highlight half-column"><img class="lookup-sheet" src="assets/BIP39_printout/Page7.png" alt="BIP39 word-list page with the upper half of one column highlighted"></div><span>Half a column: 16 candidate words</span></div>
+                <div class="final-candidate candidate-24" data-final-range-24 hidden><div class="sheet-highlight final-range-highlight full-page"><img class="lookup-sheet" src="assets/BIP39_printout/Page7.png" alt="BIP39 word-list page highlighted as the candidate range"></div><span>One page: 256 candidate words</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
