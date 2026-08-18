@@ -1,0 +1,3 @@
+# Test-only reference implementation used by Specter DIY; never included in release artifacts.
+embit==0.8.0 \
+    --hash=sha256:8bf4b10073c67400370ce523fb16f035fe759f6fdd987c579bdcc268d75ed770

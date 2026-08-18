@@ -1,0 +1,95 @@
+        <article class="guide-step dice-step" data-step-panel="3" data-step-title="Roll and look up">
+          <div class="step-copy">
+            <p class="step-number">Step 3 · roll and look up</p>
+            <h2>Roll your batch, then enter each result.</h2>
+            <p>Roll as many dice per throw as you want.</p>
+            <div data-container-panel="box">
+              <ol class="instruction-list">
+                <li><span>1</span> Put all chosen dice in the lidded box. Shake hard at least ten times so dice travel and collide audibly, then gently tip settled dice to one edge.</li>
+                <li><span>2</span> Open without touching dice by hand. Read left to right, (if need be: front to back), using the same fixed reading order for every throw.</li>
+                <li><span>3</span> For each die: select the face below (or press <kbd>1</kbd>–<kbd>6</kbd>) in that order. Bits fill in automatically and each word appears as soon as its 11 bits are complete.</li>
+              </ol>
+            </div>
+            <div data-container-panel="cup" hidden>
+              <ol class="instruction-list">
+                <li><span>1</span> Shake dice in the cup, then cast them with enough room and energy for several impacts on the hard tray or board.</li>
+                <li><span>2</span> Read every die from left to right (and if need be: front to back), using the same fixed reading order for every throw.</li>
+                <li><span>3</span> For each die: select the face below (or press <kbd>1</kbd>–<kbd>6</kbd>) in that order. Bits fill in automatically and each word appears as soon as its 11 bits are complete.</li>
+              </ol>
+            </div>
+            <p class="callout"><strong>Unclear result?</strong> If a die is cocked or ambiguous, discard the whole batch and re-roll the complete batch.</p>
+            <p class="repeat-instruction"><strong>Repeat</strong> steps 1–3 until all required bits are filled.</p>
+            <div class="die-entry" data-die-entry>
+              <p class="die-encoding-note" data-die-encoding-note aria-live="polite"></p>
+              <div class="die-buttons" role="group" aria-label="Click the face you rolled">
+                <button class="die-btn" type="button" data-face="1"><span class="die-face">⚀</span><span class="die-label">1</span></button>
+                <button class="die-btn" type="button" data-face="2"><span class="die-face">⚁</span><span class="die-label">2</span></button>
+                <button class="die-btn" type="button" data-face="3"><span class="die-face">⚂</span><span class="die-label">3</span></button>
+                <button class="die-btn" type="button" data-face="4"><span class="die-face">⚃</span><span class="die-label">4</span></button>
+                <button class="die-btn" type="button" data-face="5"><span class="die-face">⚄</span><span class="die-label">5</span></button>
+                <button class="die-btn" type="button" data-face="6"><span class="die-face">⚅</span><span class="die-label">6</span></button>
+              </div>
+              <p class="die-progress" data-die-progress aria-live="polite"><strong>0</strong>&thinsp;/&thinsp;<strong data-bw-total-bits>128</strong> bits</p>
+              <div class="die-controls">
+                <button class="button button-quiet" type="button" data-die-undo>Undo last roll</button>
+                <button class="button button-quiet" type="button" data-die-clear>Clear all</button>
+              </div>
+            </div>
+            <label class="checkpoint checkpoint-top">
+              <input type="checkbox" data-checkpoint="dice-done">
+              <span>All <strong data-bw-total-bits>128</strong> bits entered.</span>
+            </label>
+            <label class="checkpoint">
+              <input type="checkbox" data-checkpoint="words-verified">
+              <span>I checked all <strong data-bw-total>12</strong> words against the printed BIP39 list.</span>
+            </label>
+            <label class="checkpoint">
+              <input type="checkbox" data-checkpoint="words-noted">
+              <span>I wrote down all <strong data-bw-total>12</strong> words on my paper worksheet.</span>
+            </label>
+          </div>
+          <div class="step-visual dice-table-area">
+          <div class="visual-stage roll-stage">
+            <b class="visual-step-number">1</b>
+            <div class="visual-stage-content">
+              <div class="roll-method box-method" data-container-visual="box">
+                <div class="mini-box"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Shake hard at least ten times.</p>
+              </div>
+              <div class="roll-method cup-method" data-container-visual="cup" hidden>
+                <div class="cup-shake"><span class="cup-hand" aria-hidden="true"><span class="hand-finger finger-two"></span><span class="hand-finger finger-three"></span><span class="hand-finger finger-four"></span></span><div class="cup-icon"><span>⚄</span><span>⚂</span><span>⚀</span></div></div>
+                <p>Shake the dice in the cup.</p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-stage read-stage">
+            <b class="visual-step-number">2</b>
+            <div class="visual-stage-content">
+              <div class="read-method box-method" data-container-visual="box">
+                <div class="aligned-dice"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Tip to align, then read left → right.</p>
+              </div>
+              <div class="read-method cup-method" data-container-visual="cup" hidden>
+                <div class="tray-dice"><span>⚄</span><span>⚂</span><span>⚀</span></div>
+                <p>Cast onto a hard tray, read in fixed order.</p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-stage entry-stage">
+            <b class="visual-step-number">3</b>
+            <div class="visual-stage-content">
+              <div class="entry-shot">
+                <div class="die-buttons" role="group" aria-label="Click the face you rolled">
+                <button class="die-btn" type="button" data-face="1"><span class="die-face">⚀</span><span class="die-label">1</span></button>
+                <button class="die-btn" type="button" data-face="2"><span class="die-face">⚁</span><span class="die-label">2</span></button>
+                <button class="die-btn" type="button" data-face="3"><span class="die-face">⚂</span><span class="die-label">3</span></button>
+                <button class="die-btn" type="button" data-face="4"><span class="die-face">⚃</span><span class="die-label">4</span></button>
+                <button class="die-btn" type="button" data-face="5"><span class="die-face">⚄</span><span class="die-label">5</span></button>
+                <button class="die-btn" type="button" data-face="6"><span class="die-face">⚅</span><span class="die-label">6</span></button>
+              </div>
+              </div>
+              <div class="bw-table" data-bw-table role="group" aria-label="Word bits and results"></div>
+            </div>
+          </div>
+        </div>
+      </article>
