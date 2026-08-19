@@ -35,8 +35,17 @@
     return `<div class="bit-cells ${extraClass}">${values.map((value, index) => `<i class="${typeof value === 'object' ? value.className : ''}">${typeof value === 'object' ? value.value : value}</i>`).join('')}</div>`;
   }
 
-  function wordBox(wordNumber, values, className = '', extraClass = '') {
-    return `<div class="bits-word-box ${className}"><span class="word-number">${wordNumber}</span>${bitCells(values, extraClass)}<span class="word-space"></span></div>`;
+  function bitMarkerRow(markerKind = 'standard') {
+    const markers = markerKind === 'final-12'
+      ? '<span class="marker-page">P</span><span class="marker-column">C</span><span class="marker-row marker-row-partial">R</span><span class="marker-checksum">checksum</span>'
+      : markerKind === 'final-24'
+        ? '<span class="marker-page">P</span><span class="marker-checksum">checksum</span>'
+        : '<span class="marker-page">P</span><span class="marker-column">C</span><span class="marker-row">R</span>';
+    return `<div class="bit-marker-row bit-marker-${markerKind}">${markers}</div>`;
+  }
+
+  function wordBox(wordNumber, values, className = '', extraClass = '', markerKind = 'standard', wordLabel = '') {
+    return `<div class="bits-word-box ${className}"><span class="word-number">${wordNumber}</span>${bitCells(values, extraClass)}${bitMarkerRow(markerKind)}<span class="word-space">${wordLabel}</span></div>`;
   }
 
   function setupRollingEntryVisuals() {
@@ -49,9 +58,139 @@
     const entryBinary = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, ...blanks(5)], 'entry-binary');
     entryContent.innerHTML = `<div class="bit-entry-shot"><div data-base4-entry>${entryBase4}</div><div data-binary-entry hidden>${entryBinary}</div></div>`;
 
-    const final12 = wordBox(12, ['1', '0', '1', '0', ...Array.from({ length: 7 }, () => ({ value: '', className: 'locked-bit' }))], 'final-boundary-12');
-    const final24 = wordBox(24, ['1', '0', '1', ...Array.from({ length: 8 }, () => ({ value: '', className: 'locked-bit' }))], 'final-boundary-24');
+    const final12 = wordBox(12, ['1', '0', '1', '0', '1', '0', '1', ...Array.from({ length: 4 }, () => ({ value: '', className: 'locked-bit checksum-cell' }))], 'final-boundary-12', '', 'final-12');
+    const final24 = wordBox(24, ['1', '0', '1', ...Array.from({ length: 8 }, () => ({ value: '', className: 'locked-bit checksum-cell' }))], 'final-boundary-24', '', 'final-24');
     finalContent.innerHTML = `<div class="final-boundary-shot"><div data-final-boundary-12>${final12}</div><div data-final-boundary-24 hidden>${final24}</div></div>`;
+  }
+
+  function setupFinalLookupVisual() {
+    const target = document.querySelector('[data-final-bits]');
+    if (!target) return;
+    const final12 = wordBox(12, ['1', '1', '0', '1', '0', '0', '1', ...Array.from({ length: 4 }, () => ({ value: '', className: 'checksum-cell' }))], 'final-lookup-box', '', 'final-12');
+    const final24 = wordBox(24, ['1', '1', '0', ...Array.from({ length: 8 }, () => ({ value: '', className: 'checksum-cell' }))], 'final-lookup-box', '', 'final-24');
+    target.innerHTML = `<div data-final-bits-12>${final12}</div><div data-final-bits-24 hidden>${final24}</div>`;
+  }
+
+  function addStaticBitMarkers() {
+    document.querySelectorAll('.bits-word-box .bit-cells').forEach(bitCellRow => {
+      if (bitCellRow.nextElementSibling?.classList.contains('bit-marker-row')) return;
+      bitCellRow.insertAdjacentHTML('afterend', bitMarkerRow());
+    });
+  }
+
+  function bottomCenter(firstElement, lastElement) {
+    const firstRect = firstElement.getBoundingClientRect();
+    const lastRect = lastElement.getBoundingClientRect();
+    return { x: (firstRect.left + lastRect.right) / 2, y: lastRect.bottom };
+  }
+
+  function topCenter(element) {
+    const rect = element.getBoundingClientRect();
+    return { x: rect.left + rect.width / 2, y: rect.top };
+  }
+
+  function pointInLayer(point, layer) {
+    const rect = layer.getBoundingClientRect();
+    return { x: point.x - rect.left, y: point.y - rect.top };
+  }
+
+  function drawConnector(layer, line, source, target) {
+    if (!layer || !line || !source || !target) return;
+    const rect = layer.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const start = pointInLayer(source, layer);
+    const end = pointInLayer(target, layer);
+    layer.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+    line.setAttribute('x1', String(start.x));
+    line.setAttribute('y1', String(start.y));
+    line.setAttribute('x2', String(end.x));
+    line.setAttribute('y2', String(end.y));
+  }
+
+  function updateLookupConnectors() {
+    const lookupVisual = document.querySelector('.lookup-visual');
+    if (!lookupVisual) return;
+    const stages = [...lookupVisual.querySelectorAll('.lookup-stage')];
+    const pageStage = stages[0];
+    const columnStage = stages[1];
+    const rowStage = lookupVisual.querySelector('.lookup-row-stage');
+    const writeStage = lookupVisual.querySelector('.lookup-write-stage');
+    if (!pageStage || !columnStage || !rowStage || !writeStage) return;
+
+    const selectedPage = pageStage.querySelector('.selected-stack-page');
+    const pageStack = pageStage.querySelector('.sheet-stack');
+    const pageMarker = pageStage.querySelector('.stack-page-marker');
+    if (selectedPage && pageStack && pageMarker) {
+      const pageRect = selectedPage.getBoundingClientRect();
+      const stackRect = pageStack.getBoundingClientRect();
+      pageMarker.style.left = `${pageRect.left - stackRect.left + pageRect.width * 0.015}px`;
+      pageMarker.style.top = `${pageRect.top - stackRect.top + pageRect.height * 0.03}px`;
+      pageMarker.style.width = `${pageRect.width * 0.135}px`;
+      pageMarker.style.height = `${pageRect.height * 0.09}px`;
+    }
+
+    const pageCells = pageStage.querySelectorAll('.bit-cells i');
+    drawConnector(
+      pageStage.querySelector('.stage-connector-layer'),
+      pageStage.querySelector('.page-guide-line'),
+      bottomCenter(pageCells[0], pageCells[2]),
+      topCenter(pageMarker),
+    );
+
+    const columnCells = columnStage.querySelectorAll('.bit-cells i');
+    const columnTarget = columnStage.querySelector('.column-highlight .column-choice');
+    drawConnector(
+      columnStage.querySelector('.stage-connector-layer'),
+      columnStage.querySelector('.column-guide-line'),
+      bottomCenter(columnCells[3], columnCells[5]),
+      topCenter(columnTarget),
+    );
+
+    const rowCells = rowStage.querySelectorAll('.bit-cells i');
+    const blockTarget = rowStage.querySelector('.block-choice');
+    const rowTarget = rowStage.querySelector('.row-choice');
+    const columnTargetInRow = rowStage.querySelector('.column-choice');
+    const rowLayer = rowStage.querySelector('.row-connector-layer');
+    const blockRect = blockTarget?.getBoundingClientRect();
+    const rowRect = rowTarget?.getBoundingClientRect();
+    const columnRect = columnTargetInRow?.getBoundingClientRect();
+    drawConnector(
+      rowLayer,
+      rowStage.querySelector('.block-guide-line'),
+      bottomCenter(rowCells[6], rowCells[7]),
+      blockRect && { x: blockRect.right, y: blockRect.top },
+    );
+    drawConnector(
+      rowLayer,
+      rowStage.querySelector('.row-guide-line'),
+      bottomCenter(rowCells[8], rowCells[10]),
+      rowRect && columnRect && { x: columnRect.left + columnRect.width / 2, y: rowRect.top },
+    );
+
+    const transferLayer = lookupVisual.querySelector('.lookup-transfer-layer');
+    const wordTarget = writeStage.querySelector('.word-target');
+    drawConnector(
+      transferLayer,
+      lookupVisual.querySelector('.word-guide-line'),
+      rowRect && columnRect && { x: columnRect.left + columnRect.width / 2, y: rowRect.bottom },
+      topCenter(wordTarget),
+    );
+  }
+
+  let lookupConnectorFrame;
+  function scheduleLookupConnectorUpdate() {
+    cancelAnimationFrame(lookupConnectorFrame);
+    lookupConnectorFrame = requestAnimationFrame(updateLookupConnectors);
+  }
+
+  function observeLookupConnectors() {
+    const lookupVisual = document.querySelector('.lookup-visual');
+    if (!lookupVisual || !globalThis.ResizeObserver) return;
+    const observer = new ResizeObserver(scheduleLookupConnectorUpdate);
+    observer.observe(lookupVisual);
+    lookupVisual.querySelectorAll('img').forEach(image => image.addEventListener('load', scheduleLookupConnectorUpdate));
+    window.addEventListener('resize', scheduleLookupConnectorUpdate);
+    scheduleLookupConnectorUpdate();
   }
 
   function isStepChecklistComplete(step) {
@@ -121,6 +260,8 @@
     const fb24 = document.querySelector('[data-final-boundary-24]');
     if (fb12) fb12.hidden = selectedLength !== 12;
     if (fb24) fb24.hidden = selectedLength !== 24;
+    document.querySelectorAll('[data-final-bits-12]').forEach(el => { el.hidden = selectedLength !== 12; });
+    document.querySelectorAll('[data-final-bits-24]').forEach(el => { el.hidden = selectedLength !== 24; });
     document.querySelectorAll('[data-worksheet-12]').forEach(el => { el.hidden = selectedLength !== 12; });
     document.querySelectorAll('[data-worksheet-24]').forEach(el => { el.hidden = selectedLength !== 24; });
 
@@ -182,6 +323,7 @@
     document.body.dataset.stepIndex = String(stepIndex); // CSS fallback for offline progress bar
     updateSelections();
     updateForwardState();
+    scheduleLookupConnectorUpdate();
     document.dispatchEvent(new CustomEvent('guide:stepchange', { detail: { previousStep, step } }));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -276,6 +418,9 @@
     check.addEventListener('change', updateForwardState);
   });
   setupRollingEntryVisuals();
+  setupFinalLookupVisual();
+  addStaticBitMarkers();
+  observeLookupConnectors();
   updateSelections();
   if (document.body.classList.contains('offline-edition')) selectStep(firstStep);
 })();

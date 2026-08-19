@@ -20,7 +20,7 @@ GUIDE_SOURCE = ROOT / "guide-src"
 OFFLINE_SOURCE = ROOT / "offline-package" / "src"
 DIST = ROOT / "dist"
 WORDLIST_SOURCE = ROOT / "additional_ressources" / "BIP39_Wordlist_Binary_Decimal_Searchable.ods"
-WORDLIST_SOURCE_SHA256 = "776d5ed99bbfce76f0289c5acf3ce27ac3d3ce01763cf607c9f2fba65a09f48b"
+WORDLIST_SOURCE_SHA256 = "967bb0b0cb39fdbaede6186cfb6f732f1979e072495ffb48e2d453ee92a2c542"
 WORDLIST_NORMALIZED_SHA256 = "2f5eed53a4727b4bf8880d8f3f199efc90e58503646d9ff8eff3a2ed3b24dbda"
 SHA256_SOURCE_SHA256 = "e9540c4fe6fa3cb5edd0eeb2ef2c80f6c5107b3e75f9789263c2e4922275b444"
 SHELL_OPENING = Path("shared/00-shell-opening.html")
@@ -94,6 +94,38 @@ def extract_wordlist() -> list[str]:
             if index in indexed and indexed[index] != word:
                 raise BuildError(f"Conflicting words found for BIP39 index {index}.")
             indexed[index] = word
+
+    if not indexed:
+        pages: dict[int, ElementTree.Element] = {}
+        table_name = "{urn:oasis:names:tc:opendocument:xmlns:table:1.0}name"
+        for table in (element for element in root.iter() if element.tag.endswith("}table")):
+            match = re.fullmatch(r"Page (\d+)", table.attrib.get(table_name, ""))
+            if match:
+                pages[int(match.group(1))] = table
+
+        if set(pages) != set(range(1, 9)):
+            raise BuildError("The redesigned BIP39 source is missing one or more Page 1–8 tables.")
+
+        for page_number, table in pages.items():
+            rows = [element for element in table if element.tag.endswith("}table-row")]
+            if len(rows) < 33:
+                raise BuildError(f"Page {page_number} does not contain 32 lookup rows.")
+            for row_index, row in enumerate(rows[1:33]):
+                cells = [
+                    element for element in row
+                    if element.tag.endswith("}table-cell") or element.tag.endswith("}covered-table-cell")
+                ]
+                if len(cells) < 19:
+                    raise BuildError(f"Page {page_number}, lookup row {row_index} is incomplete.")
+                for column_index in range(8):
+                    index = (page_number - 1) * 256 + column_index * 32 + row_index
+                    displayed_index = "".join(cells[3 + column_index * 2].itertext()).strip()
+                    word = "".join(cells[4 + column_index * 2].itertext()).strip()
+                    if displayed_index != str(index) or not re.fullmatch(r"[a-z]+", word):
+                        raise BuildError(
+                            f"Page {page_number}, column {column_index}, row {row_index} failed lookup validation."
+                        )
+                    indexed[index] = word
 
     if set(indexed) != set(range(2048)):
         missing = sorted(set(range(2048)) - set(indexed))
