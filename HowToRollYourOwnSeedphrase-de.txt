@@ -1,0 +1,102 @@
+KURZANLEITUNG: ERSTELLE DEINE EIGENE BIP-39-SEED-PHRASE MIT WÜRFELN
+
+1. Besorge einen oder mehrere sechsseitige Würfel, vorzugsweise, aber nicht zwingend,
+   mit Casino-Qualität, außerdem eine saubere Schuhschachtel mit gut schließendem Deckel
+   oder eine ähnlich große blickdichte Aufbewahrungsbox. Verwende nicht mehr Würfel, als
+   sich im gewählten Behälter frei bewegen können. Alternativ kannst du einen großen
+   Würfelbecher und eine harte Würfelunterlage verwenden.
+
+2. Drucke eine Seite von BitsToWords-de.pdf aus. Welche Seite du brauchst, hängt davon ab,
+   ob du 12 oder 24 Wörter verwenden willst. Zwölf Wörter reichen bei gut charakterisierten
+   Würfeln und sorgfältiger Wurftechnik. Bei nicht charakterisierten Würfeln ohne
+   Casino-Qualität solltest du 24 Wörter für zusätzliche Reserve verwenden.
+   (Fülle das Feld Bezeichnung mit einem Namen aus, damit du später weißt, welche
+   Seed-Sicherung es ist.)
+   Jedes nummerierte große Rechteck steht für ein Wort.
+   Das Wort notierst du im unteren, breiteren Rechteck.
+   Die elf kleineren Rechtecke darüber sind die Bits; am Ende enthält jedes entweder 0 oder 1.
+   Zuerst füllst du die Bits mit den Würfeln aus, dann leitest du aus den Bits die Wörter ab.
+
+3. Drucke BIP39_Wordlist_Binary_Decimal_Searchable.pdf aus.
+   Sie hilft dir, die Wörter aus den Bits abzuleiten.
+   Wichtig: Drucke diese Liste aus. Durchsuche die Datei auf deinem Desktop NICHT nach den
+   gewürfelten Bits, auch nicht teilweise.
+
+4. Arbeite in einem privaten Raum ohne Kameras, Telefone, Smart Glasses, Beobachter oder
+   andere Aufzeichnungsgeräte.
+
+5. Wähle vor dem Würfeln eine dieser beiden Bit-Kodierungen:
+
+   A. Basis-4-Ablehnungsverfahren (empfohlener Kompromiss; weniger erwartete Würfe):
+      Zeigt der Würfel 1: trage "00" in die nächsten zwei freien Bit-Rechtecke ein.
+      Zeigt der Würfel 2: trage "01" in die nächsten zwei freien Bit-Rechtecke ein.
+      Zeigt der Würfel 3: trage "10" in die nächsten zwei freien Bit-Rechtecke ein.
+      Zeigt der Würfel 4: trage "11" in die nächsten zwei freien Bit-Rechtecke ein.
+      Zeigt der Würfel 5 oder 6: ignoriere ihn vollständig.
+
+      Du brauchst genau 64 akzeptierte Würfelergebnisse für 12 Wörter oder 128 akzeptierte
+      Würfelergebnisse für 24 Wörter.
+      Mit idealen Würfeln sind dafür im Mittel 96 beziehungsweise 192 tatsächliche
+      Würfelergebnisse nötig. Die tatsächliche Zahl variiert.
+
+   B. Binäre Quantisierung (keine verworfenen Ergebnisse; feste Anzahl Würfe):
+      NUTZE die binäre Quantisierung NUR, wenn du entweder
+            - Würfel mit Casino-Qualität hast ODER
+            - 24 Wörter gewählt hast.
+
+      Zeigt der Würfel 1, 2 oder 3: trage "0" in das nächste freie Bit-Rechteck ein.
+      Zeigt der Würfel 4, 5 oder 6: trage "1" in das nächste freie Bit-Rechteck ein.
+
+      Du brauchst genau 128 Würfelergebnisse für 12 Wörter oder 256 für 24 Wörter.
+
+6. Abhängig von deinem Aufbau:
+
+   A. Große Box mit Deckel:
+      Lege für jede Charge alle Würfel in die Box und schließe den Deckel. Schüttle sie
+      mindestens zehnmal kräftig. Bei jedem Schütteln sollen die Würfel hörbar rollen und
+      zusammenstoßen; wenn sie zu eng liegen und sich nicht frei bewegen können, nimm weniger
+      Würfel oder eine größere Box. Stelle die Box ab und kippe sie vorsichtig, damit die
+      ruhenden Würfel zu einer Kante rutschen. Öffne dann den Deckel und lies sie von links
+      nach rechts; bilden einige eine zweite Reihe, lies von vorne nach hinten. Ordne die
+      Würfel nicht von Hand zu einer Linie. Das Kippen schafft nur die Lesereihenfolge und
+      ersetzt nicht das kräftige Schütteln.
+
+      Liegt ein Würfel schief oder lässt er sich nicht eindeutig ablesen, verwirf unabhängig
+      von den sichtbaren Werten die gesamte Charge und schüttle die vollständige Charge erneut.
+
+   B. Becher und Unterlage:
+      Schüttle kräftig, würfle mit genug Platz und Energie für mehrere Aufpralle und lies die
+      Würfel dort ab, wo sie liegen bleiben, nach einer räumlichen Regel, die du vor dem ersten
+      Wurf festgelegt hast.
+
+      Lies jeden Würfel nach dieser festen Regel und wende die in Schritt 5 gewählte Kodierung
+      an. Bei Basis 4 belegen die Seiten 5 und 6 keine Bit-Rechtecke.
+
+   Wiederhole dies, bis du alle Bit-Rechtecke außer denjenigen hinter dem letzten dicken
+   Trennstrich im letzten Wort gefüllt hast.
+   Beim 12-Wort-Arbeitsblatt bedeutet das alle außer den letzten 4; beim 24-Wort-Arbeitsblatt
+   alle außer den letzten 8.
+   Verwende in der letzten Charge Ergebnisse in der vorbestimmten Reihenfolge nur bis zu dieser
+   Grenze und ignoriere alle späteren Würfel.
+   Wähle niemals anhand ihrer Werte aus, welche Ergebnisse du behältst.
+
+7. Suche für jedes Wort in deinem Ausdruck von BIP39_Wordlist_Binary_Decimal_Searchable.pdf
+   das Wort mit denselben 11 Bits, die du gewürfelt hast.
+   Die ersten drei Bits (P) sagen dir, welche Seite du brauchst.
+   Die nächsten drei Bits (C) sagen dir, welche Spalte dieser Seite du brauchst.
+   Die Bits 7-8 (R) sagen dir, welchen Block dieser Seite du brauchst.
+   Die Bits 9-11 (R) sagen dir, welche Zeile innerhalb dieses Blocks du brauchst.
+
+8. Für das letzte Wort fehlen noch einige Bits: 4 Bits bei 12 Wörtern, 8 Bits bei 24 Wörtern.
+   Um sie zu finden, brauchst du die Hilfe einer Hardware-Wallet.
+   (Es sind Prüfsummen-Bits, also vollständig durch die anderen Bits bestimmt. Die Berechnung ist
+   recht komplex, beeinflusst aber deine Entropie beziehungsweise Zufälligkeit nicht.)
+   Die bereits gewürfelten Bits begrenzen die Optionen auf 16 Wörter, also eine halbe Spalte bei
+   12 Wörtern, beziehungsweise 256 Wörter, also eine Seite bei 24 Wörtern.
+   Wahrscheinlich möchtest du nicht versuchen, alle diese Optionen manuell auszuprobieren.
+   Wie du weiter vorgehst, hängt von deiner konkreten Hardware-Wallet ab.
+   Üblicherweise gibst du die ersten elf Wörter so ein, wie du eine bestehende Seed-Phrase
+   eingeben würdest. Dann schlägt die Hardware-Wallet mögliche letzte Wörter vor, die zu einer
+   gültigen Prüfsumme führen. Wähle eines davon, das in deinem zuvor bestimmten Bereich liegt.
+
+Halte deine Seed-Phrase privat, offline und sicher gesichert.

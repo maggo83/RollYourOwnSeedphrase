@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ausdruckbare Kurzfassung zum Erzeugen einer BIP-39-Seed-Phrase mit Würfeln.">
+  <title>Würfle deine eigene Seed-Phrase</title>
+  <style>
+    :root { --ink: #203933; --muted: #61756d; --cream: #fffdf7; --sage: #d8e8d3; --mint: #eff7ed; --forest: #1f5a4e; --coral: #ec8069; --amber: #fff6db; --line: #d9dfd3; }
+    * { box-sizing: border-box; }
+    body { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 4rem; color: var(--ink); background: var(--cream); font-family: Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+    h1, h2, h3 { font-family: Georgia, serif; line-height: 1.12; }
+    h1 { max-width: 680px; margin: 0; font-size: clamp(2.8rem, 8vw, 4.8rem); letter-spacing: -.05em; }
+    h2 { margin: 0; font-size: 1.7rem; }
+    h3 { margin: .1rem 0 .4rem; font-size: 1.08rem; }
+    a { color: var(--forest); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .eyebrow { margin: 0 0 .6rem; color: var(--forest); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .lede { max-width: 680px; margin: 1.2rem 0 1.8rem; color: var(--muted); font-size: 1.12rem; }
+    .notice { padding: 1rem 1.1rem; margin: 1.5rem 0 2rem; background: var(--amber); border-left: 5px solid var(--coral); border-radius: 0 10px 10px 0; }
+    .print-button { display: inline-block; padding: .65rem 1rem; color: #fff; background: var(--forest); border-radius: 8px; font-weight: 700; text-decoration: none; }
+    .quick-links { display: flex; flex-wrap: wrap; gap: .9rem; margin: 1.5rem 0 2.4rem; }
+    .supplies { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: 1rem 0 2rem; }
+    .supply { padding: .9rem; background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+    .supply p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .step { display: grid; grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.5rem 0; border-top: 1px solid var(--line); }
+    .step-number { display: grid; place-items: center; width: 36px; height: 36px; color: #fff; background: var(--forest); border-radius: 50%; font-weight: 700; }
+    .step p { margin: .55rem 0; }
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: .8rem; }
+    .method { padding: 1rem; background: var(--mint); border-radius: 10px; }
+    .method p, .method ul { font-size: .93rem; }
+    ul { padding-left: 1.25rem; }
+    li + li { margin-top: .35rem; }
+    .code { display: inline-block; padding: .05rem .3rem; background: #e7eee4; border-radius: 3px; font-family: monospace; }
+    .important { padding: .8rem 1rem; margin-top: .9rem; background: #fff8e8; border-radius: 8px; }
+    footer { padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+    @media (max-width: 650px) { body { padding: 2rem 1rem; }.supplies, .method-grid { grid-template-columns: 1fr; } }
+    @media print { @page { margin: 12mm; } body { max-width: none; padding: 0; background: #fff; font-size: 10pt; } h1 { font-size: 30pt; } h2 { font-size: 16pt; }.quick-links { display: none; }.notice { break-inside: avoid; }.preparation { break-after: page; }.supplies { grid-template-columns: repeat(3, 1fr); }.step { break-inside: avoid; padding: .7rem 0; }.method { background: #f2f2f2; }.step-number { color: #000; background: #fff; border: 1px solid #000; } }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">Ausdruckbare Kurzfassung</p>
+  <h1>Würfle deine eigene<br>Seed-Phrase.</h1>
+  <p class="lede">Eine papierbasierte Kurzfassung zum Umwandeln von Würfelergebnissen in eine BIP-39-Seed-Phrase mit 12 oder 24 Wörtern.</p>
+  <div class="notice"><strong>Nutze diese Kurzfassung erst, nachdem du den Ablauf verstanden hast.</strong> Lies zuerst die visuelle Anleitung oder mache einen Trockendurchlauf mit einer Dummy-Phrase. Für eine echte Seed-Phrase halte den Vorgang geheim und nutze kein Netzwerkgerät, um deine Würfe zu notieren, zu suchen oder einzugeben.</div>
+  <div class="quick-links"><a class="print-button" href="#print" onclick="window.print(); return false;">Diese Anleitung drucken</a><a href="BitsToWords-de.pdf">BitsToWords-Arbeitsblätter</a><a href="BIP39_Wordlist_Binary_Decimal_Searchable.pdf">Englische BIP-39-Wortliste</a></div>
+  <section class="preparation"><h2>Vorbereiten</h2><div class="supplies"><div class="supply"><h3>Würfel</h3><p>Ein oder mehrere sechsseitige Würfel. Casino-Qualität ist besser, aber nicht zwingend erfoderlich.</p></div><div class="supply"><h3>Würfel-Setup</h3><p>Eine Box mit Deckel, in der sich alle Würfel frei bewegen können, oder ein größer Würfelbecher mit harter Unterlage.</p></div><div class="supply"><h3>Ausdrucke</h3><p>Ein BitsToWords-Arbeitsblatt und die durchsuchbare englische BIP-39-Wortliste.</p></div><div class="supply"><h3>Stift</h3><p>Schreibe jedes umgewandelte Bit auf Papier. Tippe Würfe nie in ein internet-verbundenes Gerät.</p></div><div class="supply"><h3>Offline-Gerät für Prüfsumme</h3><p>Eine Hardware-Wallet oder ein dauerhaft offline bleibender Laptop, der die Prüfsumme vervollständigt.</p></div><div class="supply"><h3>Nicht-öffentlicher Raum</h3><p>Keine Kameras, Telefone, Smart Glasses, Beobachter oder Aufzeichnungsgeräte.</p></div></div></section>
+  <section class="step"><div class="step-number">1</div><div><h2>Wähle die Länge der Phrase</h2><p>Wähle vor dem Würfeln. Nutze <strong>12 Wörter</strong> nur mit Casino-Würfeln und sauberer Technik. Wähle <strong>24 Wörter</strong> für mehr Sicherheit mit normalen Würfeln.</p><p>Drucke das passende Arbeitsblatt und notiere eine <strong>willkürliche Bezeichnung</strong>, damit du die Sicherung später wiedererkennst.</p></div></section>
+  <section class="step"><div class="step-number">2</div><div><h2>Wähle eine Kodierung aus</h2><div class="method-grid"><div class="method"><h3>Basis-4-Ablehnungsverfahren - empfohlen</h3><ul><li>1 &rarr; <span class="code">00</span></li><li>2 &rarr; <span class="code">01</span></li><li>3 &rarr; <span class="code">10</span></li><li>4 &rarr; <span class="code">11</span></li><li>5 oder 6 &rarr; ignorieren</li></ul><p>Sammle genau 64 akzeptierte Ergebnisse für 12 Wörter oder 128 für 24 Wörter.</p></div><div class="method"><h3>Binäre Quantisierung</h3><ul><li>1, 2 oder 3 &rarr; <span class="code">0</span></li><li>4, 5 oder 6 &rarr; <span class="code">1</span></li></ul><p>Nutze dies nur mit Casino-Würfeln oder mit der 24-Wort-Option. Mache genau 128 Würfe für 12 Wörter oder 256 für 24 Wörter.</p></div></div></div></section>
+  <section class="step"><div class="step-number">3</div><div><h2>Würfeln und notieren</h2><p><strong>Box mit Deckel:</strong> Lege alle Würfel in die Box, schließe den Deckel und schüttle mindestens zehnmal kräftig. Kippe die Würfel dann vorsichtig zu einer Seite und lies von links nach rechts; eine zweite Reihe liest du von vorne nach hinten. Ordne Würfel nicht von Hand.</p><p><strong>Becher und Unterlage:</strong> Schüttle kräftig, wirf mit genug Platz und Energie und lies die Würfel mit einer vor dem ersten Wurf gewählten räumlichen Regel.</p><p>Wandle jedes Ergebnis mit deiner Kodierung um und schreibe die Bits in die nächsten leeren Kästchen. Wenn ein Würfel schief liegt oder nicht eindeutig lesbar ist, verwirf den <strong>ganzen Satz</strong> und würfle ihn erneut.</p><div class="important"><strong>Stoppe am dicken Trenner im letzten Wort.</strong> Lasse bei 12 Wörtern die letzten 4 Kästchen leer, bei 24 Wörtern die letzten 8. Behalte im letzten Satz Ergebnisse nur bis zu dieser Grenze - wähle nie nach Augenzahl aus.</div></div></section>
+  <section class="step"><div class="step-number">4</div><div><h2>Bits in Wörter umwandeln</h2><p>Nutze für jede vollständige 11-Bit-Gruppe die ausgedruckte BIP-39-Wortliste:</p><ul><li>Bits 1-3 (P) bestimmen die <strong>Seite</strong>;</li><li>Bits 4-6 (C) bestimmen die <strong>Spalte</strong>;</li><li>Bits 7-8 (R) bestimmen den <strong>Block</strong>;</li><li>Bits 9-11 (R) bestimmen die <strong>Zeile im Block</strong> und damit das Wort.</li></ul><p>Schreibe das Wort unter seine 11 Bits. Durchsuche die Wortliste nicht digital, auch nicht nach einem Teilmuster.</p></div></section>
+  <section class="step"><div class="step-number">5</div><div><h2>Letztes Wort vervollständigen</h2><p>Die Prüfsummen-Bits des letzten Wortes sind durch die bereits notierten Bits bestimmt. Sie verringern die von den Würfeln erzeugte Zufallsstärke nicht.</p><ul><li>Bei 12 Wörtern lassen deine sieben gewürfelten Bits des letzten Wortes <strong>16</strong> mögliche Wörter.</li><li>Bei 24 Wörtern lassen deine drei gewürfelten Bits des letzten Wortes <strong>256</strong> mögliche Wörter.</li></ul><p>Gib je nach Wallet die vorherigen Wörter als bestehende Seed-Phrase ein. Lass dir ein letztes Wort vorschlagen und prüfe dann, dass es in deinem zulässigen Bereich liegt.</p></div></section>
+  <footer><strong>Verwahre deine Seed-Phrase privat, offline und sicher.</strong></footer>
+</body>
+</html>

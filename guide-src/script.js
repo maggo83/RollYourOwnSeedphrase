@@ -1,4 +1,6 @@
 (() => {
+  const text = globalThis.GUIDE_LOCALE_TEXT;
+  if (!text) throw new Error('Missing build-generated guide locale text.');
   const lengths = {
     12: { base4: 64, average: 96, binary: 128, checksum: 4 },
     24: { base4: 128, average: 192, binary: 256, checksum: 8 }
@@ -16,15 +18,7 @@
   const progressStep = document.querySelector('[data-current-step]');
   const progressBar = document.querySelector('.progress-track span');
   const forwardNote = document.querySelector('[data-forward-note]');
-  const titles = {
-    0: 'Permanent air gap required',
-    1: 'Prepare privately',
-    2: 'Make your choices',
-    3: 'Roll in batches',
-    4: 'Record on paper',
-    5: 'Complete safely',
-    6: 'Your seed phrase is ready'
-  };
+  const titles = text.titles;
   const stepNumbers = stepPanels.map(panel => Number(panel.dataset.stepPanel));
   const firstStep = stepNumbers[0];
   const lastStep = stepNumbers[stepNumbers.length - 1];
@@ -76,6 +70,23 @@
       if (bitCellRow.nextElementSibling?.classList.contains('bit-marker-row')) return;
       bitCellRow.insertAdjacentHTML('afterend', bitMarkerRow());
     });
+  }
+
+  function populateWorksheetPreviews() {
+    document.querySelectorAll('.worksheet-grid').forEach(grid => {
+      grid.replaceChildren();
+      const total = grid.hasAttribute('data-worksheet-24') ? 24 : 12;
+      for (let wordNumber = 1; wordNumber <= total; wordNumber += 1) {
+        const cell = document.createElement('div');
+        cell.className = 'ws-cell';
+        const label = document.createElement('span');
+        label.textContent = wordNumber === total ? `${wordNumber} / ${text.checksum}` : String(wordNumber);
+        cell.append(label, document.createElement('span'));
+        grid.append(cell);
+      }
+    });
+    document.querySelectorAll('.worksheet-label').forEach(el => { el.textContent = text.worksheetIdentifier; });
+    document.querySelectorAll('.worksheet-input').forEach(el => { el.textContent = text.worksheetExample; });
   }
 
   function bottomCenter(firstElement, lastElement) {
@@ -223,15 +234,15 @@
 
     next.disabled = blockForChecklist || blockForSafety;
     if (blockForSafety) {
-      next.textContent = 'Select a safer option';
-      forwardNote.textContent = 'Choose 24 words or base-4 before continuing.';
+      next.textContent = text.chooseSafer;
+      forwardNote.textContent = text.safetyNote;
       forwardNote.classList.remove('is-hidden');
     } else if (blockForChecklist) {
-      next.textContent = 'Complete the checklist';
-      forwardNote.textContent = 'Tick every checklist item above to continue.';
+      next.textContent = text.completeChecklist;
+      forwardNote.textContent = text.checklistNote;
       forwardNote.classList.remove('is-hidden');
     } else {
-      next.textContent = stepNumbers.indexOf(currentStep) === stepNumbers.length - 1 ? 'Start again ↺' : 'Continue →';
+      next.textContent = stepNumbers.indexOf(currentStep) === stepNumbers.length - 1 ? text.restart : text.continue;
       forwardNote.textContent = '';
       forwardNote.classList.add('is-hidden');
     }
@@ -251,7 +262,7 @@
     document.querySelectorAll('[data-found-words]').forEach(el => el.textContent = selectedLength - 1);
     document.querySelectorAll('[data-final-options]').forEach(el => el.textContent = selectedLength === 12 ? 16 : 256);
     const checksumCaption = document.querySelector('[data-checksum-caption]');
-    if (checksumCaption) checksumCaption.textContent = `${values.checksum} checksum bits`;
+    if (checksumCaption) checksumCaption.textContent = `${values.checksum} ${text.checksum}`;
     document.querySelectorAll('[data-final-range-12]').forEach(el => { el.hidden = selectedLength !== 12; });
     document.querySelectorAll('[data-final-range-24]').forEach(el => { el.hidden = selectedLength !== 24; });
     document.querySelectorAll('[data-final-range-instructions-12]').forEach(el => { el.hidden = selectedLength !== 12; });
@@ -286,8 +297,8 @@
 
     const isBase4 = selectedEncoding === 'base4';
     document.querySelectorAll('[data-bits-per-result]').forEach(el => el.textContent = isBase4 ? 2 : 1);
-    document.querySelectorAll('[data-bit-word]').forEach(el => el.textContent = isBase4 ? 'bits' : 'bit');
-    document.querySelectorAll('[data-bit-boxes]').forEach(el => el.textContent = isBase4 ? 'the next free boxes' : 'the next free box');
+    document.querySelectorAll('[data-bit-word]').forEach(el => el.textContent = text.bitWord);
+    document.querySelectorAll('[data-bit-boxes]').forEach(el => el.textContent = isBase4 ? text.nextFreeBits : text.nextFreeBit);
     const b4v = document.querySelector('[data-base4-visual]');
     const bnv = document.querySelector('[data-binary-visual]');
     const b4ex = document.querySelector('[data-base4-example]');
@@ -301,9 +312,7 @@
     if (bnex) bnex.hidden = isBase4;
     if (b4ent) b4ent.hidden = !isBase4;
     if (bnent) bnent.hidden = isBase4;
-    if (encCap) encCap.textContent = isBase4
-      ? 'Base-4: 1–4 become bits; 5–6 are skipped.'
-      : 'Binary: 1–3 become 0; 4–6 become 1.';
+    if (encCap) encCap.textContent = isBase4 ? text.base4Caption : text.binaryCaption;
     document.dispatchEvent(new CustomEvent('guide:selectionchange', { detail: { length: selectedLength } }));
     updateForwardState();
   }
@@ -420,6 +429,7 @@
   setupRollingEntryVisuals();
   setupFinalLookupVisual();
   addStaticBitMarkers();
+  populateWorksheetPreviews();
   observeLookupConnectors();
   updateSelections();
   if (document.body.classList.contains('offline-edition')) selectStep(firstStep);

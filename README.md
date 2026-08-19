@@ -47,6 +47,8 @@ Supporting printable material:
 
 The interactive version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Read it before generating a real seed phrase, or use it for a dry run first.
 
+The landing page is a language selector for English and informal German guide editions. Both editions always use the **one shared English BIP-39 word list**; German changes instructions and printable labels only. German printable material uses stable `-de` filenames for [the German quick guide](HowToRollYourOwnSeedphrase-de.pdf) and [German-labeled BitsToWords worksheet](BitsToWords-de.pdf). The English BIP-39 lookup list remains one shared artifact for every guide language.
+
 ### Offline edition
 
 The English-only, self-contained offline edition converts entered dice results into bits and BIP39 words, including the deterministic final-word checksum. It is intended exclusively for a dedicated, permanently offline machine that has never connected and will never connect to the internet or another untrusted network.
@@ -56,7 +58,7 @@ The implementation has automated verification but has not received independent s
 
 ## Source and builds
 
-Canonical HTML and shared assets are stored under `guide-src/`. The root-level `build-guides.py` declares the exact ordered fragment list for each target: online uses the shared shell, Steps 1–4, the online wallet Step 5, Step 6, and the shared ending; offline inserts Step 0, replaces online Steps 3–5 with a combined dice-entry and bits-to-words Step 3, then completes at Step 4. The root `index.html` is generated online compatibility output and must not be edited. Both editions are complete static outputs: no fragment is loaded at runtime. Run `python3 offline-package/verify.py` after changing any source.
+Canonical HTML structure and shared assets are stored under `guide-src/`. The root-level `build-guides.py` declares the exact ordered fragment list for each target: online builds English (`dist/online`) and German (`dist/de`) static editions; offline builds one English-only edition (`dist/offline`). Online translations are paired by fragment in `guide-src/i18n/catalog.json`, then generated as static output without a runtime fetch. The root `index.html` is a generated language selector for local development and must not be edited. The printable quick guides likewise use one template plus adjacent EN/DE section content in `print-src/quick-guide-template.html` and `print-src/quick-guide-content.json`; run `python3 build-localized-printouts.py` after changing either source. Then run `python3 offline-package/verify.py` after changing any source.
 
 # Important qualification
 
