@@ -106,19 +106,31 @@ class BuildTests(unittest.TestCase):
             text_output = ROOT / print_module.quick_guide_name(locale_code, "txt")
             self.assertEqual(html_output.read_text(encoding="utf-8"), print_module.render_quick_guide_html(locale_code))
             self.assertEqual(text_output.read_text(encoding="utf-8"), print_module.render_quick_guide_text(locale_code))
+        english_print = (ROOT / "HowToRollYourOwnSeedphrase.html").read_text(encoding="utf-8")
+        german_print = (ROOT / "HowToRollYourOwnSeedphrase-de.html").read_text(encoding="utf-8")
+        self.assertIn("Use this printed guide for a real seed phrase.", english_print)
+        self.assertIn("Base-4 works with 12 or 24 words.", english_print)
+        self.assertIn("With regular dice, choose 24 words or use base-4.", english_print)
+        self.assertIn("Nutze diese gedruckte Anleitung für eine echte Seed-Phrase.", german_print)
+        self.assertIn("Basis 4 funktioniert mit 12 oder 24 Wörtern.", german_print)
+        self.assertIn("Mit normalen Würfeln wähle 24 Wörter oder Basis 4.", german_print)
 
-    def test_root_index_is_the_only_generated_compatibility_output(self) -> None:
+    def test_generated_selectors_match_their_layouts(self) -> None:
         online = (self.online / "index.html").read_text(encoding="utf-8")
         root_index = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertEqual(root_index, build_module.language_selector_html("dist/online/index.html", "dist/de/index.html"))
+        self.assertEqual(self.online, ROOT / "dist" / "en")
+        self.assertEqual(root_index, build_module.local_selector_forwarder_html("dist/index.html"))
         self.assertEqual(root_index.count(build_module.GENERATED_FILE_NOTICE), 1)
         self.assertNotIn(build_module.GENERATED_FILE_NOTICE, online)
+        self.assertFalse((ROOT / "dist" / "online").exists())
         self.assertEqual(
-            (ROOT / "dist" / "site-index.html").read_text(encoding="utf-8"),
+            (ROOT / "dist" / "index.html").read_text(encoding="utf-8"),
             build_module.language_selector_html("en/index.html", "de/index.html"),
         )
-        self.assertIn('🇬🇧', root_index)
-        self.assertIn('🇩🇪', root_index)
+        self.assertFalse((ROOT / "dist" / "site-index.html").exists())
+        self.assertIn('href="dist/index.html"', root_index)
+        self.assertIn('🇬🇧', (ROOT / "dist" / "index.html").read_text(encoding="utf-8"))
+        self.assertIn('🇩🇪', (ROOT / "dist" / "index.html").read_text(encoding="utf-8"))
         for fragment in build_module.ONLINE_FRAGMENTS + build_module.OFFLINE_FRAGMENTS:
             self.assertNotIn(build_module.GENERATED_FILE_NOTICE, build_module.fragment_text(fragment))
 
@@ -139,6 +151,31 @@ class BuildTests(unittest.TestCase):
         self.assertIn('<p class="step-number">Step 4 · complete</p>', offline)
         self.assertNotIn("VARIANT_STEP_5", online + offline)
         self.assertNotIn("OFFLINE_STEP_0_INSERT", online + offline)
+
+    def test_dice_policy_and_guide_use_are_consistent(self) -> None:
+        online = (self.online / "index.html").read_text(encoding="utf-8")
+        german = (self.german_online / "index.html").read_text(encoding="utf-8")
+        offline = (self.offline / "index.html").read_text(encoding="utf-8")
+        source_script = (ROOT / "guide-src" / "script.js").read_text(encoding="utf-8")
+        self.assertIn("let selectedDice = 'consumer';", source_script)
+        self.assertIn('data-dice="consumer" aria-pressed="true">Regular dice', online)
+        self.assertIn("For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.", online)
+        self.assertIn("With regular dice, select 24 words or use base-4.", online)
+        self.assertIn("Do not use this online guide for a real seed phrase.", online)
+        self.assertNotIn("turn off or cover its camera", online)
+        self.assertIn('data-dice="consumer" aria-pressed="true">Normale Würfel', german)
+        self.assertIn("Mit normalen Würfeln wähle 24 Wörter oder Basis 4.", german)
+        self.assertIn("Ich habe im Feld Bezeichnung einen nicht geheimen Namen eingetragen.", german)
+        self.assertNotIn("I filled the worksheet Identifier", german)
+        self.assertIn("Nutze diese Online-Anleitung nicht für eine echte Seed-Phrase.", german)
+        self.assertNotIn("Keep it private, offline, and safely backed up.", online)
+        self.assertNotIn("Keep your seed phrase private, offline, and backed up safely.", online)
+        self.assertNotIn("Verwahre sie privat, offline und sicher.", german)
+        self.assertNotIn("Halte deine Seed-Phrase privat, offline und sicher gesichert.", german)
+        self.assertIn("This offline edition is for experts.", offline)
+        self.assertIn("Keep it private, offline, and safely backed up.", offline)
+        self.assertIn("Keep your seed phrase private, offline, and backed up safely.", offline)
+        self.assertNotIn("Use this online guide to learn the method", offline)
 
     def test_variant_sources_cannot_cross_contaminate(self) -> None:
         online_sources = set(build_module.ONLINE_FRAGMENTS)

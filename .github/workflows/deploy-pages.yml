@@ -43,10 +43,10 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp dist/site-index.html _site/index.html
+          cp dist/index.html _site/index.html
           mkdir -p _site/en _site/de
-          cp -R dist/online/. _site/en/
-          cp -R dist/de _site/de
+          cp -R dist/en/. _site/en/
+          cp -R dist/de/. _site/de/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

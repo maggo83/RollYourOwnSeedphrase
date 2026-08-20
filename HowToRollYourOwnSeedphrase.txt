@@ -1,16 +1,17 @@
-1. Get one or more six-sided dice, preferably but not mandatory casino rated, plus a clean shoe box
-   with a well-fitting lid or an opaque food-storage box of similar size. Don't use more dice than
-   can move freely in the chosen container. A large dice cup and hard rolling tray can be used as an
-   alternative.
+Use this printed guide for a real seed phrase. If you are unsure about the method, first use the online guide or make a dry run with a dummy phrase. Keep rolls, bits, and seed words off networked devices.
+
+1. Get plain, well-made six-sided dice plus a clean shoe box with a well-fitting lid or an opaque
+   food-storage box of similar size. Avoid decorative, novelty, damaged, or visibly uneven dice.
+   Don't use more dice than can move freely in the chosen container. A large dice cup and hard
+   rolling tray can be used as an alternative.
    
-2. Print one page of BitsToWords.pdf (which one depends on whether you want 12 or 24 words. Twelve
-   words are sufficient with well-characterized dice and a proper rolling technique. For
-   uncharacterized non-casino dice, use 24 words for additional margin.)
-   (Fill the Identifier with a name so you later know which seed this is)
-   Each numbered bigger rectangle will represent be a word.
-   The word will be noted in the lower wider rectangle.
-   The smaller 11 rectangles above, are the "bits" (each is either a "0" or a "1" at the end)
-   We will first fill the bits using the dice and then derive the words from the bits.
+2. Choose 12 or 24 words and one encoding before rolling. Base-4 works with either length. With
+   regular dice, use 24 words for binary quantization.
+   Print the matching page of BitsToWords.pdf.
+   (Fill the Identifier with a name so you later know which seed this is.)
+   Each numbered larger rectangle represents a word. Write the word in the lower, wider rectangle.
+   The 11 smaller rectangles above are bits; each contains 0 or 1. First fill the bits using dice,
+   then derive the words from the bits.
 3. Print BIP39_Wordlist_Binary_Decimal_Searchable.pdf
    This will help us derive the words from the bits.
    Important: Do print this out. Do NOT search in this file on your desktop for the bits you have
@@ -31,9 +32,7 @@
       number varies.
 
    B. Binary quantization (no rejected results; fixed number of rolls):
-      ONLY use Binary quantization if you either
-            -have casino graded dice OR
-            -chose 24 words
+      For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.
 
       If the die is 1, 2 or 3: enter "0" into the next free bit rectangle
       If the die is 4, 5 or 6: enter "1" into the next free bit rectangle

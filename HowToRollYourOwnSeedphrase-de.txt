@@ -1,21 +1,21 @@
 KURZANLEITUNG: ERSTELLE DEINE EIGENE BIP-39-SEED-PHRASE MIT WÜRFELN
 
-1. Besorge einen oder mehrere sechsseitige Würfel, vorzugsweise, aber nicht zwingend,
-   mit Casino-Qualität, außerdem eine saubere Schuhschachtel mit gut schließendem Deckel
-   oder eine ähnlich große blickdichte Aufbewahrungsbox. Verwende nicht mehr Würfel, als
-   sich im gewählten Behälter frei bewegen können. Alternativ kannst du einen großen
-   Würfelbecher und eine harte Würfelunterlage verwenden.
+Nutze diese gedruckte Anleitung für eine echte Seed-Phrase. Wenn du beim Ablauf unsicher bist, lies zuerst die Online-Anleitung oder mache einen Trockendurchlauf mit einer Dummy-Phrase. Halte Würfe, Bits und Seed-Wörter von Netzwerkgeräten fern.
 
-2. Drucke eine Seite von BitsToWords-de.pdf aus. Welche Seite du brauchst, hängt davon ab,
-   ob du 12 oder 24 Wörter verwenden willst. Zwölf Wörter reichen bei gut charakterisierten
-   Würfeln und sorgfältiger Wurftechnik. Bei nicht charakterisierten Würfeln ohne
-   Casino-Qualität solltest du 24 Wörter für zusätzliche Reserve verwenden.
+1. Besorge gut verarbeitete sechsseitige Würfel sowie eine saubere Schuhschachtel mit gut
+   schließendem Deckel oder eine ähnlich große blickdichte Aufbewahrungsbox. Vermeide Deko-,
+   Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel. Verwende nicht mehr Würfel, als sich
+   im gewählten Behälter frei bewegen können. Alternativ kannst du einen großen Würfelbecher und
+   eine harte Würfelunterlage verwenden.
+
+2. Wähle vor dem Würfeln 12 oder 24 Wörter und eine Kodierung. Basis 4 funktioniert mit beiden
+   Längen. Mit normalen Würfeln nutze für binäre Quantisierung 24 Wörter.
+   Drucke die passende Seite von BitsToWords-de.pdf aus.
    (Fülle das Feld Bezeichnung mit einem Namen aus, damit du später weißt, welche
    Seed-Sicherung es ist.)
-   Jedes nummerierte große Rechteck steht für ein Wort.
-   Das Wort notierst du im unteren, breiteren Rechteck.
-   Die elf kleineren Rechtecke darüber sind die Bits; am Ende enthält jedes entweder 0 oder 1.
-   Zuerst füllst du die Bits mit den Würfeln aus, dann leitest du aus den Bits die Wörter ab.
+   Jedes nummerierte große Rechteck steht für ein Wort. Das Wort notierst du im unteren, breiteren
+   Rechteck. Die elf kleineren Rechtecke darüber sind Bits; jedes enthält 0 oder 1. Zuerst füllst du
+   die Bits mit den Würfeln aus, dann leitest du aus den Bits die Wörter ab.
 
 3. Drucke BIP39_Wordlist_Binary_Decimal_Searchable.pdf aus.
    Sie hilft dir, die Wörter aus den Bits abzuleiten.
@@ -40,9 +40,7 @@ KURZANLEITUNG: ERSTELLE DEINE EIGENE BIP-39-SEED-PHRASE MIT WÜRFELN
       Würfelergebnisse nötig. Die tatsächliche Zahl variiert.
 
    B. Binäre Quantisierung (keine verworfenen Ergebnisse; feste Anzahl Würfe):
-      NUTZE die binäre Quantisierung NUR, wenn du entweder
-            - Würfel mit Casino-Qualität hast ODER
-            - 24 Wörter gewählt hast.
+      Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4.
 
       Zeigt der Würfel 1, 2 oder 3: trage "0" in das nächste freie Bit-Rechteck ein.
       Zeigt der Würfel 4, 5 oder 6: trage "1" in das nächste freie Bit-Rechteck ein.

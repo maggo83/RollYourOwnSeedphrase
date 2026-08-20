@@ -3006,16 +3006,16 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
 }
 .ws-cell {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 2.5rem 22px;
   gap: 0.1rem;
 }
 .ws-cell span:first-child {
   color: var(--muted);
   font-size: 0.68rem;
   font-weight: 700;
+  line-height: 1.15;
 }
 .ws-cell span:last-child {
-  min-height: 22px;
   background: #fffdf7;
   border: 1px solid #94bb98;
   border-radius: 3px;

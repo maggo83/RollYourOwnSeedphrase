@@ -78,8 +78,8 @@
       },
       {
         "kind": "text",
-        "en": " use this guide first to understand the procedure or follow it on your laptop as a dry run to produce a dummy seed phrase. If you run it on a laptop during the procedure for your ",
-        "de": " Lies diese Anleitung zuerst durch oder mache einen Trockendurchlauf mit einer Dummy-Phrase. Für eine "
+        "en": " use this online guide to learn the method or make a dry run with a dummy seed phrase. For a ",
+        "de": " Nutze diese Online-Anleitung, um den Ablauf zu lernen oder einen Trockendurchlauf mit einer Dummy-Phrase zu machen. Für eine "
       },
       {
         "kind": "text",
@@ -88,29 +88,8 @@
       },
       {
         "kind": "text",
-        "en": ": turn off or cover its camera and microphone.",
-        "de": " decke Kamera und Mikrofon ab oder schalte sie aus."
-      },
-      {
-        "kind": "text",
-        "en": "Once you know the process, you can print the ",
-        "de": "Wenn du den Ablauf kennst, kannst du die "
-      },
-      {
-        "kind": "attr",
-        "en": "../HowToRollYourOwnSeedphrase.pdf",
-        "de": "../HowToRollYourOwnSeedphrase-de.pdf",
-        "name": "href"
-      },
-      {
-        "kind": "text",
-        "en": "brief printable summary",
-        "de": "druckbare Kurzfassung"
-      },
-      {
-        "kind": "text",
-        "en": " and follow it offline instead.",
-        "de": " verwenden und sie offline befolgen."
+        "en": ", use the printed quick guide.",
+        "de": " nutze die gedruckte Kurzfassung."
       },
       {
         "kind": "text",
@@ -159,7 +138,7 @@
       {
         "kind": "text",
         "en": "Set up a private, paper-first workspace.",
-        "de": "Richte dir einen abgeschiedenen Arbeitsplatz."
+        "de": "Richte dir einen abgeschiedenen Arbeitsplatz ein."
       },
       {
         "kind": "text",
@@ -282,18 +261,18 @@
       },
       {
         "kind": "text",
-        "en": "Any",
-        "de": "Beliebig"
+        "en": "Regular dice",
+        "de": "Normale Würfel"
       },
       {
         "kind": "text",
-        "en": "Choose plain, well-made dice.",
-        "de": "Wähle schlichte, gut gemachte Würfel."
+        "en": "Use plain, well-made dice.",
+        "de": "Nutze gut verarbeitete Würfel."
       },
       {
         "kind": "text",
-        "en": " Casino-grade is not required, but avoid decorative, novelty, or visibly uneven dice.",
-        "de": " Casino-Qualität ist nicht erforderlich, aber vermeide dekorative, neuartige oder sichtbar ungleichmäßige Würfel."
+        "en": " Avoid decorative, novelty, damaged, or visibly uneven dice.",
+        "de": " Vermeide Deko-, Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel."
       },
       {
         "kind": "text",
@@ -406,8 +385,8 @@
       },
       {
         "kind": "text",
-        "en": " select the matching Bit-to-word worksheet and fill its Identifier field with a name (arbitrary) so you can recognize this seed later.",
-        "de": " Wähle das passende BitsToWords-Arbeitsblatt und trage eine nicht beliebige Bezeichnung ein, damit du diese Seed später wiedererkennst."
+        "en": " select the matching Bit-to-word worksheet and fill its Identifier field with a name (non-secret) so you can recognize this seed backup later.",
+        "de": " Wähle das passende BitsToWords-Arbeitsblatt und trage im Feld Bezeichnung eine nicht geheime Bezeichnung ein, damit du diese Seed-Sicherung später wiedererkennst."
       },
       {
         "kind": "text",
@@ -472,8 +451,8 @@
       },
       {
         "kind": "text",
-        "en": " rolls. Use this only with casino-grade dice, or select 24 words for more margin.",
-        "de": " Würfe. Nutze das nur mit Casino-Würfeln oder wähle 24 Wörter für mehr Reserve."
+        "en": " rolls. For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.",
+        "de": " Würfe. Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
       },
       {
         "kind": "text",
@@ -482,8 +461,8 @@
       },
       {
         "kind": "text",
-        "en": " Binary quantization with consumer-grade dice requires the 24-word option. Select 24 words or use base-4.",
-        "de": " Binäre Quantisierung mit beliebigen Würfeln erfordert die 24-Wort-Option. Wähle 24 Wörter oder Basis 4."
+        "en": " With regular dice, select 24 words or use base-4.",
+        "de": " Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
       },
       {
         "kind": "text",
@@ -492,8 +471,8 @@
       },
       {
         "kind": "text",
-        "en": "I filled the worksheet Identifier with a name.",
-        "de": "Ich habe eine Bezeichnung auf dem Arbeitsblatt eingetragen."
+        "en": "I filled the worksheet Identifier with a non-secret name.",
+        "de": "Ich habe im Feld Bezeichnung einen nicht geheimen Namen eingetragen."
       },
       {
         "kind": "attr",
@@ -504,12 +483,12 @@
       {
         "kind": "text",
         "en": "skip",
-        "de": "ignorieren"
+        "de": "weg"
       },
       {
         "kind": "text",
         "en": "skip",
-        "de": "ignorieren"
+        "de": "weg"
       },
       {
         "kind": "text",
@@ -945,7 +924,7 @@
       {
         "kind": "text",
         "en": " Depending on your wallet select a final word (consult its documentation if needed).",
-        "de": " Wie du das letzte Wort wählst hängt vom Wallet ab; lies bei Bedarf deren Dokumentation."
+        "de": " Wie du das letzte Wort wählst hängt von der Wallet ab; lies bei Bedarf deren Dokumentation."
       },
       {
         "kind": "text",
@@ -1022,11 +1001,6 @@
         "kind": "text",
         "en": "you made your own seed phrase.",
         "de": "du hast deine eigene Seed-Phrase erstellt."
-      },
-      {
-        "kind": "text",
-        "en": "Keep it private, offline, and safely backed up.",
-        "de": "Verwahre sie privat, offline und sicher."
       }
     ],
     "shared/70-shell-ending.html": [
@@ -1047,8 +1021,8 @@
       },
       {
         "kind": "text",
-        "en": "This website is an aid to the paper guide, not a place to enter or store your rolls, bits, or seed words.",
-        "de": "Diese Website ist eine Hilfe zum Papierleitfaden und kein Ort, um Würfe, Bits oder Seed-Wörter einzugeben oder zu speichern."
+        "en": "Do not use this online guide for a real seed phrase.",
+        "de": "Nutze diese Online-Anleitung nicht für eine echte Seed-Phrase."
       },
       {
         "kind": "text",
@@ -1059,11 +1033,6 @@
         "kind": "text",
         "en": " Roll your own seed phrase",
         "de": " Eigene Seed-Phrase würfeln"
-      },
-      {
-        "kind": "text",
-        "en": "Keep your seed phrase private, offline, and backed up safely.",
-        "de": "Halte deine Seed-Phrase privat, offline und sicher gesichert."
       }
     ]
   },
@@ -1115,8 +1084,8 @@
       "de": "Neu starten ↺"
     },
     "safetyNote": {
-      "en": "Choose 24 words or base-4 before continuing.",
-      "de": "Wähle 24 Wörter oder Basis 4, bevor du fortfährst."
+      "en": "With regular dice, choose 24 words or base-4.",
+      "de": "Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
     },
     "checklistNote": {
       "en": "Tick every checklist item above to continue.",

@@ -74,7 +74,7 @@ class Locale:
 
 
 LOCALES = {
-    "en": Locale("en", "online", ""),
+    "en": Locale("en", "en", ""),
     "de": Locale("de", "de", "-de"),
 }
 
@@ -338,6 +338,23 @@ def language_selector_html(english_href: str, german_href: str) -> str:
 """
 
 
+def local_selector_forwarder_html(target: str) -> str:
+    return f"""<!doctype html>
+{GENERATED_FILE_NOTICE}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={target}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roll Your Own Seed Phrase</title>
+</head>
+<body>
+    <p><a href="{target}">Open language selector</a></p>
+</body>
+</html>
+"""
+
+
 def offline_html(source_html: str) -> str:
     output = source_html
     output = output.replace(
@@ -347,6 +364,10 @@ def offline_html(source_html: str) -> str:
     )
     output = output.replace("<title>Roll Your Own Seed Phrase</title>", "<title>Roll Your Own Seed Phrase — Verified Offline Edition</title>")
     output = output.replace("<body>", '<body class="offline-edition wizard-active">')
+    output = output.replace(
+        '<p class="hero-safety-note"><strong>Before you begin:</strong> use this online guide to learn the method or make a dry run with a dummy seed phrase. For a <strong>real seed phrase</strong>, use the printed quick guide.</p>',
+        '<p class="hero-safety-note">This offline edition is for experts. Use it with a real seed phrase only on a dedicated, permanently offline machine.</p>',
+    )
     output = re.sub(r'\s*<div class="language-picker"[^>]*>.*?</div>', "", output, count=1)
     output = re.sub(
         r'<a class="plain-guide-link"[^>]*>.*?</a>',
@@ -366,8 +387,18 @@ def offline_html(source_html: str) -> str:
     )
     output = output.replace('<p class="step-number">Step 6 · complete</p>', '<p class="step-number">Step 4 · complete</p>')
     output = output.replace(
-        '<p class="small-note">This website is an aid to the paper guide, not a place to enter or store your rolls, bits, or seed words.</p>',
+        '<h2>Congratulations—<br>you made your own seed phrase.</h2>',
+        '<h2>Congratulations—<br>you made your own seed phrase.</h2>'
+        '<p>Keep it private, offline, and safely backed up.</p>',
+    )
+    output = output.replace(
+        '<p class="small-note">Do not use this online guide for a real seed phrase.</p>',
         '<p class="small-note">This verified offline edition derives BIP39 words directly from dice results entered in Step 3. All data is cleared when you navigate away or close the guide.</p>',
+    )
+    output = output.replace(
+        '</footer>',
+        '<p>Keep your seed phrase private, offline, and backed up safely.</p></footer>',
+        1,
     )
     for name in ("BitsToWords.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "HowToRollYourOwnSeedphrase.pdf"):
         output = output.replace(f"../{name}", name)
@@ -547,11 +578,15 @@ def build(target_name: str, version: str = "development", locale_code: str = "en
     if target_name == "online":
         deployable_html = online_html(compose_html(ONLINE_FRAGMENTS, locale_code), locale_code)
         (target / "index.html").write_text(deployable_html, encoding="utf-8", newline="\n")
-        (ROOT / "index.html").write_text(
-            language_selector_html("dist/online/index.html", "dist/de/index.html"), encoding="utf-8", newline="\n"
-        )
-        (DIST / "site-index.html").write_text(
+        (DIST / "index.html").write_text(
             language_selector_html("en/index.html", "de/index.html"), encoding="utf-8", newline="\n"
+        )
+        (DIST / "site-index.html").unlink(missing_ok=True)
+        legacy_english_output = DIST / "online"
+        if legacy_english_output.exists():
+            shutil.rmtree(legacy_english_output)
+        (ROOT / "index.html").write_text(
+            local_selector_forwarder_html("dist/index.html"), encoding="utf-8", newline="\n"
         )
         (target / "styles.css").write_text(source_css, encoding="utf-8", newline="\n")
     else:

@@ -3,9 +3,11 @@
 
 from __future__ import annotations
 
+import argparse
 import html
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -47,6 +49,35 @@ def convert_to_pdf(source: Path, destination: Path) -> None:
         generated.replace(destination)
 
 
+def render_html_to_pdf(source: Path, destination: Path) -> None:
+    browser = next(
+        (candidate for name in ("google-chrome", "chromium", "chromium-browser") if (candidate := shutil.which(name))),
+        None,
+    )
+    if browser is None:
+        raise RuntimeError("Chrome or Chromium is required to render the quick-guide PDFs.")
+
+    destination.unlink(missing_ok=True)
+    with tempfile.TemporaryDirectory(dir=os.environ.get("XDG_RUNTIME_DIR")) as profile:
+        subprocess.run(
+            [
+                browser,
+                "--headless=new",
+                "--disable-gpu",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--no-pdf-header-footer",
+                f"--user-data-dir={profile}",
+                f"--print-to-pdf={destination}",
+                source.resolve().as_uri(),
+            ],
+            check=True,
+            env={**os.environ, "TMPDIR": os.environ.get("XDG_RUNTIME_DIR", os.environ.get("TMPDIR", "/tmp"))},
+        )
+    if not destination.is_file():
+        raise RuntimeError(f"Quick-guide PDF was not created: {destination}")
+
+
 def build_german_bits_to_words() -> None:
     source = RESOURCES / "BitsToWords.xlsx"
     destination = RESOURCES / "BitsToWords-de.xlsx"
@@ -60,6 +91,11 @@ def build_german_bits_to_words() -> None:
                     cell.value = "Prüfsumme"
     workbook.save(destination)
     convert_to_pdf(destination, ROOT / "BitsToWords-de.pdf")
+
+
+def build_worksheet_pdfs() -> None:
+    convert_to_pdf(RESOURCES / "BitsToWords.xlsx", ROOT / "BitsToWords.pdf")
+    build_german_bits_to_words()
 
 
 def quick_guide_catalog() -> dict[str, object]:
@@ -151,7 +187,7 @@ def build_quick_guides() -> None:
         (ROOT / quick_guide_name(locale_code, "txt")).write_text(
             render_quick_guide_text(locale_code), encoding="utf-8", newline="\n"
         )
-    convert_to_pdf(ROOT / quick_guide_name("de", "html"), ROOT / quick_guide_name("de", "pdf"))
+        render_html_to_pdf(ROOT / quick_guide_name(locale_code, "html"), ROOT / quick_guide_name(locale_code, "pdf"))
 
 
 def remove_duplicate_lookup_artifacts() -> None:
@@ -163,7 +199,10 @@ def remove_duplicate_lookup_artifacts() -> None:
 
 
 def main() -> None:
-    build_german_bits_to_words()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("target", nargs="?", choices=("all",), default="all")
+    parser.parse_args()
+    build_worksheet_pdfs()
     build_quick_guides()
     remove_duplicate_lookup_artifacts()
 

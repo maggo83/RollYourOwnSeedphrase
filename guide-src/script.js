@@ -9,7 +9,7 @@
   let currentStep;
   let selectedLength = 12;
   let selectedEncoding = 'base4';
-  let selectedDice = 'casino';
+  let selectedDice = 'consumer';
   let selectedContainer = 'box';
   const stepPanels = [...document.querySelectorAll('.guide-step')];
   const previous = document.querySelector('.previous');

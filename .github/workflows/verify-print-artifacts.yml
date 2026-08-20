@@ -1,0 +1,50 @@
+name: Verify committed print artifacts
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PDF and worksheet renderers
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libreoffice-calc poppler-utils
+          google-chrome --version
+
+      - name: Install pinned worksheet dependency
+        run: python -m pip install --require-hashes -r print-requirements.txt
+
+      - name: Verify committed printable artifacts
+        run: python offline-package/verify_print_artifacts.py
+
+      - name: Upload regenerated artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regenerated-print-artifacts
+          path: |
+            BitsToWords.pdf
+            BitsToWords-de.pdf
+            additional_ressources/BitsToWords-de.xlsx
+            HowToRollYourOwnSeedphrase.html
+            HowToRollYourOwnSeedphrase.txt
+            HowToRollYourOwnSeedphrase.pdf
+            HowToRollYourOwnSeedphrase-de.html
+            HowToRollYourOwnSeedphrase-de.txt
+            HowToRollYourOwnSeedphrase-de.pdf
+          if-no-files-found: error
