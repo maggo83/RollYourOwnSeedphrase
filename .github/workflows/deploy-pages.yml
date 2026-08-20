@@ -43,8 +43,10 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -R dist/online/. _site/
-          cp HowToRollYourOwnSeedphrase.html HowToRollYourOwnSeedphrase.pdf HowToRollYourOwnSeedphrase.txt BitsToWords.pdf BIP39_Wordlist_Binary_Decimal_Searchable.pdf _site/
+          cp dist/index.html _site/index.html
+          mkdir -p _site/en _site/de
+          cp -R dist/en/. _site/en/
+          cp -R dist/de/. _site/de/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

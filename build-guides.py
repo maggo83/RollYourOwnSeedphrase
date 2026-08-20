@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import functools
 import hashlib
+import html
 import html.parser
 import json
 import re
@@ -12,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import zipfile
+from dataclasses import dataclass
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -33,6 +36,12 @@ STEP_3_4_OFFLINE = Path("offline/30-step-03-dice-bits.html")  # combined dice-en
 STEP_5_ONLINE = Path("online/50-step-05-wallet.html")
 STEP_6 = Path("shared/60-step-06-complete.html")
 SHELL_ENDING = Path("shared/70-shell-ending.html")
+CATALOG_SOURCE = GUIDE_SOURCE / "i18n" / "catalog.json"
+HTML_TOKEN_RE = re.compile(r"(<!--.*?-->|<![^>]*>|<[^>]*>)", flags=re.DOTALL)
+ATTRIBUTE_RE = re.compile(
+    r"(?P<name>[A-Za-z_:][A-Za-z0-9:_.-]*)(?P<equals>\s*=\s*)(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
+    flags=re.DOTALL,
+)
 ONLINE_FRAGMENTS = (
     SHELL_OPENING,
     STEP_1,
@@ -54,6 +63,20 @@ OFFLINE_FRAGMENTS = (
 )
 FIXED_ZIP_TIME = (2020, 1, 1, 0, 0, 0)
 GENERATED_FILE_NOTICE = "<!-- GENERATED FILE — DO NOT EDIT. Edit guide-src/ and run python3 build-guides.py online. -->"
+LOCALIZED_PRINTOUTS = frozenset({"BitsToWords.pdf", "HowToRollYourOwnSeedphrase.pdf"})
+
+
+@dataclass(frozen=True)
+class Locale:
+    code: str
+    output_directory: str
+    print_suffix: str
+
+
+LOCALES = {
+    "en": Locale("en", "en", ""),
+    "de": Locale("de", "de", "-de"),
+}
 
 
 class BuildError(RuntimeError):
@@ -151,11 +174,83 @@ class LocalReferenceParser(html.parser.HTMLParser):
                 self.references.append(value)
 
 
-def fragment_text(relative_path: Path) -> str:
-    return read_text(GUIDE_SOURCE / relative_path)
+def locale_config(locale_code: str) -> Locale:
+    try:
+        return LOCALES[locale_code]
+    except KeyError as error:
+        raise BuildError(f"Unsupported locale: {locale_code}") from error
 
 
-def validate_fragment_plan() -> None:
+@functools.cache
+def translation_catalog() -> dict[str, object]:
+    try:
+        catalog = json.loads(read_text(CATALOG_SOURCE))
+    except json.JSONDecodeError as error:
+        raise BuildError(f"Translation catalog is not valid JSON: {CATALOG_SOURCE.relative_to(ROOT)}") from error
+    if catalog.get("format") != 1 or not isinstance(catalog.get("fragments"), dict) or not isinstance(catalog.get("runtime"), dict):
+        raise BuildError("Translation catalog has an unsupported structure.")
+    return catalog
+
+
+def translated_fragment(source: str, relative_path: Path, locale_code: str) -> str:
+    if locale_code == "en":
+        return source
+
+    catalog = translation_catalog()
+    entries = catalog["fragments"].get(relative_path.as_posix())
+    if not isinstance(entries, list):
+        raise BuildError(f"Translation catalog is missing {relative_path}.")
+
+    text_values: dict[str, str] = {}
+    attribute_values: dict[tuple[str, str], str] = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or entry.get("kind") not in {"text", "attr"}:
+            raise BuildError(f"Translation catalog has an invalid entry for {relative_path}.")
+        english = entry.get("en")
+        localized = entry.get(locale_code)
+        if not isinstance(english, str) or not isinstance(localized, str):
+            raise BuildError(f"Translation catalog has an incomplete {locale_code} entry for {relative_path}.")
+        if entry["kind"] == "text":
+            if text_values.setdefault(english, localized) != localized:
+                raise BuildError(f"Translation catalog has ambiguous text for {relative_path}: {english!r}")
+        else:
+            name = entry.get("name")
+            if not isinstance(name, str):
+                raise BuildError(f"Translation catalog has an unnamed attribute for {relative_path}.")
+            key = (name, english)
+            if attribute_values.setdefault(key, localized) != localized:
+                raise BuildError(f"Translation catalog has ambiguous attribute {name} for {relative_path}: {english!r}")
+
+    def replace_attribute(match: re.Match[str]) -> str:
+        name = match.group("name")
+        value = html.unescape(match.group("value"))
+        localized = attribute_values.get((name, value))
+        if localized is None:
+            return match.group(0)
+        return f'{name}{match.group("equals")}{match.group("quote")}{html.escape(localized, quote=True)}{match.group("quote")}'
+
+    def replace_tag(tag: str) -> str:
+        return ATTRIBUTE_RE.sub(replace_attribute, tag)
+
+    pieces = HTML_TOKEN_RE.split(source)
+    for index in range(0, len(pieces), 2):
+        english = html.unescape(pieces[index])
+        if english in text_values:
+            pieces[index] = html.escape(text_values[english], quote=False)
+    for index in range(1, len(pieces), 2):
+        pieces[index] = replace_tag(pieces[index])
+    translated = "".join(pieces)
+    if translated == source:
+        raise BuildError(f"Translation catalog did not change {relative_path} for locale {locale_code}.")
+    return translated
+
+
+def fragment_text(relative_path: Path, locale_code: str = "en") -> str:
+    locale_config(locale_code)
+    return translated_fragment(read_text(GUIDE_SOURCE / relative_path), relative_path, locale_code)
+
+
+def validate_fragment_plan(locale_code: str = "en", include_offline: bool = True) -> None:
     expected_online = (SHELL_OPENING, STEP_1, STEP_2, STEP_3, STEP_4, STEP_5_ONLINE, STEP_6, SHELL_ENDING)
     expected_offline = (SHELL_OPENING, STEP_0_OFFLINE, STEP_1, STEP_2, STEP_3_4_OFFLINE, STEP_6, SHELL_ENDING)
     if ONLINE_FRAGMENTS != expected_online or OFFLINE_FRAGMENTS != expected_offline:
@@ -171,45 +266,93 @@ def validate_fragment_plan() -> None:
         STEP_5_ONLINE: [5],
         STEP_6: [6],
     }
-    all_fragments = dict.fromkeys(ONLINE_FRAGMENTS + OFFLINE_FRAGMENTS)
+    all_fragments = dict.fromkeys(ONLINE_FRAGMENTS + (OFFLINE_FRAGMENTS if include_offline else ()))
     for relative_path in all_fragments:
-        source = fragment_text(relative_path)
+        source = fragment_text(relative_path, locale_code)
         if "OFFLINE_STEP_0_INSERT" in source or "VARIANT_STEP_5" in source:
             raise BuildError(f"Obsolete build marker found in {relative_path}.")
         panels = [int(value) for value in re.findall(r'data-step-panel="(\d+)"', source)]
         if panels != expected_steps.get(relative_path, []):
             raise BuildError(f"Fragment {relative_path} has unexpected step panels: {panels}")
 
-    online_step_five = fragment_text(STEP_5_ONLINE)
-    offline_dice_step = fragment_text(STEP_3_4_OFFLINE)
+    online_step_five = fragment_text(STEP_5_ONLINE, locale_code)
     if "final-candidate" not in online_step_five or "data-checksum-calculator" in online_step_five:
         raise BuildError("The online Step 5 fragment is not the wallet workflow.")
-    if "data-bw-table" not in offline_dice_step or "data-die-entry" not in offline_dice_step:
-        raise BuildError("The offline combined step is missing its die-entry or bit-table.")
-    if "air-gap-step" not in fragment_text(STEP_0_OFFLINE):
-        raise BuildError("The offline Step 0 fragment is missing its air-gap content.")
+    if include_offline:
+        offline_dice_step = fragment_text(STEP_3_4_OFFLINE, locale_code)
+        if "data-bw-table" not in offline_dice_step or "data-die-entry" not in offline_dice_step:
+            raise BuildError("The offline combined step is missing its die-entry or bit-table.")
+        if "air-gap-step" not in fragment_text(STEP_0_OFFLINE, locale_code):
+            raise BuildError("The offline Step 0 fragment is missing its air-gap content.")
 
 
-def compose_html(fragments: tuple[Path, ...]) -> str:
-    return "".join(fragment_text(relative_path) for relative_path in fragments)
+def compose_html(fragments: tuple[Path, ...], locale_code: str = "en") -> str:
+    return "".join(fragment_text(relative_path, locale_code) for relative_path in fragments)
 
 
-def online_html(source_html: str) -> str:
+def localized_print_name(name: str, locale_code: str) -> str:
+    locale = locale_config(locale_code)
+    if not locale.print_suffix or name not in LOCALIZED_PRINTOUTS:
+        return name
+    stem, suffix = name.rsplit(".", 1)
+    return f"{stem}{locale.print_suffix}.{suffix}"
+
+
+def online_html(source_html: str, locale_code: str = "en") -> str:
     output = source_html
-    output = output.replace("../BitsToWords.pdf", "BitsToWords.pdf")
-    output = output.replace("../BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf")
-    output = output.replace("../HowToRollYourOwnSeedphrase.pdf", "HowToRollYourOwnSeedphrase.pdf")
+    for name in ("BitsToWords.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "HowToRollYourOwnSeedphrase.pdf"):
+        output = output.replace(f"../{localized_print_name(name, locale_code)}", localized_print_name(name, locale_code))
+    output = output.replace(
+        '  <script src="script.js"></script>',
+        '  <script src="locale.js"></script>\n'
+        '  <script src="script.js"></script>',
+    )
     return output
 
 
-def generated_root_html(deployable_html: str) -> str:
-    doctype = "<!doctype html>\n"
-    if not deployable_html.startswith(doctype):
-        raise BuildError("The online composition must begin with the HTML doctype.")
-    output = deployable_html.replace('href="styles.css"', 'href="guide-src/styles.css"')
-    output = output.replace('src="assets/', 'src="guide-src/assets/')
-    output = output.replace('src="script.js"', 'src="guide-src/script.js"')
-    return doctype + GENERATED_FILE_NOTICE + "\n" + output[len(doctype):]
+def language_selector_html(english_href: str, german_href: str) -> str:
+        return f"""<!doctype html>
+{GENERATED_FILE_NOTICE}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+        * {{ box-sizing: border-box; }}
+        body {{ display: grid; min-height: 100vh; place-items: center; margin: 0; background: #eff7ed; font-family: "DM Sans", Arial, sans-serif; }}
+        main {{ display: grid; grid-template-columns: repeat(2, minmax(132px, 180px)); gap: 1rem; padding: 1.5rem; }}
+        a {{ display: grid; min-height: 180px; place-items: center; align-content: center; gap: 0.8rem; padding: 1rem; color: #203933; background: #fffdf7; border: 2px solid #15483e; border-radius: 8px; box-shadow: 0 8px 18px rgba(21, 72, 62, 0.12); font-size: 1.15rem; font-weight: 700; text-decoration: none; }}
+        a:hover, a:focus-visible {{ color: #fff; background: #15483e; outline: 3px solid #c7922f; outline-offset: 3px; }}
+        .flag {{ font-size: 3rem; line-height: 1; }}
+        @media (max-width: 360px) {{ main {{ grid-template-columns: 1fr; width: min(100%, 220px); }} a {{ min-height: 130px; }} }}
+    </style>
+</head>
+<body>
+    <main aria-label="Language selection">
+        <a href="{english_href}"><span class="flag" aria-hidden="true">🇬🇧</span><span>English</span></a>
+        <a href="{german_href}" lang="de"><span class="flag" aria-hidden="true">🇩🇪</span><span>Deutsch</span></a>
+    </main>
+</body>
+</html>
+"""
+
+
+def local_selector_forwarder_html(target: str) -> str:
+    return f"""<!doctype html>
+{GENERATED_FILE_NOTICE}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={target}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roll Your Own Seed Phrase</title>
+</head>
+<body>
+    <p><a href="{target}">Open language selector</a></p>
+</body>
+</html>
+"""
 
 
 def offline_html(source_html: str) -> str:
@@ -222,34 +365,49 @@ def offline_html(source_html: str) -> str:
     output = output.replace("<title>Roll Your Own Seed Phrase</title>", "<title>Roll Your Own Seed Phrase — Verified Offline Edition</title>")
     output = output.replace("<body>", '<body class="offline-edition wizard-active">')
     output = output.replace(
-        '<a class="plain-guide-link" href="../HowToRollYourOwnSeedphrase.pdf">Printable summary</a>',
+        '<p class="hero-safety-note"><strong>Before you begin:</strong> use this online guide to learn the method or make a dry run with a dummy seed phrase. For a <strong>real seed phrase</strong>, use the printed quick guide.</p>',
+        '<p class="hero-safety-note">This offline edition is for experts. Use it with a real seed phrase only on a dedicated, permanently offline machine.</p>',
+    )
+    output = re.sub(r'\s*<div class="language-picker"[^>]*>.*?</div>', "", output, count=1)
+    output = re.sub(
+        r'<a class="plain-guide-link"[^>]*>.*?</a>',
         '<span class="plain-guide-link">Verified offline edition</span>',
+        output,
+        count=1,
     )
     output = output.replace(
         '<span class="progress-label">Step <strong data-current-step>1</strong> of 6</span>',
         '<span class="progress-label">Step <strong data-current-step>0</strong> of 4</span>',
-    ).replace("<span data-progress-title>Prepare privately</span>", "<span data-progress-title>Permanent air gap required</span>")
+    )
+    output = output.replace("<span data-progress-title>Prepare privately</span>", "<span data-progress-title>Permanent air gap required</span>")
     # Rename completion step panel 6 → 4 so offline panels are [0,1,2,3,4]
     output = output.replace(
         'data-step-panel="6" data-step-title="Your seed phrase is ready"',
         'data-step-panel="4" data-step-title="Your seed phrase is ready"',
     )
+    output = output.replace('<p class="step-number">Step 6 · complete</p>', '<p class="step-number">Step 4 · complete</p>')
     output = output.replace(
-        '<p class="step-number">Step 6 · complete</p>',
-        '<p class="step-number">Step 4 · complete</p>',
+        '<h2>Congratulations—<br>you made your own seed phrase.</h2>',
+        '<h2>Congratulations—<br>you made your own seed phrase.</h2>'
+        '<p>Keep it private, offline, and safely backed up.</p>',
     )
     output = output.replace(
-        '<p class="small-note">This website is an aid to the paper guide, not a place to enter or store your rolls, bits, or seed words.</p>',
+        '<p class="small-note">Do not use this online guide for a real seed phrase.</p>',
         '<p class="small-note">This verified offline edition derives BIP39 words directly from dice results entered in Step 3. All data is cleared when you navigate away or close the guide.</p>',
     )
-    output = output.replace("../BitsToWords.pdf", "BitsToWords.pdf")
-    output = output.replace("../BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf")
-    output = output.replace("../HowToRollYourOwnSeedphrase.pdf", "HowToRollYourOwnSeedphrase.pdf")
+    output = output.replace(
+        '</footer>',
+        '<p>Keep your seed phrase private, offline, and backed up safely.</p></footer>',
+        1,
+    )
+    for name in ("BitsToWords.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "HowToRollYourOwnSeedphrase.pdf"):
+        output = output.replace(f"../{name}", name)
     output = output.replace(
         '  <script src="script.js"></script>',
         '  <script src="bip39-english.js"></script>\n'
         '  <script src="sha256.js"></script>\n'
         '  <script src="bits-words.js"></script>\n'
+        '  <script src="locale.js"></script>\n'
         '  <script src="script.js"></script>',
     )
     return output
@@ -268,11 +426,34 @@ def wordlist_javascript(words: list[str]) -> str:
     )
 
 
-def copy_common_files(target: Path) -> None:
+def runtime_locale_javascript(locale_code: str) -> str:
+    def resolve(value: object) -> object:
+        if isinstance(value, str):
+            return value
+        if not isinstance(value, dict):
+            raise BuildError("Translation catalog runtime values must be strings or objects.")
+        if locale_code in value:
+            localized = value[locale_code]
+            if not isinstance(localized, str):
+                raise BuildError(f"Translation catalog runtime value for {locale_code} must be a string.")
+            return localized
+        return {key: resolve(child) for key, child in value.items()}
+
+    runtime = translation_catalog()["runtime"]
+    localized = resolve(runtime)
+    payload = json.dumps(localized, ensure_ascii=False, separators=(",", ":"))
+    return f"/* Build-generated runtime locale: {locale_code}. */\nglobalThis.GUIDE_LOCALE_TEXT = Object.freeze({payload});\n"
+
+
+def copy_common_files(target: Path, locale_code: str) -> None:
     shutil.copytree(GUIDE_SOURCE / "assets", target / "assets")
     shutil.copy2(ROOT / "LICENSE", target / "LICENSE")
     for name in ("BitsToWords.pdf", "BIP39_Wordlist_Binary_Decimal_Searchable.pdf", "HowToRollYourOwnSeedphrase.pdf"):
-        shutil.copy2(ROOT / name, target / name)
+        localized_name = localized_print_name(name, locale_code)
+        shutil.copy2(ROOT / localized_name, target / localized_name)
+    if locale_code == "de":
+        for name in ("HowToRollYourOwnSeedphrase-de.html", "HowToRollYourOwnSeedphrase-de.txt"):
+            shutil.copy2(ROOT / name, target / name)
 
 
 def source_commit() -> str:
@@ -282,10 +463,11 @@ def source_commit() -> str:
     return result.stdout.strip()
 
 
-def write_manifest(target: Path, build_target: str, version: str) -> None:
+def write_manifest(target: Path, build_target: str, version: str, locale_code: str) -> None:
     manifest = (
         "Roll Your Own Seed Phrase\n"
         f"Build target: {build_target}\n"
+        f"Guide locale: {locale_code}\n"
         f"Release version: {version}\n"
         f"Source commit: {source_commit()}\n"
         f"English BIP39 normalized SHA-256: {WORDLIST_NORMALIZED_SHA256}\n"
@@ -294,11 +476,17 @@ def write_manifest(target: Path, build_target: str, version: str) -> None:
     (target / "MANIFEST.txt").write_text(manifest, encoding="utf-8", newline="\n")
 
 
-def validate_local_references(target: Path, allow_remote_css: bool = False) -> None:
+def validate_local_references(
+    target: Path,
+    allow_remote_css: bool = False,
+    allowed_cross_edition_links: frozenset[str] = frozenset(),
+) -> None:
     parser = LocalReferenceParser()
     parser.feed((target / "index.html").read_text(encoding="utf-8"))
     for reference in parser.references:
         if reference.startswith("#"):
+            continue
+        if reference in allowed_cross_edition_links:
             continue
         if ":" in reference or reference.startswith("//") or ".." in Path(reference).parts:
             raise BuildError(f"Non-local or escaping reference in offline HTML: {reference}")
@@ -317,24 +505,32 @@ def validate_local_references(target: Path, allow_remote_css: bool = False) -> N
             raise BuildError(f"Missing offline CSS reference: {reference}")
 
 
-def validate_output(target: Path, build_target: str) -> None:
+def validate_output(target: Path, build_target: str, locale_code: str = "en") -> None:
     html_text = (target / "index.html").read_text(encoding="utf-8")
     panels = [int(value) for value in re.findall(r'data-step-panel="(\d+)"', html_text)]
     if build_target == "online":
         if panels != [1, 2, 3, 4, 5, 6] or "data-checksum-calculator" in html_text or "air-gap-step" in html_text:
             raise BuildError("The online output has the wrong steps or contains offline-only inputs.")
-        if '<p class="step-number">Step 6 · complete</p>' not in html_text:
+        completion_caption = '<p class="step-number">Step 6 · complete</p>' if locale_code == "en" else '<p class="step-number">Schritt 6 · fertig</p>'
+        if completion_caption not in html_text:
             raise BuildError("The online completion caption has the wrong step number.")
-        validate_local_references(target, allow_remote_css=True)
+        language_link = "de/" if locale_code == "en" else "../"
+        validate_local_references(
+            target,
+            allow_remote_css=True,
+            allowed_cross_edition_links=frozenset({language_link}),
+        )
         return
 
     if panels != [0, 1, 2, 3, 4]:
         raise BuildError(f"The offline output has the wrong step order: {panels}")
     if "data-bw-table" not in html_text or "data-die-entry" not in html_text or "final-candidate" in html_text:
         raise BuildError("The offline output does not contain the combined dice-entry + bits-to-words step.")
-    if "your funds may be at risk" not in html_text.lower():
+    air_gap_warning = "your funds may be at risk" if locale_code == "en" else "deine mittel koennen gefaehrdet sein"
+    if air_gap_warning not in html_text.lower():
         raise BuildError("The mandatory Step 0 funds-at-risk warning is missing.")
-    if '<p class="step-number">Step 4 · complete</p>' not in html_text:
+    completion_caption = '<p class="step-number">Step 4 · complete</p>' if locale_code == "en" else '<p class="step-number">Schritt 4 · fertig</p>'
+    if completion_caption not in html_text:
         raise BuildError("The offline completion caption has the wrong step number.")
 
     forbidden = {
@@ -359,26 +555,39 @@ def validate_output(target: Path, build_target: str) -> None:
     validate_local_references(target)
 
 
-def build(target_name: str, version: str = "development") -> Path:
+def build(target_name: str, version: str = "development", locale_code: str = "en") -> Path:
     if target_name not in {"online", "offline"}:
         raise BuildError(f"Unknown build target: {target_name}")
+    if target_name == "offline" and locale_code != "en":
+        raise BuildError("The offline edition is English-only.")
+    locale = locale_config(locale_code)
+    build_locale = locale_code if target_name == "online" else "en"
 
     source_css = read_text(GUIDE_SOURCE / "styles.css")
     source_script = read_text(GUIDE_SOURCE / "script.js")
-    validate_fragment_plan()
+    validate_fragment_plan(locale_code, include_offline=target_name == "offline")
     require_hash(OFFLINE_SOURCE / "sha256.js", SHA256_SOURCE_SHA256)
     words = extract_wordlist()
 
-    target = DIST / target_name
+    target = DIST / (locale.output_directory if target_name == "online" else "offline")
     if target.exists():
         shutil.rmtree(target)
     target.mkdir(parents=True)
-    copy_common_files(target)
+    copy_common_files(target, locale_code if target_name == "online" else "en")
 
     if target_name == "online":
-        deployable_html = online_html(compose_html(ONLINE_FRAGMENTS))
+        deployable_html = online_html(compose_html(ONLINE_FRAGMENTS, locale_code), locale_code)
         (target / "index.html").write_text(deployable_html, encoding="utf-8", newline="\n")
-        (ROOT / "index.html").write_text(generated_root_html(deployable_html), encoding="utf-8", newline="\n")
+        (DIST / "index.html").write_text(
+            language_selector_html("en/index.html", "de/index.html"), encoding="utf-8", newline="\n"
+        )
+        (DIST / "site-index.html").unlink(missing_ok=True)
+        legacy_english_output = DIST / "online"
+        if legacy_english_output.exists():
+            shutil.rmtree(legacy_english_output)
+        (ROOT / "index.html").write_text(
+            local_selector_forwarder_html("dist/index.html"), encoding="utf-8", newline="\n"
+        )
         (target / "styles.css").write_text(source_css, encoding="utf-8", newline="\n")
     else:
         (target / "index.html").write_text(offline_html(compose_html(OFFLINE_FRAGMENTS)), encoding="utf-8", newline="\n")
@@ -388,9 +597,10 @@ def build(target_name: str, version: str = "development") -> Path:
         shutil.copy2(OFFLINE_SOURCE / "bits-words.js", target / "bits-words.js")
         shutil.copytree(OFFLINE_SOURCE / "LICENSES", target / "LICENSES")
 
+    (target / "locale.js").write_text(runtime_locale_javascript(build_locale), encoding="utf-8", newline="\n")
     (target / "script.js").write_text(source_script, encoding="utf-8", newline="\n")
-    write_manifest(target, target_name, version)
-    validate_output(target, target_name)
+    write_manifest(target, target_name, version, build_locale)
+    validate_output(target, target_name, build_locale)
     return target
 
 
@@ -425,17 +635,19 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("target", choices=("online", "offline", "all", "package"))
     parser.add_argument("--version", help="Required for the package target, for example 1.0.0")
+    parser.add_argument("--locale", choices=tuple(LOCALES), default="en", help="Guide locale for the online target")
     args = parser.parse_args()
     try:
         if args.target == "all":
-            build("online")
-            build("offline")
+            build("online", locale_code="en")
+            build("online", locale_code="de")
+            build("offline", locale_code="en")
         elif args.target == "package":
             if not args.version:
                 raise BuildError("--version is required for the package target.")
             package(args.version)
         else:
-            build(args.target)
+            build(args.target, locale_code=args.locale)
     except (BuildError, OSError, subprocess.CalledProcessError, zipfile.BadZipFile) as error:
         print(f"build failed: {error}", file=sys.stderr)
         return 1
