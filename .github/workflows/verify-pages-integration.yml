@@ -1,33 +1,18 @@
-name: Deploy GitHub Pages
+name: Verify Pages integration
 
 on:
-  push:
-    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  pages-integration:
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -43,19 +28,15 @@ jobs:
       - name: Verify guide builds and offline derivation
         run: python offline-package/verify.py
 
-      - name: Assemble site
+      - name: Assemble Pages site
         run: |
-          mkdir -p _site
-          cp dist/index.html _site/index.html
           mkdir -p _site/en _site/de
+          cp dist/index.html _site/index.html
           cp -R dist/en/. _site/en/
           cp -R dist/de/. _site/de/
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          test -f _site/index.html
+          test -f _site/en/index.html
+          test -f _site/de/index.html
+          test ! -d _site/de/de
+          grep -F 'href="en/index.html"' _site/index.html
+          grep -F 'href="de/index.html"' _site/index.html
