@@ -483,12 +483,12 @@
       {
         "kind": "text",
         "en": "skip",
-        "de": "weg"
+        "de": "ignorieren"
       },
       {
         "kind": "text",
         "en": "skip",
-        "de": "weg"
+        "de": "ignorieren"
       },
       {
         "kind": "text",
@@ -641,12 +641,12 @@
       {
         "kind": "text",
         "en": "skip",
-        "de": "ignorieren"
+        "de": ""
       },
       {
         "kind": "text",
         "en": "skip",
-        "de": "ignorieren"
+        "de": ""
       },
       {
         "kind": "text",
