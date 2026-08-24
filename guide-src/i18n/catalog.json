@@ -515,7 +515,7 @@
       "text-02": {
         "kind": "text",
         "en": "Roll, convert, and repeat.",
-        "de": "Würfle, übertrage und wiederhole."
+        "de": "Würfeln, Aufschreiben und Wiederholen."
       },
       "text-03": {
         "kind": "text",
@@ -638,7 +638,7 @@
       "text-02": {
         "kind": "text",
         "en": "Look up one 11-bit group (word) at a time.",
-        "de": "Schlage jede 11-Bit-Gruppe einzeln nach."
+        "de": "Übersetze jede 11-Bit-Gruppe in ein Wort."
       },
       "text-03": {
         "kind": "text",
@@ -838,7 +838,7 @@
       "text-02": {
         "kind": "text",
         "en": "Let the checksum finish the last word.",
-        "de": "Lass die Prüfsumme das letzte Wort vervollständigen."
+        "de": "Die Prüfsumme vervollständigt das letzte Wort."
       },
       "text-03": {
         "kind": "text",

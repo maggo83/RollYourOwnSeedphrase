@@ -441,9 +441,12 @@ h3 {
 .encoding-tabs {
   display: flex;
   gap: 0.4rem;
+  width: 100%;
   margin: 1.5rem 0 1rem;
 }
 .encoding-tab {
+  flex: 1 1 0;
+  min-width: 0;
   padding: 0.55rem 0.7rem;
   color: var(--muted);
   background: #fff;
@@ -875,6 +878,74 @@ footer p {
   border-left: 4px solid var(--coral);
   border-radius: 0 8px 8px 0;
   font-size: 0.9rem;
+}
+.decision-checkpoints {
+  display: grid;
+  gap: 0.8rem;
+}
+.decision-checkpoints .checkpoint {
+  margin-top: 0;
+}
+.step-checkpoints {
+  display: grid;
+  gap: 0.8rem;
+}
+.step-checkpoints .checkpoint {
+  margin-top: 0;
+}
+.wizard .guide-step[data-step-panel="2"] .toggle-group {
+  width: 100%;
+}
+.wizard .guide-step[data-step-panel="2"] .toggle {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 801px) {
+  .wizard .guide-step[data-step-panel="2"] {
+    grid-template-areas:
+      "copy visual"
+      "checkpoints visual";
+    grid-template-rows: auto auto;
+    column-gap: 4.2rem;
+    row-gap: 0.8rem;
+    align-content: center;
+  }
+  .wizard .guide-step[data-step-panel="2"] > .step-copy {
+    grid-area: copy;
+  }
+  .wizard .guide-step[data-step-panel="2"] > .step-visual {
+    grid-area: visual;
+  }
+  .decision-checkpoints {
+    grid-area: checkpoints;
+  }
+  .wizard .guide-step[data-step-panel="3"],
+  .wizard .guide-step[data-step-panel="4"],
+  .wizard .guide-step[data-step-panel="5"] {
+    grid-template-areas:
+      "copy visual"
+      "checkpoints visual";
+    grid-template-rows: auto auto;
+    column-gap: 4.2rem;
+    row-gap: 0.8rem;
+    align-content: center;
+  }
+  .wizard .guide-step[data-step-panel="3"] > .step-copy,
+  .wizard .guide-step[data-step-panel="4"] > .step-copy,
+  .wizard .guide-step[data-step-panel="5"] > .step-copy {
+    grid-area: copy;
+  }
+  .wizard .guide-step[data-step-panel="3"] > .step-visual,
+  .wizard .guide-step[data-step-panel="4"] > .step-visual,
+  .wizard .guide-step[data-step-panel="5"] > .step-visual {
+    grid-area: visual;
+  }
+  .step-checkpoints {
+    grid-area: checkpoints;
+  }
 }
 [hidden] {
   display: none !important;
@@ -3721,6 +3792,166 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
   .lookup-flow .sheet-highlight {
     flex-basis: 118px;
     width: 118px;
+  }
+}
+
+/* Phone layout: retain the single guide flow while making controls and diagrams fit narrow viewports. */
+@media (max-width: 600px) {
+  .site-header {
+    min-height: 72px;
+    padding: 0.8rem 1rem;
+  }
+  .plain-guide-link {
+    font-size: 0.8rem;
+  }
+  .wizard {
+    min-height: auto;
+    padding: 1rem 1rem 1.25rem;
+  }
+  .wizard-progress {
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+    font-size: 0.78rem;
+  }
+  .wizard .guide-step {
+    gap: 1.3rem;
+  }
+  .wizard .step-copy h2 {
+    font-size: 2rem;
+  }
+  .wizard .step-visual {
+    min-height: 0;
+    padding: 1rem;
+    border-radius: 16px;
+  }
+  .prepare-step .compact,
+  .compact,
+  .setup-choices,
+  .compact-checklist,
+  .compact-checklist.has-box-clearance {
+    grid-template-columns: 1fr;
+  }
+  .compact-checklist [data-container-check="box"] {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .wizard .toggle-group,
+  .toggle-group {
+    width: 100%;
+  }
+  .toggle {
+    min-width: 0;
+  }
+  .worksheet-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+  }
+  .worksheet-input {
+    width: 100%;
+  }
+  .tooltip-content {
+    position: fixed;
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: 1rem;
+    width: auto;
+  }
+  .tooltip-content::after {
+    display: none;
+  }
+  .lookup-stage,
+  .lookup-row-stage {
+    padding: 0.85rem 0.75rem 0.85rem 2.5rem;
+  }
+  .lookup-flow {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .lookup-flow .lookup-arrow {
+    transform: rotate(90deg);
+  }
+  .lookup-flow .sheet-stack {
+    flex-basis: 126px;
+    width: 126px;
+  }
+  .lookup-flow .sheet-stack img,
+  .lookup-flow .lookup-sheet,
+  .lookup-flow .sheet-highlight {
+    flex-basis: 104px;
+    width: 104px;
+  }
+  .stage-connector-layer,
+  .row-connector-layer,
+  .lookup-transfer-layer {
+    display: none;
+  }
+  .step-controls {
+    position: sticky;
+    z-index: 100;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: calc(100% + 2rem);
+    margin: 1.5rem -1rem 0;
+    padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--cream) 94%, transparent);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+  }
+  .step-controls .button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .forward-note.is-hidden {
+    display: none;
+  }
+  .wizard .small-note {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand {
+    gap: 0.45rem;
+    font-size: 0.76rem;
+  }
+  .brand strong {
+    font-size: 0.84rem;
+  }
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.1rem;
+  }
+  .plain-guide-link {
+    max-width: 7.5rem;
+    text-align: right;
+  }
+  .wizard .step-copy h2 {
+    font-size: 1.8rem;
+  }
+  .die-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    width: 100%;
+  }
+  .die-grid div {
+    height: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
