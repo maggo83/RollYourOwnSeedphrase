@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap");
 
 :root {
+  color-scheme: only light;
   --ink: #203933;
   --muted: #61756d;
   --cream: #fffdf7;
@@ -440,26 +441,30 @@ h3 {
 }
 .encoding-tabs {
   display: flex;
-  gap: 0.4rem;
+  gap: 0;
   width: 100%;
+  overflow: hidden;
   margin: 1.5rem 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: 11px;
 }
 .encoding-tab {
   flex: 1 1 0;
   min-width: 0;
-  padding: 0.55rem 0.7rem;
+  padding: 0.7rem 0.8rem;
   color: var(--muted);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   cursor: pointer;
-  font-size: 0.84rem;
   font-weight: 700;
+}
+.encoding-tab + .encoding-tab {
+  border-left: 1px solid var(--line);
 }
 .encoding-tab.is-selected {
   color: #fff;
   background: var(--forest);
-  border-color: var(--forest);
 }
 .encoding-explanation {
   display: none;
@@ -674,9 +679,6 @@ footer p {
   }
   .die-grid div {
     height: 72px;
-  }
-  .encoding-tabs {
-    flex-direction: column;
   }
 }
 
@@ -3411,7 +3413,10 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
 
 /* Restore the centered BitsToWords-to-page lookup sequence. */
 .bit-marker-row + .word-space {
-  border-top: 1px solid #315d50;
+  border-top: 0;
+}
+.bit-marker-row {
+  border-bottom: 1px solid #315d50;
 }
 .final-boundary-12 .bit-cells i:nth-child(7),
 [data-final-bits-12] .bit-cells i:nth-child(7) {
@@ -3819,6 +3824,11 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
   .wizard .step-copy h2 {
     font-size: 2rem;
   }
+  .completion-step h2 {
+    max-width: 100%;
+    font-size: 2.2rem !important;
+    overflow-wrap: anywhere;
+  }
   .wizard .step-visual {
     min-height: 0;
     padding: 1rem;
@@ -3880,11 +3890,6 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
   .lookup-flow .sheet-highlight {
     flex-basis: 104px;
     width: 104px;
-  }
-  .stage-connector-layer,
-  .row-connector-layer,
-  .lookup-transfer-layer {
-    display: none;
   }
   .step-controls {
     position: sticky;
