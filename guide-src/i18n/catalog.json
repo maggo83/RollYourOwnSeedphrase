@@ -1,1040 +1,1014 @@
 {
-  "format": 1,
+  "format": 2,
   "fragments": {
-    "shared/00-shell-opening.html": [
-      {
+    "shared/00-shell-opening.html": {
+      "attr-01": {
         "kind": "attr",
         "en": "en",
         "de": "de",
         "name": "lang"
       },
-      {
+      "attr-02": {
         "kind": "attr",
         "en": "A calm, visual guide to creating a BIP-39 seed phrase with physical dice.",
         "de": "Eine ruhige, visuelle Anleitung zum Erstellen einer BIP-39-Seed-Phrase mit echten Würfeln.",
         "name": "content"
       },
-      {
+      "text-01": {
         "kind": "text",
         "en": "Roll Your Own Seed Phrase",
         "de": "Würfle deine eigene Seed-Phrase"
       },
-      {
+      "attr-03": {
         "kind": "attr",
         "en": "Roll Your Own Seed Phrase",
         "de": "Würfle deine eigene Seed-Phrase",
         "name": "aria-label"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "⚄",
         "de": "⚁"
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "Roll your own",
         "de": "Würfle deine eigene"
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "seed phrase",
         "de": "Seed-Phrase"
       },
-      {
+      "attr-04": {
         "kind": "attr",
         "en": "../HowToRollYourOwnSeedphrase.pdf",
         "de": "../HowToRollYourOwnSeedphrase-de.pdf",
         "name": "href"
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": "Printable summary",
         "de": "Druckbare Kurzfassung"
       },
-      {
+      "text-06": {
         "kind": "text",
-        "en": "A relaxed, private, paper-first process",
+        "en": "A relaxed, private, process",
         "de": "Entspannt, mit Papier, Schritt für Schritt"
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": "Make your own seed phrase",
         "de": "Würfle deine eigene"
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "one roll at a time.",
         "de": "Seed-Phrase."
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": "This visual guide turns physical dice rolls into a 12- or 24-word BIP-39 seed phrase.",
         "de": "Diese visuelle Anleitung verwandelt echte Würfelwürfe in eine BIP-39-Seed-Phrase mit 12 oder 24 Wörtern."
       },
-      {
+      "text-10": {
         "kind": "text",
         "en": "Before you begin:",
         "de": "Bevor du loslegst:"
       },
-      {
+      "text-11": {
         "kind": "text",
         "en": " use this online guide to learn the method or make a dry run with a dummy seed phrase. For a ",
         "de": " Nutze diese Online-Anleitung, um den Ablauf zu lernen oder einen Trockendurchlauf mit einer Dummy-Phrase zu machen. Für eine "
       },
-      {
+      "text-12": {
         "kind": "text",
         "en": "real seed phrase",
         "de": "echte Seed-Phrase"
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": ", use the printed quick guide.",
         "de": " nutze die gedruckte Kurzfassung."
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": "Start the guide ",
         "de": "Anleitung starten "
       },
-      {
+      "attr-05": {
         "kind": "attr",
         "en": "Illustration of dice inside a lidded box",
         "de": "Illustration von Würfeln in einer Box mit Deckel",
         "name": "aria-label"
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": "Shake · settle · read",
         "de": "Schütteln · rollen · ablesen"
       },
-      {
+      "attr-06": {
         "kind": "attr",
         "en": "Seed phrase guide",
         "de": "Anleitung für Seed-Phrasen",
         "name": "aria-label"
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": "Step ",
         "de": "Schritt "
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": " of 6",
         "de": " von 6"
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": "Prepare calmly",
         "de": "In Ruhe vorbereiten"
       }
-    ],
-    "shared/10-step-01-prepare.html": [
-      {
+    },
+    "shared/10-step-01-prepare.html": {
+      "text-01": {
         "kind": "text",
         "en": "Step 1 · prepare",
         "de": "Schritt 1 · vorbereiten"
       },
-      {
+      "text-02": {
         "kind": "text",
-        "en": "Set up a private, paper-first workspace.",
-        "de": "Richte dir einen abgeschiedenen Arbeitsplatz ein."
+        "en": "Set up a private workspace.",
+        "de": "Richte dir deinen Arbeitsplatz ein."
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "Gather these six things before we get started.",
         "de": "Lege diese sechs Dinge bereit."
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "⚄",
         "de": "⚁"
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": "Dice",
         "de": "Würfel"
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": "One or more six-sided dice.",
         "de": "Ein oder mehrere sechsseitige Würfel."
       },
-      {
+      "attr-01": {
         "kind": "attr",
         "en": "Lidded box",
         "de": "Box mit Deckel",
         "name": "aria-label"
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": "Rolling setup",
         "de": "Würfel-Setup"
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "A lidded box (e.g. shoebox, tupperware) OR a cup and a hard rolling tray.",
         "de": "Eine Box mit Deckel (z. B. Schuhkarton, Ikea-Box) ODER ein Becher mit harter Würfelunterlage."
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": "Two printouts",
         "de": "Zwei Ausdrucke"
       },
-      {
+      "attr-02": {
         "kind": "attr",
         "en": "../BitsToWords.pdf",
         "de": "../BitsToWords-de.pdf",
         "name": "href"
       },
-      {
+      "text-10": {
         "kind": "text",
         "en": " and the ",
         "de": " und die "
       },
-      {
+      "text-11": {
         "kind": "text",
         "en": "manually searchable BIP-39 word list",
         "de": "durchsuchbare englische BIP-39-Wortliste"
       },
-      {
+      "text-12": {
         "kind": "text",
         "en": "A pen",
         "de": "Stift"
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": "Use it to write each converted bit into the printed sheet.",
         "de": "Damit schreibst du jedes umgewandelte Bit auf den Ausdruck."
       },
-      {
+      "attr-03": {
         "kind": "attr",
         "en": "No internet connection",
         "de": "Keine Internetverbindung",
         "name": "aria-label"
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": "An offline device",
         "de": "Offline-Gerät für die Prüfsumme"
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": "A hardware wallet or (permanently!) offline laptop that can ",
         "de": "Eine Hardware-Wallet oder ein dauerhaft offline bleibender Laptop, um "
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": "find the checksum word",
         "de": "das Prüfsummenwort zu finden"
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": "Known options include BitBox02, Passport, Jade, Specter DIY, and SeedSigner. Check your device documentation and firmware before relying on it.",
         "de": "Bekannte Optionen sind BitBox02, Passport, Jade, Specter DIY und SeedSigner. Prüfe Dokumentation und Firmware deines Geräts, bevor du dich darauf verlässt."
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": "A private room",
         "de": "Privater Raum"
       },
-      {
+      "text-19": {
         "kind": "text",
         "en": "No cameras, phones, observers or electronic snitches like Alexa.",
         "de": "Keine Kameras, Telefone, Smart Glasses, Beobachter oder Aufzeichnungsgeräte."
       },
-      {
+      "text-20": {
         "kind": "text",
         "en": "My dice",
         "de": "Meine Würfel"
       },
-      {
+      "attr-04": {
         "kind": "attr",
         "en": "Dice quality",
         "de": "Würfelqualität",
         "name": "aria-label"
       },
-      {
+      "text-21": {
         "kind": "text",
         "en": "Casino-grade",
         "de": "Casino-Qualität"
       },
-      {
+      "text-22": {
         "kind": "text",
         "en": "Regular dice",
         "de": "Normale Würfel"
       },
-      {
+      "text-23": {
         "kind": "text",
         "en": "Use plain, well-made dice.",
         "de": "Nutze gut verarbeitete Würfel."
       },
-      {
+      "text-24": {
         "kind": "text",
         "en": " Avoid decorative, novelty, damaged, or visibly uneven dice.",
         "de": " Vermeide Deko-, Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel."
       },
-      {
+      "text-25": {
         "kind": "text",
         "en": "My rolling setup",
         "de": "Mein Würfel-Setup"
       },
-      {
+      "attr-05": {
         "kind": "attr",
         "en": "Rolling setup",
         "de": "Würfel-Setup",
         "name": "aria-label"
       },
-      {
+      "text-26": {
         "kind": "text",
         "en": "Lidded box",
         "de": "Box mit Deckel"
       },
-      {
+      "text-27": {
         "kind": "text",
         "en": "Cup and hard tray",
         "de": "Becher und harte Unterlage"
       },
-      {
+      "text-28": {
         "kind": "text",
         "en": "Dice ready",
         "de": "Würfel bereit"
       },
-      {
+      "text-29": {
         "kind": "text",
         "en": "Box or cup and tray ready",
         "de": "Box oder Becher und Unterlage bereit"
       },
-      {
+      "text-30": {
         "kind": "text",
         "en": "All dice can move freely in the lidded box when shaken",
         "de": "Alle Würfel können sich beim Schütteln frei bewegen"
       },
-      {
+      "text-31": {
         "kind": "text",
         "en": "Both printouts ready",
         "de": "Beide Ausdrucke bereit"
       },
-      {
+      "text-32": {
         "kind": "text",
         "en": "Pen ready",
         "de": "Stift bereit"
       },
-      {
+      "text-33": {
         "kind": "text",
         "en": "Offline checksum device ready",
         "de": "Offline-Gerät für Prüfsumme bereit"
       },
-      {
+      "text-34": {
         "kind": "text",
         "en": "Room checked for privacy",
         "de": "Raum auf Privatsphäre geprüft"
+      },
+      "text-35": {
+        "kind": "text",
+        "en": "BitsToWords",
+        "de": "BitsToWords"
       }
-    ],
-    "shared/20-step-02-decide.html": [
-      {
+    },
+    "shared/20-step-02-decide.html": {
+      "text-01": {
         "kind": "text",
         "en": "Step 2 · decide",
         "de": "Schritt 2 · entscheiden"
       },
-      {
+      "text-02": {
         "kind": "text",
-        "en": "Choose your phrase length and encoding.",
-        "de": "Wähle Länge und Kodierung deiner Seed-Phrase."
+        "en": "Choose an encoding, then your phrase length.",
+        "de": "Wähle eine Kodierung, dann die Länge deiner Seed-Phrase."
       },
-      {
+      "text-03": {
         "kind": "text",
-        "en": "Make both choices now, before any rolling. Your selection controls every instruction that follows.",
-        "de": "Triff beide Entscheidungen vor dem ersten Wurf. Sie bestimmen den restlichen Ablauf."
+        "en": "First choose how to convert dice results into bits. Then choose a phrase length and prepare the matching worksheet.",
+        "de": "Wähle zuerst, wie Würfelergebnisse in Bits umgewandelt werden. Wähle dann die Länge der Phrase und bereite das passende Arbeitsblatt vor."
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "Phrase length",
         "de": "Phrasenlänge"
       },
-      {
+      "attr-01": {
         "kind": "attr",
         "en": "Phrase length",
         "de": "Phrasenlänge",
         "name": "aria-label"
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": "12 words ",
         "de": "12 Wörter "
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": "128 random bits",
         "de": "128 zufällige Bits"
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": "24 words ",
         "de": "24 Wörter "
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "256 random bits",
         "de": "256 zufällige Bits"
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": "Before rolling:",
         "de": "Vor dem Würfeln:"
       },
-      {
+      "text-10": {
         "kind": "text",
         "en": " select the matching Bit-to-word worksheet and fill its Identifier field with a name (non-secret) so you can recognize this seed backup later.",
         "de": " Wähle das passende BitsToWords-Arbeitsblatt und trage im Feld Bezeichnung eine nicht geheime Bezeichnung ein, damit du diese Seed-Sicherung später wiedererkennst."
       },
-      {
+      "text-11": {
         "kind": "text",
         "en": "Dice-to-bit method",
         "de": "Methode: Würfel-zu-Bits"
       },
-      {
+      "attr-02": {
         "kind": "attr",
         "en": "Encoding methods",
         "de": "Kodierungsmethoden",
         "name": "aria-label"
       },
-      {
+      "text-12": {
         "kind": "text",
         "en": "Recommended: base-4",
         "de": "Empfohlen: Basis 4"
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": "Alternative: binary",
         "de": "Alternative: binär"
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": "Base-4 rejection sampling",
         "de": "Basis-4-Ablehnungsverfahren"
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": " gives two bits from each accepted roll. Faces 5 and 6 are ignored.",
         "de": " erzeugt aus jedem akzeptierten Wurf zwei Bits. Die Seiten 5 und 6 werden ignoriert."
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": "You will collect ",
         "de": "Du sammelst "
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": " accepted results. Expect about ",
         "de": " akzeptierte Ergebnisse. Rechne im Mittel mit etwa "
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": " physical rolls on average.",
         "de": " physischen Würfen."
       },
-      {
+      "text-19": {
         "kind": "text",
         "en": "Binary quantization",
         "de": "Binäre Quantisierung"
       },
-      {
+      "text-20": {
         "kind": "text",
         "en": " uses every result: faces 1–3 mean 0, and faces 4–6 mean 1.",
         "de": " verwendet jedes Ergebnis: 1–3 bedeuten 0, 4–6 bedeuten 1."
       },
-      {
+      "text-21": {
         "kind": "text",
         "en": "You will make exactly ",
         "de": "Du machst genau "
       },
-      {
+      "text-22": {
         "kind": "text",
         "en": " rolls. For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.",
         "de": " Würfe. Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
       },
-      {
+      "text-23": {
         "kind": "text",
         "en": "Choose another combination.",
         "de": "Wähle eine andere Kombination."
       },
-      {
+      "text-24": {
         "kind": "text",
         "en": " With regular dice, select 24 words or use base-4.",
         "de": " Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
       },
-      {
+      "text-25": {
         "kind": "text",
-        "en": "I selected my phrase length and encoding.",
-        "de": "Ich habe Länge und Kodierung gewählt."
+        "en": "I selected my encoding and phrase length.",
+        "de": "Ich habe meine Kodierung und Phrasenlänge gewählt."
       },
-      {
+      "text-26": {
         "kind": "text",
         "en": "I filled the worksheet Identifier with a non-secret name.",
         "de": "Ich habe im Feld Bezeichnung einen nicht geheimen Namen eingetragen."
       },
-      {
+      "attr-03": {
         "kind": "attr",
         "en": "Selected die conversion visual",
         "de": "Visualisierung der gewählten Würfelkodierung",
         "name": "aria-label"
       },
-      {
+      "text-27": {
         "kind": "text",
         "en": "skip",
         "de": "ignorieren"
       },
-      {
-        "kind": "text",
-        "en": "skip",
-        "de": "ignorieren"
-      },
-      {
+      "text-28": {
         "kind": "text",
         "en": "Base-4: 1–4 become bits; 5–6 are skipped.",
         "de": "Basis 4: 1–4 werden zu Bits; 5–6 werden ignoriert."
       },
-      {
+      "text-29": {
         "kind": "text",
         "en": "Identifier:",
         "de": "Bezeichnung:"
       },
-      {
+      "text-30": {
         "kind": "text",
         "en": "My first dummy seed phrase",
         "de": "Meine erste Dummy-Seed-Phrase"
       }
-    ],
-    "shared/30-step-03-roll.html": [
-      {
+    },
+    "shared/30-step-03-roll.html": {
+      "text-01": {
         "kind": "text",
         "en": "Step 3 · roll and record",
         "de": "Schritt 3 · würfeln und notieren"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "Roll, convert, and repeat.",
         "de": "Würfle, übertrage und wiederhole."
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": " Put all dice in the lidded box. Shake hard at least ten times; each shake should make the dice travel and collide audibly inside. Then gently tip the settled dice to one edge.",
         "de": " Lege alle Würfel in die Box mit Deckel. Schüttle mindestens zehnmal kräftig; bei jedem Schütteln sollen die Würfel hörbar rollen und zusammenstoßen. Kippe die ruhenden Würfel danach vorsichtig zu einer Seite."
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": " Open the box without moving dice by hand. Read left to right; if needed, read the next row front to back.",
         "de": " Öffne die Box, ohne Würfel von Hand zu bewegen. Lies von links nach rechts; lies bei Bedarf die nächste Reihe von vorne nach hinten."
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": " Convert each result using the selected method, shown on the right.",
         "de": " Wandle jedes Ergebnis mit der rechts gezeigten Methode um."
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": " Write ",
         "de": " Schreibe "
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": "bits",
         "de": "Bits"
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "the next free boxes",
         "de": "die nächsten freien Kästchen"
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": " Shake the dice in the cup, then cast them with enough room and energy for several impacts on the hard rolling tray or mat.",
         "de": " Schüttle die Würfel im Becher und wirf sie mit genug Platz und Energie auf die harte Unterlage, so dass sie mehrmals aufprallen."
       },
-      {
+      "text-10": {
         "kind": "text",
         "en": " Read every die using the fixed spatial order chosen before the first throw.",
         "de": " Lies jeden Würfel in der vor dem ersten Wurf festgelegten räumlichen Reihenfolge."
       },
-      {
-        "kind": "text",
-        "en": " Convert each result using the selected method, shown on the right.",
-        "de": " Wandle jedes Ergebnis mit der rechts gezeigten Methode um."
-      },
-      {
-        "kind": "text",
-        "en": " Write ",
-        "de": " Schreibe "
-      },
-      {
-        "kind": "text",
-        "en": "bits",
-        "de": "Bits"
-      },
-      {
-        "kind": "text",
-        "en": "the next free boxes",
-        "de": "die nächsten freien Kästchen"
-      },
-      {
+      "text-11": {
         "kind": "text",
         "en": "Unclear result?",
         "de": "Unklares Ergebnis?"
       },
-      {
+      "text-12": {
         "kind": "text",
         "en": " If a die is cocked or ambiguous, discard the whole batch and roll the complete batch again.",
         "de": " Wenn ein Würfel schief liegt oder nicht eindeutig lesbar ist, verwirf den ganzen Wurf und würfle ihn vollständig nochmal."
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": "Repeat:",
         "de": "Wiederhole:"
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": " steps 1-4, until you reach the stopping boundary in the last word.",
         "de": " die Schritte 1-4, bis du die Grenze im letzten Wort erreichst."
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": "I rolled ",
         "de": "Ich habe "
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": " bits with this same rolling method, reading order, and conversion rule throughout.",
         "de": " Bits mit derselben Würfelmethode, Lesereihenfolge und Umwandlungsregel erzeugt."
       },
-      {
+      "attr-01": {
         "kind": "attr",
         "en": "Selected rolling method and bit-entry visual",
         "de": "Visualisierung der gewählten Würfelmethode und Biterfassung",
         "name": "aria-label"
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": "Shake hard at least ten times.",
         "de": "Mindestens zehnmal kräftig schütteln."
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": "Shake the dice in the cup.",
         "de": "Würfel im Becher schütteln."
       },
-      {
+      "text-19": {
         "kind": "text",
         "en": "Tip to align, then read left → right.",
         "de": "Zum Ordnen kippen, dann links → rechts lesen."
       },
-      {
+      "text-20": {
         "kind": "text",
         "en": "Cast onto a hard tray, read in fixed order.",
         "de": "Auf harte Unterlage werfen und in fester Reihenfolge lesen."
       },
-      {
+      "text-21": {
         "kind": "text",
         "en": "Convert the face value",
         "de": "Augenzahl umwandeln"
       },
-      {
+      "text-22": {
         "kind": "text",
         "en": "skip",
         "de": ""
       },
-      {
+      "text-23": {
         "kind": "text",
-        "en": "skip",
-        "de": ""
-      },
-      {
-        "kind": "text",
-        "en": "Convert the face value",
-        "de": "Augenzahl umwandeln"
+        "en": " in ",
+        "de": " in "
       }
-    ],
-    "shared/40-step-04-lookup.html": [
-      {
+    },
+    "shared/40-step-04-lookup.html": {
+      "text-01": {
         "kind": "text",
         "en": "Step 4 · bits to words",
         "de": "Schritt 4 · Bits zu Wörtern"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "Look up one 11-bit group (word) at a time.",
         "de": "Schlage jede 11-Bit-Gruppe einzeln nach."
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "Use the ",
         "de": "Nutze die "
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "printed",
         "de": "ausgedruckten"
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": " references. For each of the numbered boxes (except the last one):",
         "de": " Unterlagen. Für jede nummerierte Box (außer der letzten):"
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": "Use ",
         "de": "Nutze "
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": " (first 3 bits) to choose the ",
         "de": " (die ersten 3 Bits), um die "
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "page",
         "de": "Seite"
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": ".",
         "de": " zu wählen."
       },
-      {
-        "kind": "text",
-        "en": "Use ",
-        "de": "Nutze "
-      },
-      {
+      "text-10": {
         "kind": "text",
         "en": " (next 3 bits) to choose the ",
         "de": " (die nächsten 3 Bits), um die "
       },
-      {
+      "text-11": {
         "kind": "text",
         "en": "column",
         "de": "Spalte"
       },
-      {
-        "kind": "text",
-        "en": ".",
-        "de": " zu wählen."
-      },
-      {
-        "kind": "text",
-        "en": "Use ",
-        "de": "Nutze "
-      },
-      {
+      "text-12": {
         "kind": "text",
         "en": " (last 5 bits): first 2 choose the ",
         "de": " (die letzten 5 Bits): Die ersten 2 wählen den "
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": "block",
         "de": "Block"
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": "; last 3 choose the ",
         "de": "; die letzten 3 die "
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": "row",
         "de": "Zeile"
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": " in it.",
         "de": " darin."
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": "Write",
         "de": "Schreibe"
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": " the word you found into the empty space beneath its bits.",
         "de": " das gefundene Wort unter seine Bits."
       },
-      {
+      "text-19": {
         "kind": "text",
         "en": "I found all ",
         "de": "Ich habe alle "
       },
-      {
+      "text-20": {
         "kind": "text",
         "en": " words.",
         "de": " Wörter gefunden."
       },
-      {
+      "attr-01": {
         "kind": "attr",
         "en": "Four-stage visual lookup and word-entry process for the BIP39 word list",
         "de": "Vierstufige Visualisierung zum Nachschlagen und Eintragen von BIP39-Wörtern",
         "name": "aria-label"
       },
-      {
+      "attr-02": {
         "kind": "attr",
         "en": "All BIP39 word-list pages",
         "de": "Alle Seiten der englischen BIP39-Wortliste",
         "name": "aria-label"
       },
-      {
+      "attr-03": {
         "kind": "attr",
         "en": "BIP39 word-list page P0",
         "de": "BIP39-Wortlistenseite P0",
         "name": "alt"
       },
-      {
+      "attr-04": {
         "kind": "attr",
         "en": "BIP39 word-list page P1",
         "de": "BIP39-Wortlistenseite P1",
         "name": "alt"
       },
-      {
+      "attr-05": {
         "kind": "attr",
         "en": "BIP39 word-list page P2",
         "de": "BIP39-Wortlistenseite P2",
         "name": "alt"
       },
-      {
+      "attr-06": {
         "kind": "attr",
         "en": "BIP39 word-list page P3",
         "de": "BIP39-Wortlistenseite P3",
         "name": "alt"
       },
-      {
+      "attr-07": {
         "kind": "attr",
         "en": "BIP39 word-list page P4",
         "de": "BIP39-Wortlistenseite P4",
         "name": "alt"
       },
-      {
+      "attr-08": {
         "kind": "attr",
         "en": "BIP39 word-list page P5",
         "de": "BIP39-Wortlistenseite P5",
         "name": "alt"
       },
-      {
+      "attr-09": {
         "kind": "attr",
         "en": "BIP39 word-list page P6",
         "de": "BIP39-Wortlistenseite P6",
         "name": "alt"
       },
-      {
+      "attr-10": {
         "kind": "attr",
         "en": "BIP39 word-list page P7",
         "de": "BIP39-Wortlistenseite P7",
         "name": "alt"
       },
-      {
+      "attr-11": {
         "kind": "attr",
         "en": "Selected BIP39 word-list page P6",
         "de": "Gewählt: BIP39-Wortlistenseite P6",
         "name": "alt"
       },
-      {
-        "kind": "attr",
-        "en": "Selected BIP39 word-list page P6",
-        "de": "Gewählt: BIP39-Wortlistenseite P6",
-        "name": "alt"
-      },
-      {
+      "attr-12": {
         "kind": "attr",
         "en": "Page P6 with column C4 highlighted",
         "de": "Seite P6 mit markierter Spalte C4",
         "name": "alt"
       },
-      {
+      "attr-13": {
         "kind": "attr",
         "en": "Page P6 with column C4, block 10, and row R20 highlighted",
         "de": "Seite P6 mit Spalte C4, Block 10 und Zeile R20",
         "name": "alt"
+      },
+      "text-21": {
+        "kind": "text",
+        "en": "P",
+        "de": "P"
+      },
+      "text-22": {
+        "kind": "text",
+        "en": "C",
+        "de": "C"
+      },
+      "text-23": {
+        "kind": "text",
+        "en": "R",
+        "de": "R"
+      },
+      "text-24": {
+        "kind": "text",
+        "en": "spoon",
+        "de": "spoon"
       }
-    ],
-    "online/50-step-05-wallet.html": [
-      {
+    },
+    "online/50-step-05-wallet.html": {
+      "text-01": {
         "kind": "text",
         "en": "Step 5 · finish",
         "de": "Schritt 5 · abschließen"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "Let the checksum finish the last word.",
         "de": "Lass die Prüfsumme das letzte Wort vervollständigen."
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "For your selected ",
         "de": "Bei deiner "
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "-word phrase, keep the bits you rolled and leave the final ",
         "de": "-Wort-Phrase behältst du die gewürfelten Bits; die letzten "
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": " checksum bits for the wallet.",
         "de": " Prüfsummen-Bits bestimmt die Wallet."
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": " Identify the ",
         "de": " Bestimme die "
       },
-      {
+      "text-07": {
         "kind": "text",
         "en": " allowed last-word choices matching your rolled bits.",
         "de": " zulässigen letzten Wörter, die zu deinen gewürfelten Bits passen."
       },
-      {
+      "text-08": {
         "kind": "text",
         "en": "The first 3 bits determine the page.",
         "de": "Die ersten 3 Bits bestimmen die Seite."
       },
-      {
+      "text-09": {
         "kind": "text",
         "en": "The next 3 bits determine the column.",
         "de": "Die nächsten 3 Bits bestimmen die Spalte."
       },
-      {
+      "text-10": {
         "kind": "text",
         "en": "Bit 7 selects the upper half (0) or lower half (1) of that column.",
         "de": "Bit 7 wählt die obere Hälfte (0) oder untere Hälfte (1) dieser Spalte."
       },
-      {
+      "text-11": {
         "kind": "text",
         "en": " The first 3 bits determine the page.",
         "de": " Die ersten 3 Bits bestimmen die Seite."
       },
-      {
+      "text-12": {
         "kind": "text",
         "en": " Enter the first ",
         "de": " Gib die ersten "
       },
-      {
+      "text-13": {
         "kind": "text",
         "en": " words as an existing seed phrase.",
         "de": " Wörter als bestehende Seed-Phrase ein."
       },
-      {
+      "text-14": {
         "kind": "text",
         "en": " Depending on your wallet select a final word (consult its documentation if needed).",
         "de": " Wie du das letzte Wort wählst hängt von der Wallet ab; lies bei Bedarf deren Dokumentation."
       },
-      {
+      "text-15": {
         "kind": "text",
         "en": " Verify the wallet's proposed final word against that range.",
         "de": " Prüfe, dass das von der Wallet vorgeschlagene letzte Wort in deinem zulässigen Bereich liegt."
       },
-      {
+      "text-16": {
         "kind": "text",
         "en": "Remember:",
         "de": "Wichtig:"
       },
-      {
+      "text-17": {
         "kind": "text",
         "en": " checksum bits are determined by the earlier bits. They do not reduce the randomness you created with dice.",
         "de": " Die Prüfsummen-Bits werden durch die vorherigen Bits bestimmt. Sie verringern die von den Würfeln erzeugte Zufallsstärke nicht."
       },
-      {
+      "text-18": {
         "kind": "text",
         "en": "I identified the valid range of final words.",
         "de": "Ich habe den zulässigen Bereich für das letzte Wort bestimmt."
       },
-      {
+      "text-19": {
         "kind": "text",
         "en": "I verified the final word proposed by the wallet keeps my rolled bits and is in the valid range.",
         "de": "Ich habe geprüft, dass das von der Wallet vorgeschlagene letzte Wort meine gewürfelten Bits beibehält und im zulässigen Bereich liegt."
       },
-      {
+      "attr-01": {
         "kind": "attr",
         "en": "Final word selection visual",
         "de": "Visualisierung zur Auswahl des letzten Wortes",
         "name": "aria-label"
       },
-      {
+      "attr-02": {
         "kind": "attr",
         "en": "BIP39 word-list page with the upper half of one column highlighted",
         "de": "Englische BIP39-Wortlistenseite mit markierter oberer Spaltenhälfte",
         "name": "alt"
       },
-      {
+      "text-20": {
         "kind": "text",
         "en": "Half a column: 16 candidate words",
         "de": "Halbe Spalte: 16 mögliche Wörter"
       },
-      {
+      "attr-03": {
         "kind": "attr",
         "en": "BIP39 word-list page highlighted as the candidate range",
         "de": "Englische BIP39-Wortlistenseite als möglicher Bereich",
         "name": "alt"
       },
-      {
+      "text-21": {
         "kind": "text",
         "en": "One page: 256 candidate words",
         "de": "Eine Seite: 256 mögliche Wörter"
       }
-    ],
-    "shared/60-step-06-complete.html": [
-      {
+    },
+    "shared/60-step-06-complete.html": {
+      "attr-01": {
         "kind": "attr",
         "en": "Your seed phrase is ready",
         "de": "Deine Seed-Phrase ist fertig",
         "name": "data-step-title"
       },
-      {
+      "text-01": {
         "kind": "text",
         "en": "Step 6 · complete",
         "de": "Schritt 6 · fertig"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "Congratulations—",
         "de": "Geschafft -"
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "you made your own seed phrase.",
         "de": "du hast deine eigene Seed-Phrase erstellt."
       }
-    ],
-    "shared/70-shell-ending.html": [
-      {
+    },
+    "shared/70-shell-ending.html": {
+      "text-01": {
         "kind": "text",
         "en": "← Back",
         "de": "← Zurück"
       },
-      {
+      "text-02": {
         "kind": "text",
         "en": "Continue →",
         "de": "Weiter →"
       },
-      {
+      "text-03": {
         "kind": "text",
         "en": "Tick the checklist above to continue.",
         "de": "Erfülle alle Punkte, um weiterzugehen."
       },
-      {
+      "text-04": {
         "kind": "text",
         "en": "Do not use this online guide for a real seed phrase.",
         "de": "Nutze diese Online-Anleitung nicht für eine echte Seed-Phrase."
       },
-      {
+      "text-05": {
         "kind": "text",
         "en": "⚄",
         "de": "⚁"
       },
-      {
+      "text-06": {
         "kind": "text",
         "en": " Roll your own seed phrase",
         "de": " Eigene Seed-Phrase würfeln"
       }
-    ]
+    }
   },
   "runtime": {
     "titles": {

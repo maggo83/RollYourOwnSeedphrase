@@ -72,17 +72,24 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn('BIP39_Wordlist_Binary_Decimal_Searchable-de.pdf', german)
         self.assertIn('HowToRollYourOwnSeedphrase-de.pdf', german)
         self.assertTrue((self.german_online / "HowToRollYourOwnSeedphrase-de.html").is_file())
-        self.assertTrue((self.german_online / "HowToRollYourOwnSeedphrase-de.txt").is_file())
         self.assertFalse((ROOT / "BIP39_Wordlist_Binary_Decimal_Searchable-de.pdf").exists())
         self.assertFalse((ROOT / "additional_ressources" / "BIP39_Wordlist_Binary_Decimal_Searchable-de.ods").exists())
 
     def test_german_uses_shared_templates_and_complete_catalog(self) -> None:
         catalog = build_module.translation_catalog()
-        self.assertEqual(catalog["format"], 1)
+        self.assertEqual(catalog["format"], 2)
         self.assertEqual(
             set(catalog["fragments"]),
             {fragment.as_posix() for fragment in build_module.ONLINE_FRAGMENTS},
         )
+        for fragment in build_module.ONLINE_FRAGMENTS:
+            source = (ROOT / "guide-src" / fragment).read_text(encoding="utf-8")
+            message_keys = set(build_module.fragment_messages(fragment))
+            placeholder_keys = set(re.findall(r"\{\{([a-z][a-z0-9-]*)\}\}", source))
+            self.assertEqual(placeholder_keys, message_keys)
+            build_module.validate_fragment_template(source, fragment, build_module.fragment_messages(fragment))
+            self.assertNotIn("{{", build_module.fragment_text(fragment))
+            self.assertNotIn("{{", build_module.fragment_text(fragment, "de"))
         self.assertFalse((ROOT / "guide-src" / "de").exists())
         self.assertNotIn("Dauerhafte Netzwerk-Trennung erforderlich", (ROOT / "guide-src" / "script.js").read_text(encoding="utf-8"))
         self.assertIn("Dauerhafte Netzwerk-Trennung erforderlich", (self.german_online / "locale.js").read_text(encoding="utf-8"))
@@ -95,25 +102,16 @@ class BuildTests(unittest.TestCase):
             [entry["slot"] for entry in catalog["html"]["body"]],
             list(print_module.QUICK_GUIDE_SLOTS),
         )
-        self.assertEqual(
-            [entry["number"] for entry in catalog["plainText"]["sections"]],
-            list(range(1, 9)),
-        )
         self.assertFalse((ROOT / "print-src" / "HowToRollYourOwnSeedphrase-de.html").exists())
-        self.assertFalse((ROOT / "print-src" / "HowToRollYourOwnSeedphrase-de.txt").exists())
         for locale_code in ("en", "de"):
             html_output = ROOT / print_module.quick_guide_name(locale_code, "html")
-            text_output = ROOT / print_module.quick_guide_name(locale_code, "txt")
             self.assertEqual(html_output.read_text(encoding="utf-8"), print_module.render_quick_guide_html(locale_code))
-            self.assertEqual(text_output.read_text(encoding="utf-8"), print_module.render_quick_guide_text(locale_code))
         english_print = (ROOT / "HowToRollYourOwnSeedphrase.html").read_text(encoding="utf-8")
         german_print = (ROOT / "HowToRollYourOwnSeedphrase-de.html").read_text(encoding="utf-8")
-        self.assertIn("Use this printed guide for a real seed phrase.", english_print)
-        self.assertIn("Base-4 works with 12 or 24 words.", english_print)
-        self.assertIn("With regular dice, choose 24 words or use base-4.", english_print)
-        self.assertIn("Nutze diese gedruckte Anleitung für eine echte Seed-Phrase.", german_print)
-        self.assertIn("Basis 4 funktioniert mit 12 oder 24 Wörtern.", german_print)
-        self.assertIn("Mit normalen Würfeln wähle 24 Wörter oder Basis 4.", german_print)
+        self.assertIn("You can use this printed guide for a real seed phrase.", english_print)
+        self.assertIn("If you use regular dice and binary quantization, we recommend you use 24 words.", english_print)
+        self.assertIn("Du kannst diese gedruckte Anleitung für eine echte Seed-Phrase verwenden.", german_print)
+        self.assertIn("Falls du normale Würfel und binäre Quantisierung verwenden willst, empfehlen wir 24 Wörter zu nutzen.", german_print)
 
     def test_generated_selectors_match_their_layouts(self) -> None:
         online = (self.online / "index.html").read_text(encoding="utf-8")

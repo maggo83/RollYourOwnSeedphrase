@@ -42,9 +42,7 @@ jobs:
             BitsToWords-de.pdf
             additional_ressources/BitsToWords-de.xlsx
             HowToRollYourOwnSeedphrase.html
-            HowToRollYourOwnSeedphrase.txt
             HowToRollYourOwnSeedphrase.pdf
             HowToRollYourOwnSeedphrase-de.html
-            HowToRollYourOwnSeedphrase-de.txt
             HowToRollYourOwnSeedphrase-de.pdf
           if-no-files-found: error
