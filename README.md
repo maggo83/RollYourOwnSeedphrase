@@ -11,8 +11,8 @@ Roll Your Own Seedphrase aims at providing a simple guide on how to obtain your 
 
 This depends on what your goal is. Here are the scenarios we have in mind:
 
-- You are just starting to learn about seed generation, and want to know asap HOW to: Use the [visual guide](#visual-guide) section to learn the method. Later, for a real seedphrase, use the [printable quick guide](#standalone-practical-guide) [it is also linked in the visual guide].
-- You have experience with seed generation and directly want to generate a real seedphrase: Use the [Standalone practical guide](#standalone-practical-guide).
+- You are just starting to learn about seed generation, and want to know asap HOW to: Use the [visual guide](#visual-guide) section to learn the method. Later, for a real seedphrase, use the [standalone print guide](#standalone-print-guide) [it is also linked in the visual guide].
+- You have experience with seed generation and directly want to generate a real seedphrase: Use the [Standalone print guide](#standalone-print-guide).
 - You really want to understand the underlying research and reasoning behind the method: Read the [Derivation from analysis](#derivation-from-analysis) section below.
 - You are an advanced Bitcoiner who knows his shit and has a permanently offline computer and want to generate a seedphrase on it: Use the [Offline edition](#offline-edition) section below.
 
@@ -42,11 +42,11 @@ The documents are intended to be read in this order:
 
 # Visual guide
 
-The interactive introductory version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Use it to learn the method or for a dry run. For a real seedphrase, use the [printable quick guide](HowToRollYourOwnSeedphrase.pdf) (also linked in the visual guide).
+The interactive introductory version of the procedure is available on [GitHub Pages](https://maggo83.github.io/RollYourOwnSeedphrase/). Use it to learn the method or for a dry run. For a real seedphrase, use the [standalone print guide](#standalone-print-guide).
 
-# Standalone practical guide
+# Standalone print guide
 
-[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets.
+This is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets.
 
 Required printable material:
 
