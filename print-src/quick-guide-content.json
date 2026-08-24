@@ -27,15 +27,15 @@
       {
         "slot": "lede",
         "content": {
-          "en": "<p class=\"lede\">A paper-first summary for converting physical dice rolls into a 12- or 24-word BIP-39 seed phrase.</p>",
-          "de": "<p class=\"lede\">Eine papierbasierte Kurzfassung zum Umwandeln von Würfelergebnissen in eine BIP-39-Seed-Phrase mit 12 oder 24 Wörtern.</p>"
+          "en": "<p class=\"lede\">A short summary how to convert physical dice rolls into a 12- or 24-word BIP-39 seed phrase.</p>",
+          "de": "<p class=\"lede\">Eine Kurzfassung, wie man Würfelergebnisse in eine BIP-39-Seed-Phrase mit 12 oder 24 Wörtern umwandelt.</p>"
         }
       },
       {
         "slot": "notice",
         "content": {
-          "en": "<div class=\"notice\"><strong>Use this printed guide for a real seed phrase.</strong> If you are unsure about the method, first use the online guide or make a dry run with a dummy phrase. Keep rolls, bits, and seed words off networked devices.</div>",
-          "de": "<div class=\"notice\"><strong>Nutze diese gedruckte Anleitung für eine echte Seed-Phrase.</strong> Wenn du bzgl. des Ablaufes unsicher bist, schaue dir vorher die Online-Anleitung an oder mache einen Trockendurchlauf mit einer Dummy-Phrase. Halte Wurfe, Bits und Seed-Wörter von Netzwerkgeräten fern.</div>"
+          "en": "<div class=\"notice\"><strong>You can use this printed guide for a real seed phrase.</strong> If you encounter difficulties in the process, feel free to go back to the online guide and make a dry run with a dummy phrase. Keep rolls, bits, and seed words for your real seed phrase off networked devices.</div>",
+          "de": "<div class=\"notice\"><strong>Du kannst diese gedruckte Anleitung für eine echte Seed-Phrase verwenden.</strong> Wenn du während des Prozesses auf Schwierigkeiten stößt, gehe gerne zurück zur Online-Anleitung und mache einen Trockendurchlauf mit einer Dummy-Phrase. Halte Würfe, Bits und Seed-Wörter deiner echten Seed-Phrase von Geräten mit einer Netzwerkverbindung fern.</div>"
         }
       },
       {
@@ -48,43 +48,43 @@
       {
         "slot": "preparation",
         "content": {
-          "en": "<section class=\"preparation\">\n  <h2>Prepare</h2>\n  <div class=\"supplies\">\n    <div class=\"supply\"><h3>Dice</h3><p>Plain, well-made six-sided dice. Avoid decorative, novelty, damaged, or visibly uneven dice.</p></div>\n    <div class=\"supply\"><h3>Rolling setup</h3><p>A lidded box with enough room for every die to move freely, or a large cup and hard rolling tray.</p></div>\n    <div class=\"supply\"><h3>Printouts</h3><p>One Bit-to-word worksheet and the searchable BIP-39 word list.</p></div>\n    <div class=\"supply\"><h3>Pen</h3><p>Write every converted bit on paper. Never type rolls into a connected device.</p></div>\n    <div class=\"supply\"><h3>Offline checksum device</h3><p>A hardware wallet or permanently offline laptop that supports checksum completion.</p></div>\n    <div class=\"supply\"><h3>Private room</h3><p>No cameras, phones, smart glasses, observers, or recording devices.</p></div>\n  </div>\n  </section>",
-          "de": "<section class=\"preparation\"><h2>Vorbereiten</h2><div class=\"supplies\"><div class=\"supply\"><h3>Würfel</h3><p>Gut verarbeitete sechsseitige Würfel. Vermeide Deko-, Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel.</p></div><div class=\"supply\"><h3>Würfel-Setup</h3><p>Eine Box mit Deckel, in der sich alle Würfel frei bewegen können, oder ein größer Würfelbecher mit harter Unterlage.</p></div><div class=\"supply\"><h3>Ausdrucke</h3><p>Ein BitsToWords-Arbeitsblatt und die durchsuchbare englische BIP-39-Wortliste.</p></div><div class=\"supply\"><h3>Stift</h3><p>Schreibe jedes umgewandelte Bit auf Papier. Tippe Würfe nie in ein internet-verbundenes Gerät.</p></div><div class=\"supply\"><h3>Offline-Gerät für Prüfsumme</h3><p>Eine Hardware-Wallet oder ein dauerhaft offline bleibender Laptop, der die Prüfsumme vervollständigt.</p></div><div class=\"supply\"><h3>Nicht-öffentlicher Raum</h3><p>Keine Kameras, Telefone, Smart Glasses, Beobachter oder Aufzeichnungsgeräte.</p></div></div></section>"
+          "en": "<section class=\"preparation\">\n  <h2>Prepare</h2>\n  <div class=\"supplies\">\n    <div class=\"supply\"><h3>Dice</h3><p>Plain, well-made six-sided dice. Avoid decorative, novelty, damaged, or visibly uneven dice.</p></div>\n    <div class=\"supply\"><h3>Rolling setup</h3><p>A lidded box with enough room for every die to move freely, or a large cup and hard rolling tray.</p></div>\n    <div class=\"supply\"><h3>Printouts</h3><p>One Bit-to-word worksheet and the searchable BIP-39 word list.</p></div>\n    <div class=\"supply\"><h3>Pen</h3><p>To write bits/words on paper. Never type those into a connected device.</p></div>\n    <div class=\"supply\"><h3>Offline checksum device</h3><p>A hardware wallet or permanently offline laptop that supports checksum completion.</p></div>\n    <div class=\"supply\"><h3>Private room</h3><p>No cameras, phones, smart glasses, observers, or recording devices.</p></div>\n  </div>\n  </section>",
+          "de": "<section class=\"preparation\"><h2>Vorbereiten</h2><div class=\"supplies\"><div class=\"supply\"><h3>Würfel</h3><p>Gut verarbeitete sechsseitige Würfel. Vermeide Deko-, Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel.</p></div><div class=\"supply\"><h3>Würfel-Setup</h3><p>Eine Box mit Deckel, in der sich alle Würfel frei bewegen können, oder ein größer Würfelbecher mit harter Unterlage.</p></div><div class=\"supply\"><h3>Ausdrucke</h3><p>Ein BitsToWords-Arbeitsblatt und die durchsuchbare englische BIP-39-Wortliste.</p></div><div class=\"supply\"><h3>Stift</h3><p>Um jedes Bit/Wort auf Papier aufzuschreiben. Tippe diese nie in ein internet-verbundenes Gerät.</p></div><div class=\"supply\"><h3>Offline-Gerät für Prüfsumme</h3><p>Eine Hardware-Wallet oder ein dauerhaft offline bleibender Laptop, der die Prüfsumme vervollständigt.</p></div><div class=\"supply\"><h3>Nicht-öffentlicher Raum</h3><p>Keine Kameras, Telefone, Smart Glasses, Beobachter oder Aufzeichnungsgeräte.</p></div></div></section>"
         }
       },
       {
         "slot": "step-1",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">1</div><div><h2>Choose your phrase length</h2><p>Choose before rolling. Base-4 works with 12 or 24 words. With regular dice, use 24 words for binary quantization.</p><p>Print the matching worksheet and write a <strong>non-secret identifier</strong> on it so you can recognize the backup later.</p></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">1</div><div><h2>Wähle die Länge der Phrase</h2><p>Wähle vor dem Würfeln. Basis 4 funktioniert mit 12 oder 24 Wörtern. Mit normalen Würfeln nutze für binäre Quantisierung 24 Wörter.</p><p>Drucke das passende Arbeitsblatt und notiere eine <strong>willkürliche Bezeichnung</strong>, damit du die Sicherung später wiedererkennst.</p></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">1</div><div><h2>Choose one encoding</h2><div class=\"method-grid\"><div class=\"method\"><h3>Base-4 rejection sampling — recommended</h3><ul><li>1 → <span class=\"code\">00</span></li><li>2 → <span class=\"code\">01</span></li><li>3 → <span class=\"code\">10</span></li><li>4 → <span class=\"code\">11</span></li><li>5 or 6 → skip</li></ul><p>You will collect exactly 64 accepted results for 12 words, or 128 for 24 words.</p></div><div class=\"method\"><h3>Binary quantization</h3><ul><li>1, 2, or 3 → <span class=\"code\">0</span></li><li>4, 5, or 6 → <span class=\"code\">1</span></li></ul><p>You will make exactly 128 rolls for 12 words, or 256 for 24 words.</p></div></div></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">1</div><div><h2>Wähle eine Kodierung aus</h2><div class=\"method-grid\"><div class=\"method\"><h3>Basis-4-Ablehnungsverfahren - empfohlen</h3><ul><li>1 &rarr; <span class=\"code\">00</span></li><li>2 &rarr; <span class=\"code\">01</span></li><li>3 &rarr; <span class=\"code\">10</span></li><li>4 &rarr; <span class=\"code\">11</span></li><li>5 oder 6 &rarr; ignorieren</li></ul><p>Du wirst genau 64 akzeptierte Ergebnisse für 12 Wörter oder 128 für 24 Wörter sammeln.</p></div><div class=\"method\"><h3>Binäre Quantisierung</h3><ul><li>1, 2 oder 3 &rarr; <span class=\"code\">0</span></li><li>4, 5 oder 6 &rarr; <span class=\"code\">1</span></li></ul><p>Du wirst genau 128 Würfe für 12 Wörter oder 256 für 24 Wörter machen.</p></div></div></div></section>"
         }
       },
       {
         "slot": "step-2",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Choose one encoding</h2><div class=\"method-grid\"><div class=\"method\"><h3>Base-4 rejection sampling — recommended</h3><ul><li>1 → <span class=\"code\">00</span></li><li>2 → <span class=\"code\">01</span></li><li>3 → <span class=\"code\">10</span></li><li>4 → <span class=\"code\">11</span></li><li>5 or 6 → skip</li></ul><p>Collect exactly 64 accepted results for 12 words, or 128 for 24 words.</p></div><div class=\"method\"><h3>Binary quantization</h3><ul><li>1, 2, or 3 → <span class=\"code\">0</span></li><li>4, 5, or 6 → <span class=\"code\">1</span></li></ul><p>For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4. Make exactly 128 rolls for 12 words, or 256 for 24 words.</p></div></div></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Wähle eine Kodierung aus</h2><div class=\"method-grid\"><div class=\"method\"><h3>Basis-4-Ablehnungsverfahren - empfohlen</h3><ul><li>1 &rarr; <span class=\"code\">00</span></li><li>2 &rarr; <span class=\"code\">01</span></li><li>3 &rarr; <span class=\"code\">10</span></li><li>4 &rarr; <span class=\"code\">11</span></li><li>5 oder 6 &rarr; ignorieren</li></ul><p>Sammle genau 64 akzeptierte Ergebnisse für 12 Wörter oder 128 für 24 Wörter.</p></div><div class=\"method\"><h3>Binäre Quantisierung</h3><ul><li>1, 2 oder 3 &rarr; <span class=\"code\">0</span></li><li>4, 5 oder 6 &rarr; <span class=\"code\">1</span></li></ul><p>Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4. Mache genau 128 Würfe für 12 Wörter oder 256 für 24 Wörter.</p></div></div></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Choose your phrase length</h2><p>If you use regular dice and binary quantization, we recommend you use 24 words. Otherwise chose as you like between 12 and 24 words.</p><p>Print the matching BitsToWord worksheet and write an <strong>arbitrary identifier</strong> on it so you can recognize the backup later.</p></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Wähle die Länge der Phrase</h2><p>Falls du normale Würfel und binäre Quantisierung verwenden willst, empfehlen wir 24 Wörter zu nutzen. Andernfalls wähle frei zwischen 12 und 24 Wörtern.</p><p>Drucke das passende BitsToWord Arbeitsblatt und notiere eine <strong>willkürliche Bezeichnung</strong>, damit du die Sicherung später wiedererkennst.</p></div></section>"
         }
       },
       {
         "slot": "step-3",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">3</div><div><h2>Roll and record</h2><p><strong>Lidded box:</strong> Put all dice in the box, close the lid, and shake vigorously at least ten times. Each shake should make the dice travel and collide audibly inside. Put the box down, gently tip the settled dice to one edge, then read left to right (and front to back for another row). Do not arrange dice by hand.</p><p><strong>Cup and tray:</strong> Shake vigorously, cast with enough room and energy for several impacts, and read dice by a spatial rule chosen before the first throw.</p><p>Convert every result with the encoding you chose and write the bits into the next empty boxes. If any die is cocked or ambiguous, discard the <strong>whole batch</strong> and roll that complete batch again.</p><div class=\"important\"><strong>Stop at the bold divider in the final word.</strong> Leave the final 4 boxes blank for a 12-word phrase, or the final 8 boxes blank for a 24-word phrase. In that last batch, retain results only until the boundary—never select results by value.</div></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">3</div><div><h2>Würfeln und notieren</h2><p><strong>Box mit Deckel:</strong> Lege alle Würfel in die Box, schließe den Deckel und schüttle mindestens zehnmal kräftig. Kippe die Würfel dann vorsichtig zu einer Seite und lies von links nach rechts; eine zweite Reihe liest du von vorne nach hinten. Ordne Würfel nicht von Hand.</p><p><strong>Becher und Unterlage:</strong> Schüttle kräftig, wirf mit genug Platz und Energie und lies die Würfel mit einer vor dem ersten Wurf gewählten räumlichen Regel.</p><p>Wandle jedes Ergebnis mit deiner Kodierung um und schreibe die Bits in die nächsten leeren Kästchen. Wenn ein Würfel schief liegt oder nicht eindeutig lesbar ist, verwirf den <strong>ganzen Satz</strong> und würfle ihn erneut.</p><div class=\"important\"><strong>Stoppe am dicken Trenner im letzten Wort.</strong> Lasse bei 12 Wörtern die letzten 4 Kästchen leer, bei 24 Wörtern die letzten 8. Behalte im letzten Satz Ergebnisse nur bis zu dieser Grenze - wähle nie nach Augenzahl aus.</div></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">3</div><div><h2>Roll and record</h2><p><strong>Lidded box:</strong> Put all dice in the box, close the lid, and shake vigorously at least ten times. Each shake should make the dice travel and collide audibly inside. Put the box down, gently tip the settled dice to one edge, then read left to right (and front to back for another row). Do not arrange dice by hand.</p><p><strong>Cup and tray:</strong> Shake vigorously, cast with enough room and energy for several impacts, and read dice by a spatial rule chosen before the first throw.</p><p>Convert every result with the encoding you chose and write the bits into the next empty boxes. If any die is cocked or ambiguous, discard the <strong>whole batch</strong> and roll that complete batch again.</p><div class=\"important\"><strong>Repeat until you reach the bold divider in the final word.</strong> Leave the final 4 boxes blank for a 12-word phrase, or the final 8 boxes blank for a 24-word phrase. In that last batch, retain results only until the boundary—never select results by value.</div></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">3</div><div><h2>Würfeln und notieren</h2><p><strong>Box mit Deckel:</strong> Lege alle Würfel in die Box, schließe den Deckel und schüttle mindestens zehnmal kräftig. Kippe die Würfel dann vorsichtig zu einer Seite und lies von links nach rechts; eine zweite Reihe liest du von vorne nach hinten. Ordne Würfel nicht von Hand.</p><p><strong>Becher und Unterlage:</strong> Schüttle kräftig, wirf mit genug Platz und Energie und lies die Würfel mit einer vor dem ersten Wurf gewählten räumlichen Regel.</p><p>Wandle jedes Ergebnis mit deiner Kodierung um und schreibe die Bits in die nächsten leeren Kästchen. Wenn ein Würfel schief liegt oder nicht eindeutig lesbar ist, verwirf den <strong>ganzen Satz</strong> und würfle ihn erneut.</p><div class=\"important\"><strong>Wiederhole diese Schritte bis du den dicken Trenner im letzten Wort erreichst.</strong> Lasse bei 12 Wörtern die letzten 4 Kästchen leer, bei 24 Wörtern die letzten 8. Behalte im letzten Wurf Ergebnisse nur bis zu dieser Grenze - wähle nie nach Augenzahl aus.</div></div></section>"
         }
       },
       {
         "slot": "step-4",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">4</div><div><h2>Convert bits to words</h2><p>For each completed 11-bit group, use the printed BIP-39 word list:</p><ul><li>bits 1–3 select the <strong>page</strong>;</li><li>bits 4–6 select the <strong>column</strong>;</li><li>bits 7–11 select the <strong>row</strong> and therefore the word.</li></ul><p>Write the word beneath its 11 bits. Do not search the word list digitally, even for a partial bit pattern.</p></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">4</div><div><h2>Bits in Wörter umwandeln</h2><p>Nutze für jede vollständige 11-Bit-Gruppe die ausgedruckte BIP-39-Wortliste:</p><ul><li>Bits 1-3 (P) bestimmen die <strong>Seite</strong>;</li><li>Bits 4-6 (C) bestimmen die <strong>Spalte</strong>;</li><li>Bits 7-8 (R) bestimmen den <strong>Block</strong>;</li><li>Bits 9-11 (R) bestimmen die <strong>Zeile im Block</strong> und damit das Wort.</li></ul><p>Schreibe das Wort unter seine 11 Bits. Durchsuche die Wortliste nicht digital, auch nicht nach einem Teilmuster.</p></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">4</div><div><h2>Convert bits to words</h2><p>For each completed 11-bit group, use the printed BIP-39 word list to find the corresponding word:</p><ul><li>bits 1–3 select the <strong>page</strong>;</li><li>bits 4–6 select the <strong>column</strong>;</li><li>bits 7–11 select the <strong>row</strong> and therefore the word.</li></ul><p>Write the word beneath its 11 bits. Do not search the word list digitally, even for a partial bit pattern.</p></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">4</div><div><h2>Bits in Wörter umwandeln</h2><p>Nutze für jede vollständige 11-Bit-Gruppe die ausgedruckte BIP-39-Wortliste um das zugehörige Wort zu bestimmen:</p><ul><li>Bits 1-3 (P) bestimmen die <strong>Seite</strong>;</li><li>Bits 4-6 (C) bestimmen die <strong>Spalte</strong>;</li><li>Bits 7-8 (R) bestimmen den <strong>Block</strong>;</li><li>Bits 9-11 (R) bestimmen die <strong>Zeile im Block</strong> und damit das Wort.</li></ul><p>Schreibe das Wort unter seine 11 Bits. Durchsuche die Wortliste nicht digital, auch nicht nach teilen eines Wortes.</p></div></section>"
         }
       },
       {
         "slot": "step-5",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">5</div><div><h2>Complete the final word</h2><p>The final word has checksum bits that are determined by the bits already recorded. They do not reduce the randomness supplied by the dice.</p><ul><li>For 12 words, your seven rolled final-word bits leave <strong>16</strong> possible words.</li><li>For 24 words, your three rolled final-word bits leave <strong>256</strong> possible words.</li></ul><p>Depending on the wallet, enter the earlier words as an existing seed phrase. Let it propose a final word, then verify that the proposed word remains in your allowed range.</p></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">5</div><div><h2>Letztes Wort vervollständigen</h2><p>Die Prüfsummen-Bits des letzten Wortes sind durch die bereits notierten Bits bestimmt. Sie verringern die von den Würfeln erzeugte Zufallsstärke nicht.</p><ul><li>Bei 12 Wörtern lassen deine sieben gewürfelten Bits des letzten Wortes <strong>16</strong> mögliche Wörter.</li><li>Bei 24 Wörtern lassen deine drei gewürfelten Bits des letzten Wortes <strong>256</strong> mögliche Wörter.</li></ul><p>Gib je nach Wallet die vorherigen Wörter als bestehende Seed-Phrase ein. Lass dir ein letztes Wort vorschlagen und prüfe dann, dass es in deinem zulässigen Bereich liegt.</p></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">5</div><div><h2>Complete the final word</h2><p>The final word has checksum bits that are fully determined by the bits already recorded. They do not reduce the randomness supplied by the dice.</p><ul><li>For 12 words, your seven rolled final-word bits leave <strong>16</strong> possible words.</li><li>For 24 words, your three rolled final-word bits leave <strong>256</strong> possible words.</li></ul><p>Enter the earlier words as an existing seed phrase into your hardware wallet/off-line computer. Let it propose a final word, then verify that the proposed word is within the range of possible words.</p></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">5</div><div><h2>Letztes Wort vervollständigen</h2><p>Die Prüfsummen-Bits des letzten Wortes sind durch die bereits notierten Bits mathematisch festgelegt. Sie verringern die von den Würfeln erzeugte Zufallsstärke nicht.</p><ul><li>Bei 12 Wörtern lassen deine sieben gewürfelten Bits des letzten Wortes <strong>16</strong> mögliche Wörter.</li><li>Bei 24 Wörtern lassen deine drei gewürfelten Bits des letzten Wortes <strong>256</strong> mögliche Wörter.</li></ul><p>Gib die vorherigen Wörter als bestehende Seed-Phrase in dein Hardware-Wallet/deinen Offline Rechner ein. Lass dir ein letztes Wort vorschlagen und prüfe dann, dass es eines der zulässigen Wörter ist.</p></div></section>"
         }
       },
       {
@@ -92,106 +92,6 @@
         "content": {
           "en": "<footer><strong>Keep your seed phrase private, offline, and backed up safely.</strong></footer>",
           "de": "<footer><strong>Verwahre deine Seed-Phrase privat, offline und sicher.</strong></footer>"
-        }
-      }
-    ]
-  },
-  "plainText": {
-    "heading": {
-      "en": "Use this printed guide for a real seed phrase. If you are unsure about the method, first use the online guide or make a dry run with a dummy phrase. Keep rolls, bits, and seed words off networked devices.",
-      "de": "KURZANLEITUNG: ERSTELLE DEINE EIGENE BIP-39-SEED-PHRASE MIT WÜRFELN\n\nNutze diese gedruckte Anleitung für eine echte Seed-Phrase. Wenn du beim Ablauf unsicher bist, lies zuerst die Online-Anleitung oder mache einen Trockendurchlauf mit einer Dummy-Phrase. Halte Würfe, Bits und Seed-Wörter von Netzwerkgeräten fern."
-    },
-    "headingSuffix": {
-      "en": "\n\n",
-      "de": "\n\n"
-    },
-    "sections": [
-      {
-        "number": 1,
-        "content": {
-          "en": "Get plain, well-made six-sided dice plus a clean shoe box with a well-fitting lid or an opaque\n   food-storage box of similar size. Avoid decorative, novelty, damaged, or visibly uneven dice.\n   Don't use more dice than can move freely in the chosen container. A large dice cup and hard\n   rolling tray can be used as an alternative.",
-          "de": "Besorge gut verarbeitete sechsseitige Würfel sowie eine saubere Schuhschachtel mit gut\n   schließendem Deckel oder eine ähnlich große blickdichte Aufbewahrungsbox. Vermeide Deko-,\n   Spaß-, beschädigte oder sichtbar ungleichmäßige Würfel. Verwende nicht mehr Würfel, als sich\n   im gewählten Behälter frei bewegen können. Alternativ kannst du einen großen Würfelbecher und\n   eine harte Würfelunterlage verwenden."
-        },
-        "suffix": {
-          "en": "\n   \n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 2,
-        "content": {
-          "en": "Choose 12 or 24 words and one encoding before rolling. Base-4 works with either length. With\n   regular dice, use 24 words for binary quantization.\n   Print the matching page of BitsToWords.pdf.\n   (Fill the Identifier with a name so you later know which seed this is.)\n   Each numbered larger rectangle represents a word. Write the word in the lower, wider rectangle.\n   The 11 smaller rectangles above are bits; each contains 0 or 1. First fill the bits using dice,\n   then derive the words from the bits.",
-          "de": "Wähle vor dem Würfeln 12 oder 24 Wörter und eine Kodierung. Basis 4 funktioniert mit beiden\n   Längen. Mit normalen Würfeln nutze für binäre Quantisierung 24 Wörter.\n   Drucke die passende Seite von BitsToWords-de.pdf aus.\n   (Fülle das Feld Bezeichnung mit einem Namen aus, damit du später weißt, welche\n   Seed-Sicherung es ist.)\n   Jedes nummerierte große Rechteck steht für ein Wort. Das Wort notierst du im unteren, breiteren\n   Rechteck. Die elf kleineren Rechtecke darüber sind Bits; jedes enthält 0 oder 1. Zuerst füllst du\n   die Bits mit den Würfeln aus, dann leitest du aus den Bits die Wörter ab."
-        },
-        "suffix": {
-          "en": "\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 3,
-        "content": {
-          "en": "Print BIP39_Wordlist_Binary_Decimal_Searchable.pdf\n   This will help us derive the words from the bits.\n   Important: Do print this out. Do NOT search in this file on your desktop for the bits you have\n   rolled. Not even partially.",
-          "de": "Drucke BIP39_Wordlist_Binary_Decimal_Searchable.pdf aus.\n   Sie hilft dir, die Wörter aus den Bits abzuleiten.\n   Wichtig: Drucke diese Liste aus. Durchsuche die Datei auf deinem Desktop NICHT nach den\n   gewürfelten Bits, auch nicht teilweise."
-        },
-        "suffix": {
-          "en": "\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 4,
-        "content": {
-          "en": "Use a private room without cameras, phones, smart glasses, observers, or other recording devices.",
-          "de": "Arbeite in einem privaten Raum ohne Kameras, Telefone, Smart Glasses, Beobachter oder\n   andere Aufzeichnungsgeräte."
-        },
-        "suffix": {
-          "en": "\n\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 5,
-        "content": {
-          "en": "Choose one of these two bit encodings before rolling:\n\n   A. Base-4 rejection sampling (recommended compromise; fewer expected rolls):\n      If the die is 1: enter \"00\" into the next two free bit rectangles\n      If the die is 2: enter \"01\" into the next two free bit rectangles\n      If the die is 3: enter \"10\" into the next two free bit rectangles\n      If the die is 4: enter \"11\" into the next two free bit rectangles\n      If the die is 5 or 6: ignore it completely\n\n      You need exactly 64 accepted dice for 12 words or 128 accepted dice for 24 words.\n      With ideal dice, this takes 96 respectively 192 physical dice results on average. The actual\n      number varies.\n\n   B. Binary quantization (no rejected results; fixed number of rolls):\n      For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.\n\n      If the die is 1, 2 or 3: enter \"0\" into the next free bit rectangle\n      If the die is 4, 5 or 6: enter \"1\" into the next free bit rectangle\n\n      You need exactly 128 dice results for 12 words or 256 for 24 words.",
-          "de": "Wähle vor dem Würfeln eine dieser beiden Bit-Kodierungen:\n\n   A. Basis-4-Ablehnungsverfahren (empfohlener Kompromiss; weniger erwartete Würfe):\n      Zeigt der Würfel 1: trage \"00\" in die nächsten zwei freien Bit-Rechtecke ein.\n      Zeigt der Würfel 2: trage \"01\" in die nächsten zwei freien Bit-Rechtecke ein.\n      Zeigt der Würfel 3: trage \"10\" in die nächsten zwei freien Bit-Rechtecke ein.\n      Zeigt der Würfel 4: trage \"11\" in die nächsten zwei freien Bit-Rechtecke ein.\n      Zeigt der Würfel 5 oder 6: ignoriere ihn vollständig.\n\n      Du brauchst genau 64 akzeptierte Würfelergebnisse für 12 Wörter oder 128 akzeptierte\n      Würfelergebnisse für 24 Wörter.\n      Mit idealen Würfeln sind dafür im Mittel 96 beziehungsweise 192 tatsächliche\n      Würfelergebnisse nötig. Die tatsächliche Zahl variiert.\n\n   B. Binäre Quantisierung (keine verworfenen Ergebnisse; feste Anzahl Würfe):\n      Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4.\n\n      Zeigt der Würfel 1, 2 oder 3: trage \"0\" in das nächste freie Bit-Rechteck ein.\n      Zeigt der Würfel 4, 5 oder 6: trage \"1\" in das nächste freie Bit-Rechteck ein.\n\n      Du brauchst genau 128 Würfelergebnisse für 12 Wörter oder 256 für 24 Wörter."
-        },
-        "suffix": {
-          "en": "\n\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 6,
-        "content": {
-          "en": "Depending on your setup:\n\n   A. Big box with a lid:\n      For every batch, put all dice into the box and close the lid. Shake it vigorously for at least\n      ten hard shakes. Each shake should make the dice travel and collide audibly inside; if they\n      are crowded and cannot move freely, use fewer dice or a larger box. Put the box down and\n      gently tip it so the settled dice slide toward one edge. Then open the lid and read them from\n      left to right; if some form a second row, read front to back. Do not move the dice into a line\n      by hand. The tipping step only creates the reading order and does not replace the vigorous\n      shaking.\n\n      If any die is cocked or cannot be read unambiguously, discard the entire batch regardless of\n      the visible values and shake the complete batch again.\n\n   B. Cup and tray:\n      Shake vigorously, cast with enough room and energy for several impacts, and read the dice\n      where they stop using a spatial rule chosen before the first roll.\n\n      Read every die using the fixed rule and apply the encoding selected in step 5. With base-4,\n      faces 5 and 6 consume no bit rectangles;\n\n   Repeat until you have filled all bit rectangles except the ones behind the last bold \"|\" of the\n   last word.\n   For the 12-word sheet this means all but the last 4; for the 24-word sheet, all but the last 8.\n   In the final batch, use results in the predetermined order only until this boudnary and ignore\n   all later dice.\n   Never choose which results to retain based on their values.",
-          "de": "Abhängig von deinem Aufbau:\n\n   A. Große Box mit Deckel:\n      Lege für jede Charge alle Würfel in die Box und schließe den Deckel. Schüttle sie\n      mindestens zehnmal kräftig. Bei jedem Schütteln sollen die Würfel hörbar rollen und\n      zusammenstoßen; wenn sie zu eng liegen und sich nicht frei bewegen können, nimm weniger\n      Würfel oder eine größere Box. Stelle die Box ab und kippe sie vorsichtig, damit die\n      ruhenden Würfel zu einer Kante rutschen. Öffne dann den Deckel und lies sie von links\n      nach rechts; bilden einige eine zweite Reihe, lies von vorne nach hinten. Ordne die\n      Würfel nicht von Hand zu einer Linie. Das Kippen schafft nur die Lesereihenfolge und\n      ersetzt nicht das kräftige Schütteln.\n\n      Liegt ein Würfel schief oder lässt er sich nicht eindeutig ablesen, verwirf unabhängig\n      von den sichtbaren Werten die gesamte Charge und schüttle die vollständige Charge erneut.\n\n   B. Becher und Unterlage:\n      Schüttle kräftig, würfle mit genug Platz und Energie für mehrere Aufpralle und lies die\n      Würfel dort ab, wo sie liegen bleiben, nach einer räumlichen Regel, die du vor dem ersten\n      Wurf festgelegt hast.\n\n      Lies jeden Würfel nach dieser festen Regel und wende die in Schritt 5 gewählte Kodierung\n      an. Bei Basis 4 belegen die Seiten 5 und 6 keine Bit-Rechtecke.\n\n   Wiederhole dies, bis du alle Bit-Rechtecke außer denjenigen hinter dem letzten dicken\n   Trennstrich im letzten Wort gefüllt hast.\n   Beim 12-Wort-Arbeitsblatt bedeutet das alle außer den letzten 4; beim 24-Wort-Arbeitsblatt\n   alle außer den letzten 8.\n   Verwende in der letzten Charge Ergebnisse in der vorbestimmten Reihenfolge nur bis zu dieser\n   Grenze und ignoriere alle späteren Würfel.\n   Wähle niemals anhand ihrer Werte aus, welche Ergebnisse du behältst."
-        },
-        "suffix": {
-          "en": "\n\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 7,
-        "content": {
-          "en": "For each word, look for the word that has the same 11 bits as you rolled in your printout of\n   BIP39_Wordlist_Binary_Decimal_Searchable.pdf\n   The first three bits of the word tell you which page you need to look into.\n   The next three bits of the word tell you which column of that page you need to look into.\n   The last five bits of the word tell you which row of that page you need to look into.",
-          "de": "Suche für jedes Wort in deinem Ausdruck von BIP39_Wordlist_Binary_Decimal_Searchable.pdf\n   das Wort mit denselben 11 Bits, die du gewürfelt hast.\n   Die ersten drei Bits (P) sagen dir, welche Seite du brauchst.\n   Die nächsten drei Bits (C) sagen dir, welche Spalte dieser Seite du brauchst.\n   Die Bits 7-8 (R) sagen dir, welchen Block dieser Seite du brauchst.\n   Die Bits 9-11 (R) sagen dir, welche Zeile innerhalb dieses Blocks du brauchst."
-        },
-        "suffix": {
-          "en": "\n\n",
-          "de": "\n\n"
-        }
-      },
-      {
-        "number": 8,
-        "content": {
-          "en": "For the last word there are still some bits missing (4 bits for 12 words, 8 bits for 24 words).\n   To find them you will need the help of a hardware wallet.\n   (Because they are checksum, i.e. they are fully determined by the other bits. The computation is\n   quite complex, but does not affect your entropy/randomness).\n   The existing bits you have rolled limit the options to 16 (i.e. half a column for 12 words) / 256\n   (one page for 24 words) words.\n   You probably do not want to try all of these manually.\n   How to do this will depend on your concrete HW wallet.\n   Usually you enter the first eleven words as you normally would when entering an existing\n   seedphrase and then the hw wallet will propose possible last words that lead to a valid checksum.\n   Choose one of those that is in the list of options you determined.",
-          "de": "Für das letzte Wort fehlen noch einige Bits: 4 Bits bei 12 Wörtern, 8 Bits bei 24 Wörtern.\n   Um sie zu finden, brauchst du die Hilfe einer Hardware-Wallet.\n   (Es sind Prüfsummen-Bits, also vollständig durch die anderen Bits bestimmt. Die Berechnung ist\n   recht komplex, beeinflusst aber deine Entropie beziehungsweise Zufälligkeit nicht.)\n   Die bereits gewürfelten Bits begrenzen die Optionen auf 16 Wörter, also eine halbe Spalte bei\n   12 Wörtern, beziehungsweise 256 Wörter, also eine Seite bei 24 Wörtern.\n   Wahrscheinlich möchtest du nicht versuchen, alle diese Optionen manuell auszuprobieren.\n   Wie du weiter vorgehst, hängt von deiner konkreten Hardware-Wallet ab.\n   Üblicherweise gibst du die ersten elf Wörter so ein, wie du eine bestehende Seed-Phrase\n   eingeben würdest. Dann schlägt die Hardware-Wallet mögliche letzte Wörter vor, die zu einer\n   gültigen Prüfsumme führen. Wähle eines davon, das in deinem zuvor bestimmten Bereich liegt.\n\nHalte deine Seed-Phrase privat, offline und sicher gesichert."
-        },
-        "suffix": {
-          "en": "\n",
-          "de": ""
         }
       }
     ]

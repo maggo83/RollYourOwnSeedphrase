@@ -42,6 +42,7 @@ ATTRIBUTE_RE = re.compile(
     r"(?P<name>[A-Za-z_:][A-Za-z0-9:_.-]*)(?P<equals>\s*=\s*)(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
     flags=re.DOTALL,
 )
+PLACEHOLDER_RE = re.compile(r"\{\{(?P<key>[a-z][a-z0-9-]*)\}\}")
 ONLINE_FRAGMENTS = (
     SHELL_OPENING,
     STEP_1,
@@ -187,67 +188,95 @@ def translation_catalog() -> dict[str, object]:
         catalog = json.loads(read_text(CATALOG_SOURCE))
     except json.JSONDecodeError as error:
         raise BuildError(f"Translation catalog is not valid JSON: {CATALOG_SOURCE.relative_to(ROOT)}") from error
-    if catalog.get("format") != 1 or not isinstance(catalog.get("fragments"), dict) or not isinstance(catalog.get("runtime"), dict):
+    if catalog.get("format") != 2 or not isinstance(catalog.get("fragments"), dict) or not isinstance(catalog.get("runtime"), dict):
         raise BuildError("Translation catalog has an unsupported structure.")
     return catalog
 
 
-def translated_fragment(source: str, relative_path: Path, locale_code: str) -> str:
-    if locale_code == "en":
-        return source
-
+def fragment_messages(relative_path: Path) -> dict[str, dict[str, str]]:
     catalog = translation_catalog()
-    entries = catalog["fragments"].get(relative_path.as_posix())
-    if not isinstance(entries, list):
-        raise BuildError(f"Translation catalog is missing {relative_path}.")
+    fragments = catalog["fragments"]
+    if not isinstance(fragments, dict):
+        raise BuildError("Translation catalog has an invalid fragments map.")
+    entries = fragments.get(relative_path.as_posix())
+    if entries is None:
+        return {}
+    if not isinstance(entries, dict):
+        raise BuildError(f"Translation catalog has an invalid fragment map for {relative_path}.")
 
-    text_values: dict[str, str] = {}
-    attribute_values: dict[tuple[str, str], str] = {}
-    for entry in entries:
+    messages: dict[str, dict[str, str]] = {}
+    for key, entry in entries.items():
+        if not isinstance(key, str) or not PLACEHOLDER_RE.fullmatch(f"{{{{{key}}}}}"):
+            raise BuildError(f"Translation catalog has an invalid placeholder key for {relative_path}: {key!r}")
         if not isinstance(entry, dict) or entry.get("kind") not in {"text", "attr"}:
-            raise BuildError(f"Translation catalog has an invalid entry for {relative_path}.")
+            raise BuildError(f"Translation catalog has an invalid entry for {relative_path}: {key!r}")
         english = entry.get("en")
-        localized = entry.get(locale_code)
-        if not isinstance(english, str) or not isinstance(localized, str):
-            raise BuildError(f"Translation catalog has an incomplete {locale_code} entry for {relative_path}.")
-        if entry["kind"] == "text":
-            if text_values.setdefault(english, localized) != localized:
-                raise BuildError(f"Translation catalog has ambiguous text for {relative_path}: {english!r}")
-        else:
-            name = entry.get("name")
-            if not isinstance(name, str):
-                raise BuildError(f"Translation catalog has an unnamed attribute for {relative_path}.")
-            key = (name, english)
-            if attribute_values.setdefault(key, localized) != localized:
-                raise BuildError(f"Translation catalog has ambiguous attribute {name} for {relative_path}: {english!r}")
+        german = entry.get("de")
+        if not isinstance(english, str) or not isinstance(german, str):
+            raise BuildError(f"Translation catalog has an incomplete localized entry for {relative_path}: {key!r}")
+        messages[key] = entry
+    return messages
+
+
+def validate_fragment_template(source: str, relative_path: Path, messages: dict[str, dict[str, str]]) -> None:
+    if not messages:
+        return
+    pieces = HTML_TOKEN_RE.split(source)
+    raw_text = PLACEHOLDER_RE.sub("", "".join(pieces[::2]))
+    if re.search(r"[A-Za-z]", raw_text):
+        raise BuildError(f"Raw user-facing text found in {relative_path}; add it to the translation catalog.")
+    for tag in pieces[1::2]:
+        for attribute in ATTRIBUTE_RE.finditer(tag):
+            if attribute.group("name") in {"alt", "aria-label", "lang", "placeholder", "title"}:
+                if not PLACEHOLDER_RE.fullmatch(attribute.group("value")):
+                    raise BuildError(f"Raw localized attribute found in {relative_path}; add it to the translation catalog.")
+
+
+def render_fragment(source: str, relative_path: Path, locale_code: str) -> str:
+    messages = fragment_messages(relative_path)
+    if not messages and locale_code != "en":
+        raise BuildError(f"Translation catalog is missing {relative_path}.")
+    validate_fragment_template(source, relative_path, messages)
+    uses = {key: 0 for key in messages}
+
+    def resolve(match: re.Match[str], kind: str, quote: bool) -> str:
+        key = match.group("key")
+        entry = messages.get(key)
+        if entry is None:
+            raise BuildError(f"Unknown placeholder in {relative_path}: {key!r}")
+        if entry["kind"] != kind:
+            raise BuildError(f"Placeholder {key!r} has the wrong context in {relative_path}.")
+        uses[key] += 1
+        return html.escape(entry[locale_code], quote=quote)
 
     def replace_attribute(match: re.Match[str]) -> str:
-        name = match.group("name")
         value = html.unescape(match.group("value"))
-        localized = attribute_values.get((name, value))
-        if localized is None:
+        placeholder = PLACEHOLDER_RE.fullmatch(value)
+        if placeholder is None:
             return match.group(0)
-        return f'{name}{match.group("equals")}{match.group("quote")}{html.escape(localized, quote=True)}{match.group("quote")}'
+        resolved = resolve(placeholder, "attr", quote=True)
+        return f'{match.group("name")}{match.group("equals")}{match.group("quote")}{resolved}{match.group("quote")}'
 
     def replace_tag(tag: str) -> str:
         return ATTRIBUTE_RE.sub(replace_attribute, tag)
 
     pieces = HTML_TOKEN_RE.split(source)
     for index in range(0, len(pieces), 2):
-        english = html.unescape(pieces[index])
-        if english in text_values:
-            pieces[index] = html.escape(text_values[english], quote=False)
+        pieces[index] = PLACEHOLDER_RE.sub(lambda match: resolve(match, "text", quote=False), pieces[index])
     for index in range(1, len(pieces), 2):
         pieces[index] = replace_tag(pieces[index])
-    translated = "".join(pieces)
-    if translated == source:
-        raise BuildError(f"Translation catalog did not change {relative_path} for locale {locale_code}.")
-    return translated
+    rendered = "".join(pieces)
+    if PLACEHOLDER_RE.search(rendered):
+        raise BuildError(f"Unresolved placeholder found in {relative_path}.")
+    unused = [key for key, count in uses.items() if count == 0]
+    if unused:
+        raise BuildError(f"Unused catalog placeholders in {relative_path}: {', '.join(unused)}")
+    return rendered
 
 
 def fragment_text(relative_path: Path, locale_code: str = "en") -> str:
     locale_config(locale_code)
-    return translated_fragment(read_text(GUIDE_SOURCE / relative_path), relative_path, locale_code)
+    return render_fragment(read_text(GUIDE_SOURCE / relative_path), relative_path, locale_code)
 
 
 def validate_fragment_plan(locale_code: str = "en", include_offline: bool = True) -> None:
@@ -452,8 +481,7 @@ def copy_common_files(target: Path, locale_code: str) -> None:
         localized_name = localized_print_name(name, locale_code)
         shutil.copy2(ROOT / localized_name, target / localized_name)
     if locale_code == "de":
-        for name in ("HowToRollYourOwnSeedphrase-de.html", "HowToRollYourOwnSeedphrase-de.txt"):
-            shutil.copy2(ROOT / name, target / name)
+        shutil.copy2(ROOT / "HowToRollYourOwnSeedphrase-de.html", target / "HowToRollYourOwnSeedphrase-de.html")
 
 
 def source_commit() -> str:

@@ -46,7 +46,7 @@ The interactive introductory version of the procedure is available on [GitHub Pa
 
 # Standalone practical guide
 
-[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets. The original [plain-text version](HowToRollYourOwnSeedphrase.txt) remains available for simple offline reading, but is not mandatory to read.
+[Printable quick guide](HowToRollYourOwnSeedphrase.pdf) is the formatted, print-friendly standalone procedure for generating a mnemonic with dice and the supplied worksheets.
 
 Required printable material:
 

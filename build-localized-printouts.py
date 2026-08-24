@@ -103,7 +103,7 @@ def quick_guide_catalog() -> dict[str, object]:
         catalog = json.loads(QUICK_GUIDE_CATALOG.read_text(encoding="utf-8"))
     except json.JSONDecodeError as error:
         raise RuntimeError(f"Quick-guide catalog is not valid JSON: {QUICK_GUIDE_CATALOG}") from error
-    if catalog.get("format") != 1 or not isinstance(catalog.get("html"), dict) or not isinstance(catalog.get("plainText"), dict):
+    if catalog.get("format") != 1 or not isinstance(catalog.get("html"), dict):
         raise RuntimeError("Quick-guide catalog has an unsupported structure.")
     return catalog
 
@@ -116,9 +116,8 @@ def localized(value: object, locale_code: str) -> str:
 
 def validate_quick_guide_catalog(catalog: dict[str, object]) -> None:
     html_content = catalog["html"]
-    plain_text = catalog["plainText"]
-    if not isinstance(html_content, dict) or not isinstance(plain_text, dict):
-        raise RuntimeError("Quick-guide catalog is missing its HTML or plain-text content.")
+    if not isinstance(html_content, dict):
+        raise RuntimeError("Quick-guide catalog is missing its HTML content.")
     for field in ("description", "title"):
         localized(html_content.get(field), "en")
 
@@ -129,18 +128,6 @@ def validate_quick_guide_catalog(catalog: dict[str, object]) -> None:
         if not isinstance(entry, dict):
             raise RuntimeError("Quick-guide HTML section is invalid.")
         localized(entry.get("content"), "en")
-
-    localized(plain_text.get("heading"), "en")
-    localized(plain_text.get("headingSuffix"), "en")
-    sections = plain_text.get("sections")
-    if not isinstance(sections, list) or [entry.get("number") for entry in sections if isinstance(entry, dict)] != list(range(1, 9)):
-        raise RuntimeError("Quick-guide plain-text sections must be numbered 1 through 8.")
-    for entry in sections:
-        if not isinstance(entry, dict):
-            raise RuntimeError("Quick-guide plain-text section is invalid.")
-        localized(entry.get("content"), "en")
-        localized(entry.get("suffix"), "en")
-
 
 def render_quick_guide_html(locale_code: str) -> str:
     catalog = quick_guide_catalog()
@@ -159,21 +146,6 @@ def render_quick_guide_html(locale_code: str) -> str:
         .replace("{{body}}", f"  {rendered_body}")
     )
 
-
-def render_quick_guide_text(locale_code: str) -> str:
-    catalog = quick_guide_catalog()
-    validate_quick_guide_catalog(catalog)
-    plain_text = catalog["plainText"]
-    assert isinstance(plain_text, dict)
-    sections = plain_text["sections"]
-    assert isinstance(sections, list)
-    output = localized(plain_text["heading"], locale_code) + localized(plain_text["headingSuffix"], locale_code)
-    for entry in sections:
-        if isinstance(entry, dict):
-            output += f'{entry["number"]}. {localized(entry["content"], locale_code)}{localized(entry["suffix"], locale_code)}'
-    return output
-
-
 def quick_guide_name(locale_code: str, suffix: str) -> str:
     locale_suffix = "-de" if locale_code == "de" else ""
     return f"HowToRollYourOwnSeedphrase{locale_suffix}.{suffix}"
@@ -183,9 +155,6 @@ def build_quick_guides() -> None:
     for locale_code in ("en", "de"):
         (ROOT / quick_guide_name(locale_code, "html")).write_text(
             render_quick_guide_html(locale_code), encoding="utf-8", newline="\n"
-        )
-        (ROOT / quick_guide_name(locale_code, "txt")).write_text(
-            render_quick_guide_text(locale_code), encoding="utf-8", newline="\n"
         )
         render_html_to_pdf(ROOT / quick_guide_name(locale_code, "html"), ROOT / quick_guide_name(locale_code, "pdf"))
 

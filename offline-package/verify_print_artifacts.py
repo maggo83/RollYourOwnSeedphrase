@@ -15,9 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXACT_ARTIFACTS = (
     Path("HowToRollYourOwnSeedphrase.html"),
-    Path("HowToRollYourOwnSeedphrase.txt"),
     Path("HowToRollYourOwnSeedphrase-de.html"),
-    Path("HowToRollYourOwnSeedphrase-de.txt"),
 )
 PDF_ARTIFACTS = (
     Path("BitsToWords.pdf"),
