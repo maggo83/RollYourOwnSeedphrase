@@ -12,26 +12,26 @@ Document navigation:
 This synthesis applies four inputs owned by the preceding documents:
 
 - the conversion formulas and canonical entropy tables in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md);
-- the provisional $\varepsilon=0.01$ casino and $\varepsilon=0.10$ consumer scenarios in [Expected performance of real six-sided dice](ExpectedDicePerformace.md#4-plausible-analysis-scenarios);
+- the central $\varepsilon=0.01$ casino and $\varepsilon=0.05$ consumer scenarios in [Expected performance of real six-sided dice](ExpectedDicePerformace.md#4-plausible-analysis-scenarios);
 - the [preferred lidded-box rolling protocol](RollingTechnique.md#31-preferred-lidded-box-method);
 - the 112-bit conservative objective established in [Attacker capabilities versus mnemonic entropy](AttackerCapabilties.md#8-standards-comparison).
 
-The scenario selection is deliberately asymmetric: $0.01$ is the central precision-dice scenario, while $0.10$ is the conservative consumer stress scenario. Neither is a product guarantee. All recommendations remain conditional on a valid final-outcome bound and independence between retained results.
+The comparison uses $\varepsilon=0.01$ for casino-grade precision dice and $\varepsilon=0.05$ for well-made consumer dice. These are sensitivity scenarios rather than product guarantees.
 
 The default recommendation is:
 
 > Use base-4 rejection: map faces 1–4 to 00, 01, 10, and 11; discard faces 5–6; retain exactly 64 accepted symbols for 12 words or 128 for 24 words.
 
-Base-4 rejection is preferred because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses fewer expected physical results than binary quantization. Under the consumer stress scenario it remains above the 112-bit objective; 12-word binary quantization does not.
+Base-4 rejection is preferred because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses fewer expected physical results than binary quantization. Under the central consumer scenario, a 12-word result retains 121.157 bits of min-entropy.
 
-Ordinary binary quantization remains the simplest no-rejection alternative. It always uses exactly 128 or 256 physical results, but its 12-word min-entropy margin is small under the consumer-dice assumption.
+Ordinary binary quantization is the simplest no-rejection alternative. It always uses exactly 128 or 256 physical results. Under the central consumer scenario, a 12-word result retains 118.990 bits of min-entropy.
 
-Base 6 remains useful in two forms:
+Base 6 is useful in two forms:
 
 - **Full-integer conversion:** 50 or 100 results give the best roll efficiency and entropy margin, but converting a 50- or 100-digit base-6 integer manually is not realistically error-resistant. Use this only with verifiable hardware-wallet support (i.e. enter in two hardware-wallets from different vendors and compare results) or a small, reviewed, offline converter.
 - **Manual per-word conversion:** groups of five base-6 digits can be converted separately to BIP-39 word indices using ordinary integer arithmetic. This needs 58 results for 12 words or 117 for 24 words, has no rejection, and avoids arbitrary-precision arithmetic. It is feasible by hand if every calculation is independently checked (e.g. with an off-line calculator [not on your phone or laptop/PC!]).
 
-The consumer scenario is a stress assumption, not a product guarantee. If it lacks credible support for the actual dice-and-rolling setup, use a better-supported assumption or treat the numerical guarantee as unproven.
+The consumer scenario is a central sensitivity assumption, not a product guarantee. If it lacks credible support for the actual dice-and-rolling setup, use a better-supported assumption or treat the numerical guarantee as unproven.
 
 ---
 
@@ -56,7 +56,7 @@ The synthesis applies those inputs in this order:
 
 ### 2.1 Binary quantization
 
-Binary quantization emits one bit per die result and rejects nothing. Its [workflow](#61-binary-workflow) is the simplest fixed-length option, but the canonical entropy table shows that its 12-word result does not meet the 112-bit objective under the consumer stress scenario.
+Binary quantization emits one bit per die result and rejects nothing. Its [workflow](#61-binary-workflow) is the simplest fixed-length option. Its 12-word result meets the 112-bit objective under both central scenarios: 126.163 bits for precision dice and 118.990 bits for well-made consumer dice.
 
 ### 2.2 Base-4 rejection
 
@@ -118,7 +118,8 @@ The canonical quantitative comparison is in [Entropy from ideal and real dice](D
 
 | Situation | Recommended action |
 | --- | --- |
-| Consumer scenario $\varepsilon<0.10$ is credibly supported | Use base-4 rejection, global base-6 modulo, or manual per-word base 6 for 12 words; do not use 12-word binary as a 112-bit design |
+| Central consumer scenario $\varepsilon\le0.05$ is credibly supported | Either 12- or 24-word output is acceptable for binary, base-4 rejection, global base-6 modulo, or manual per-word base 6 |
+| Only the consumer stress scenario $\varepsilon\le0.10$ is supported | Base-4 remains above 112 bits for 12 words; binary needs 24 words to meet that policy objective |
 | Consumer-dice performance is unknown | Do not claim a numerical guarantee; use the [statistical methodology](ExpectedDicePerformace.md#5-testing-five-identified-dice) to establish a bound or use a better-supported assumption |
 | Maximum manual simplicity is preferred | Use base-4 rejection |
 | Fixed completion length with no rejected results is essential | Use binary only when its canonical entropy result clears the selected objective |

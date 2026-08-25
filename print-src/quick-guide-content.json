@@ -62,8 +62,8 @@
       {
         "slot": "step-2",
         "content": {
-          "en": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Choose your phrase length</h2><p>If you use regular dice and binary quantization, we recommend you use 24 words. Otherwise chose as you like between 12 and 24 words.</p><p>Print the matching BitsToWord worksheet and write an <strong>arbitrary identifier</strong> on it so you can recognize the backup later.</p></div></section>",
-          "de": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Wähle die Länge der Phrase</h2><p>Falls du normale Würfel und binäre Quantisierung verwenden willst, empfehlen wir 24 Wörter zu nutzen. Andernfalls wähle frei zwischen 12 und 24 Wörtern.</p><p>Drucke das passende BitsToWord Arbeitsblatt und notiere eine <strong>willkürliche Bezeichnung</strong>, damit du die Sicherung später wiedererkennst.</p></div></section>"
+          "en": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Choose your phrase length</h2><p>Choose either 12 or 24 words.</p><p>Print the matching BitsToWord worksheet and write an <strong>arbitrary identifier</strong> on it so you can recognize the backup later.</p></div></section>",
+          "de": "<section class=\"step\"><div class=\"step-number\">2</div><div><h2>Wähle die Länge der Phrase</h2><p>Wähle frei zwischen 12 und 24 Wörtern.</p><p>Drucke das passende BitsToWord Arbeitsblatt und notiere eine <strong>willkürliche Bezeichnung</strong>, damit du die Sicherung später wiedererkennst.</p></div></section>"
         }
       },
       {

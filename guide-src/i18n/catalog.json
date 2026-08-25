@@ -245,24 +245,8 @@
       },
       "text-20": {
         "kind": "text",
-        "en": "My dice",
-        "de": "Meine Würfel"
-      },
-      "attr-04": {
-        "kind": "attr",
         "en": "Dice quality",
-        "de": "Würfelqualität",
-        "name": "aria-label"
-      },
-      "text-21": {
-        "kind": "text",
-        "en": "Casino-grade",
-        "de": "Casino-Qualität"
-      },
-      "text-22": {
-        "kind": "text",
-        "en": "Regular dice",
-        "de": "Normale Würfel"
+        "de": "Würfelqualität"
       },
       "text-23": {
         "kind": "text",
@@ -456,18 +440,8 @@
       },
       "text-22": {
         "kind": "text",
-        "en": " rolls. For 12 words, use casino-grade dice. With regular dice, choose 24 words or use base-4.",
-        "de": " Würfe. Für 12 Wörter nutze Casino-Würfel. Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
-      },
-      "text-23": {
-        "kind": "text",
-        "en": "Choose another combination.",
-        "de": "Wähle eine andere Kombination."
-      },
-      "text-24": {
-        "kind": "text",
-        "en": " With regular dice, select 24 words or use base-4.",
-        "de": " Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
+        "en": " rolls.",
+        "de": " Würfe."
       },
       "text-25": {
         "kind": "text",
@@ -1045,10 +1019,6 @@
       "en": "Complete the checklist",
       "de": "Checkliste abschließen"
     },
-    "chooseSafer": {
-      "en": "Select a safer option",
-      "de": "Sichere Option wählen"
-    },
     "continue": {
       "en": "Continue →",
       "de": "Weiter →"
@@ -1056,10 +1026,6 @@
     "restart": {
       "en": "Start again ↺",
       "de": "Neu starten ↺"
-    },
-    "safetyNote": {
-      "en": "With regular dice, choose 24 words or base-4.",
-      "de": "Mit normalen Würfeln wähle 24 Wörter oder Basis 4."
     },
     "checklistNote": {
       "en": "Tick every checklist item above to continue.",
