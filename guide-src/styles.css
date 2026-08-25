@@ -3885,11 +3885,22 @@ body[data-phrase-length="24"] .worksheet-grid[data-worksheet-12] {
     flex-basis: 126px;
     width: 126px;
   }
-  .lookup-flow .sheet-stack img,
+  .lookup-flow .sheet-stack img {
+    width: 104px;
+  }
   .lookup-flow .lookup-sheet,
   .lookup-flow .sheet-highlight {
-    flex-basis: 104px;
+    flex: 0 0 auto;
     width: 104px;
+  }
+  .bit-marker-final-12 .marker-checksum,
+  .bit-marker-final-24 .marker-checksum {
+    font-size: 0 !important;
+  }
+  .bit-marker-final-12 .marker-checksum::after,
+  .bit-marker-final-24 .marker-checksum::after {
+    content: "CS";
+    font-size: 0.7rem;
   }
   .step-controls {
     position: sticky;
