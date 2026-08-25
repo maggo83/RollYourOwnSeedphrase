@@ -9,7 +9,6 @@
   let currentStep;
   let selectedLength = 12;
   let selectedEncoding = 'base4';
-  let selectedDice = 'consumer';
   let selectedContainer = 'box';
   const stepPanels = [...document.querySelectorAll('.guide-step')];
   const previous = document.querySelector('.previous');
@@ -228,16 +227,10 @@
 
   function updateForwardState() {
     const checklistComplete = isStepChecklistComplete(currentStep);
-    const unsafeBinary = selectedDice === 'consumer' && selectedLength === 12 && selectedEncoding === 'binary';
     const blockForChecklist = currentStep < totalSteps && !checklistComplete;
-    const blockForSafety = currentStep === 2 && unsafeBinary;
 
-    next.disabled = blockForChecklist || blockForSafety;
-    if (blockForSafety) {
-      next.textContent = text.chooseSafer;
-      forwardNote.textContent = text.safetyNote;
-      forwardNote.classList.remove('is-hidden');
-    } else if (blockForChecklist) {
+    next.disabled = blockForChecklist;
+    if (blockForChecklist) {
       next.textContent = text.completeChecklist;
       forwardNote.textContent = text.checklistNote;
       forwardNote.classList.remove('is-hidden');
@@ -275,10 +268,6 @@
     document.querySelectorAll('[data-final-bits-24]').forEach(el => { el.hidden = selectedLength !== 24; });
     document.querySelectorAll('[data-worksheet-12]').forEach(el => { el.hidden = selectedLength !== 12; });
     document.querySelectorAll('[data-worksheet-24]').forEach(el => { el.hidden = selectedLength !== 24; });
-
-    const unsafeBinary = selectedDice === 'consumer' && selectedLength === 12 && selectedEncoding === 'binary';
-    document.querySelector('[data-binary-warning]').hidden = !unsafeBinary;
-    document.querySelector('[data-dice-quality-note]').hidden = selectedDice !== 'consumer';
 
     document.querySelectorAll('[data-container-panel]').forEach(panel => {
       panel.hidden = panel.dataset.containerPanel !== selectedContainer;
@@ -369,22 +358,6 @@
           button.classList.toggle('is-selected', active);
           button.setAttribute('aria-pressed', String(active));
         }
-      });
-      updateSelections();
-    });
-  });
-
-  document.querySelectorAll('[data-dice]').forEach(button => {
-    button.addEventListener('click', () => {
-      if (selectedDice !== button.dataset.dice) {
-        resetCheckpoint('dice');
-        resetCheckpointsAfter(1);
-      }
-      selectedDice = button.dataset.dice;
-      document.querySelectorAll('[data-dice]').forEach(choice => {
-        const active = choice === button;
-        choice.classList.toggle('is-selected', active);
-        choice.setAttribute('aria-pressed', String(active));
       });
       updateSelections();
     });

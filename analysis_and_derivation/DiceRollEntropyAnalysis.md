@@ -476,6 +476,8 @@ The same arrangement also gives the worst binary grouping, with group probabilit
 
 Again, the base-6 values are raw-source budgets. A value over 128 cannot produce more than a 128-bit output and does not by itself prove uniform extraction.
 
+For practical comparison, the central scenarios defined in [Expected performance of real six-sided dice](ExpectedDicePerformace.md#4-plausible-analysis-scenarios) are $\varepsilon=0.01$ for casino-grade precision dice and $\varepsilon=0.05$ for well-made consumer dice. Under the conservative worst-alignment model, a 12-word binary sequence retains 126.163 bits in the precision scenario and 118.990 bits in the consumer scenario; base-4 retains 126.618 and 121.157 bits respectively. All four values exceed the 112-bit conservative objective. The $\varepsilon=0.10$ consumer row is a separate stress scenario.
+
 The base-4 columns are output bounds because each accepted symbol is already an explicit two-bit group. Their worst-case Shannon distribution has two accepted faces at each probability bound; the min-entropy bound uses the most likely accepted face. Rejection does not make physically biased dice uniform.
 
 ### Entropy losses for both seed lengths
