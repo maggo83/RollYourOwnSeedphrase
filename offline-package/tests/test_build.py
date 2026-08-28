@@ -163,7 +163,7 @@ class BuildTests(unittest.TestCase):
         self.assertIn("Do not use this online guide for a real seed phrase.", online)
         self.assertNotIn("turn off or cover its camera", online)
         self.assertIn("Nutze gut verarbeitete Würfel.", german)
-        self.assertIn("Ich habe im Feld Bezeichnung einen nicht geheimen Namen eingetragen.", german)
+        self.assertIn("Ich habe im Feld Bezeichnung einen Namen eingetragen.", german)
         self.assertNotIn("I filled the worksheet Identifier", german)
         self.assertIn("Nutze diese Online-Anleitung nicht für eine echte Seed-Phrase.", german)
         self.assertNotIn("Keep it private, offline, and safely backed up.", online)

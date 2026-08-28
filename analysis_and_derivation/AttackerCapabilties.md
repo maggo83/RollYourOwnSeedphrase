@@ -21,7 +21,7 @@ The relevant security quantity is **min-entropy**. As a practical scale:
 - 112 bits is an established conservative security strength;
 - 128 bits is the appropriate target and matches Bitcoin's approximate classical elliptic-curve security level.
 
-A 12-word dice sequence whose final outcomes satisfy the bounded model with $\varepsilon\le0.05$ has at least approximately 119 bits of min-entropy with binary quantization or 121 bits with base-4 rejection. The bound must describe the actual dice-and-rolling process. Under that assumption, both remain beyond plausible classical brute force; operational compromise becomes the dominant threat.
+A 12-word dice sequence whose final outcomes satisfy the bounded model with $\varepsilon\le0.05$ has at least approximately 119 bits of min-entropy with binary quantization or 122.6 bits under the conservative Oren's variable-length mapping recurrence. The bound must describe the actual dice-and-rolling process. Under that assumption, both remain beyond plausible classical brute force; operational compromise becomes the dominant threat.
 
 ---
 
@@ -203,8 +203,8 @@ The formulas and complete $\varepsilon$-to-entropy tables are maintained in [Ent
 
 For threat interpretation, two representative outputs are sufficient:
 
-- at $\varepsilon\le0.05$, the canonical analysis gives approximately 119 bits for binary quantization and 121 bits for base-4 rejection, both far beyond plausible classical exhaustive search;
-- at $\varepsilon=0.10$, binary falls slightly below the 112-bit benchmark while base 4 remains above it, making the distinction relevant to conservative long-term policy.
+- at $\varepsilon\le0.05$, the canonical analysis gives approximately 119 bits for binary quantization and a 122.6-bit conservative lower bound for Oren's variable-length mapping, both far beyond plausible classical exhaustive search;
+- at $\varepsilon=0.10$, binary falls slightly below the 112-bit benchmark while the lower bound for Oren's variable-length mapping remains above it, making the distinction relevant to conservative long-term policy.
 
 These statements require both the final-outcome bound and the independence assumption to hold. They do not establish either physical assumption.
 
@@ -253,7 +253,7 @@ Bitcoin also faces a distinct future quantum issue: Shor's algorithm against sec
 2. Treat actor-specific guess rates as scenarios unless backed by complete-candidate benchmarks.
 3. Below 64 bits can be dangerous; 80 bits is not an appropriate new cryptographic target despite being hard today.
 4. At least 112 bits is a conservative long-term objective; 128 bits is preferred.
-5. A bounded-dice result of $\varepsilon\le0.05$ leaves approximately 119 bits for a 12-word binary method or 121 bits for base-4 rejection; neither is plausibly classically brute-forceable.
+5. A bounded-dice result of $\varepsilon\le0.05$ leaves approximately 119 bits for a 12-word binary method or at least 122.6 bits under the conservative Oren's variable-length mapping recurrence; neither is plausibly classically brute-forceable.
 6. For sophisticated cryptocurrency actors, key theft, malware, social engineering, and operational compromise are more realistic than exhaustive seed search.
 
 ## References

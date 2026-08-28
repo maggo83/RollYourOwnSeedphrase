@@ -15,6 +15,7 @@ for (const file of ['bip39-english.js', 'sha256.js', 'bits-words.js']) {
 const words = globalThis.BIP39_ENGLISH_WORDS;
 const sha256 = globalThis.OfflineHash.sha256;
 const derive = globalThis.OfflineBitsWordsCore.deriveFinalWord;
+const bitsFromFace = globalThis.OfflineBitsWordsCore.bitsFromFace;
 
 function hex(bytes) {
   return Buffer.from(bytes).toString('hex');
@@ -57,6 +58,15 @@ assert.equal(words.length, 2048);
 assert.equal(new Set(words).size, 2048);
 assert.deepEqual(words.slice(0, 4), ['abandon', 'ability', 'able', 'about']);
 assert.deepEqual(words.slice(-4), ['zebra', 'zero', 'zone', 'zoo']);
+
+assert.deepEqual([1, 2, 3, 4, 5, 6].map(face => bitsFromFace('variable', face)), [
+  [0, 0], [0, 1], [1, 0], [1, 1], [0], [1]
+]);
+assert.deepEqual([1, 2, 3, 4, 5, 6].map(face => bitsFromFace('binary', face)), [
+  [0], [0], [0], [1], [1], [1]
+]);
+assert.equal(bitsFromFace('variable', 0), null);
+assert.equal(bitsFromFace('variable', 7), null);
 
 const shaVectors = [
   ['', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],

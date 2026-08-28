@@ -112,20 +112,13 @@
     background 0.12s ease,
     border-color 0.12s ease;
 }
-.die-btn:hover:not(:disabled):not(.is-skip) {
+.die-btn:hover:not(:disabled) {
   background: var(--mint);
   border-color: var(--forest);
 }
 .die-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-}
-.die-btn.is-skip {
-  opacity: 0.35;
-}
-.die-btn.is-skip .die-label::after {
-  content: " skip";
-  font-size: 0.62rem;
 }
 .die-face {
   font-family: "DejaVu Sans", "Apple Color Emoji", sans-serif;
@@ -149,22 +142,8 @@
     border-color: var(--line);
   }
 }
-@keyframes die-flash-skip {
-  0%,
-  10% {
-    background: #ffd4cc;
-    border-color: var(--coral);
-  }
-  100% {
-    background: #fff;
-    border-color: var(--line);
-  }
-}
 .die-btn.die-flash-ok {
   animation: die-flash-ok 0.45s ease-out forwards;
-}
-.die-btn.die-flash-skip {
-  animation: die-flash-skip 0.45s ease-out forwards;
 }
 .die-progress {
   margin: 0 0 0.6rem;

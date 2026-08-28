@@ -2,13 +2,13 @@
   const text = globalThis.GUIDE_LOCALE_TEXT;
   if (!text) throw new Error('Missing build-generated guide locale text.');
   const lengths = {
-    12: { base4: 64, average: 96, binary: 128, checksum: 4 },
-    24: { base4: 128, average: 192, binary: 256, checksum: 8 }
+    12: { average: 77, binary: 128, checksum: 4 },
+    24: { average: 154, binary: 256, checksum: 8 }
   };
 
   let currentStep;
   let selectedLength = 12;
-  let selectedEncoding = 'base4';
+  let selectedEncoding = 'variable';
   let selectedContainer = 'box';
   const stepPanels = [...document.querySelectorAll('.guide-step')];
   const previous = document.querySelector('.previous');
@@ -47,9 +47,9 @@
     if (!entryContent || !finalContent) return; // absent in offline combined step
     const filled = ['1', '0', '1', '0', '1'];
     const blanks = count => Array.from({ length: count }, () => '');
-    const entryBase4 = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, { value: '0', className: 'new-bit' }, ...blanks(4)], 'entry-base4');
+    const entryVariable = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, { value: '0', className: 'new-bit' }, ...blanks(4)], 'entry-variable');
     const entryBinary = wordBox(3, [...filled, { value: '1', className: 'new-bit' }, ...blanks(5)], 'entry-binary');
-    entryContent.innerHTML = `<div class="bit-entry-shot"><div data-base4-entry>${entryBase4}</div><div data-binary-entry hidden>${entryBinary}</div></div>`;
+    entryContent.innerHTML = `<div class="bit-entry-shot"><div data-variable-entry>${entryVariable}</div><div data-binary-entry hidden>${entryBinary}</div></div>`;
 
     const final12 = wordBox(12, ['1', '0', '1', '0', '1', '0', '1', ...Array.from({ length: 4 }, () => ({ value: '', className: 'locked-bit checksum-cell' }))], 'final-boundary-12', '', 'final-12');
     const final24 = wordBox(24, ['1', '0', '1', ...Array.from({ length: 8 }, () => ({ value: '', className: 'locked-bit checksum-cell' }))], 'final-boundary-24', '', 'final-24');
@@ -245,8 +245,7 @@
     const values = lengths[selectedLength];
     document.body.dataset.phraseLength = String(selectedLength);
     document.body.dataset.encoding = selectedEncoding;
-    document.querySelectorAll('[data-base4-count]').forEach(el => el.textContent = values.base4);
-    document.querySelectorAll('[data-base4-average]').forEach(el => el.textContent = values.average);
+    document.querySelectorAll('[data-variable-average]').forEach(el => el.textContent = values.average);
     document.querySelectorAll('[data-binary-count]').forEach(el => el.textContent = values.binary);
     document.querySelectorAll('[data-required-bits]').forEach(el => el.textContent = selectedLength === 12 ? 128 : 256);
     document.querySelectorAll('[data-checksum-bits]').forEach(el => el.textContent = values.checksum);
@@ -284,24 +283,21 @@
     });
     document.querySelector('.compact-checklist').classList.toggle('has-box-clearance', selectedContainer === 'box');
 
-    const isBase4 = selectedEncoding === 'base4';
-    document.querySelectorAll('[data-bits-per-result]').forEach(el => el.textContent = isBase4 ? 2 : 1);
-    document.querySelectorAll('[data-bit-word]').forEach(el => el.textContent = text.bitWord);
-    document.querySelectorAll('[data-bit-boxes]').forEach(el => el.textContent = isBase4 ? text.nextFreeBits : text.nextFreeBit);
-    const b4v = document.querySelector('[data-base4-visual]');
+    const isVariable = selectedEncoding === 'variable';
+    const variableVisual = document.querySelector('[data-variable-visual]');
     const bnv = document.querySelector('[data-binary-visual]');
-    const b4ex = document.querySelector('[data-base4-example]');
+    const variableExample = document.querySelector('[data-variable-example]');
     const bnex = document.querySelector('[data-binary-example]');
-    const b4ent = document.querySelector('[data-base4-entry]');
+    const variableEntry = document.querySelector('[data-variable-entry]');
     const bnent = document.querySelector('[data-binary-entry]');
     const encCap = document.querySelector('[data-encoding-caption]');
-    if (b4v) b4v.hidden = !isBase4;
-    if (bnv) bnv.hidden = isBase4;
-    if (b4ex) b4ex.hidden = !isBase4;
-    if (bnex) bnex.hidden = isBase4;
-    if (b4ent) b4ent.hidden = !isBase4;
-    if (bnent) bnent.hidden = isBase4;
-    if (encCap) encCap.textContent = isBase4 ? text.base4Caption : text.binaryCaption;
+    if (variableVisual) variableVisual.hidden = !isVariable;
+    if (bnv) bnv.hidden = isVariable;
+    if (variableExample) variableExample.hidden = !isVariable;
+    if (bnex) bnex.hidden = isVariable;
+    if (variableEntry) variableEntry.hidden = !isVariable;
+    if (bnent) bnent.hidden = isVariable;
+    if (encCap) encCap.textContent = isVariable ? text.variableCaption : text.binaryCaption;
     document.dispatchEvent(new CustomEvent('guide:selectionchange', { detail: { length: selectedLength } }));
     updateForwardState();
   }

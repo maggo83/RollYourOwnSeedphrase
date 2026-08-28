@@ -2350,7 +2350,7 @@ footer p {
   height: calc(100% + 7px);
   border-color: var(--coral);
 }
-.entry-base4 .bit-cells::after {
+.entry-variable .bit-cells::after {
   left: calc(45.45% - 3px);
   width: calc(18.18% + 6px);
 }
