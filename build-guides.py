@@ -435,8 +435,8 @@ def offline_html(source_html: str) -> str:
         '  <script src="script.js"></script>',
         '  <script src="bip39-english.js"></script>\n'
         '  <script src="sha256.js"></script>\n'
-        '  <script src="bits-words.js"></script>\n'
         '  <script src="locale.js"></script>\n'
+        '  <script src="bits-words.js"></script>\n'
         '  <script src="script.js"></script>',
     )
     return output

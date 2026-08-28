@@ -20,8 +20,8 @@ Open `dist/offline/index.html` directly with a clean browser profile and no exte
 
 1. Confirm Step 0 is first and blocks Continue until its acknowledgement is checked.
 2. Complete the checklists with dummy data and confirm Steps 1–4 retain the online guide's layout and behavior.
-3. In base-4 mode, confirm faces 1–4 append `00`, `01`, `10`, and `11`; faces 5–6 append nothing and show the skipped state.
-4. Confirm Undo removes exactly the last accepted die result and Clear all empties every bit, word, checksum, progress value, and Step 3 checkpoint.
+3. In Oren's variable-length mapping mode, confirm faces 1–6 append `00`, `01`, `10`, `11`, `0`, and `1` respectively, with no skipped state.
+4. Confirm Undo removes exactly the last die result and Clear all empties every bit, word, checksum, progress value, and Step 3 checkpoint.
 5. For 12 words, enter eleven rows of `00000000000` and final prefix `0000000`; the final checksum must be `0011` and the final word must be `about`.
 6. Restart, choose 24 words, enter twenty-three rows of `00000000000` and final prefix `000`; the final checksum must be `01100110` and the final word must be `art`.
 7. Type a non-binary character into a bit field and confirm it is removed without being echoed elsewhere.

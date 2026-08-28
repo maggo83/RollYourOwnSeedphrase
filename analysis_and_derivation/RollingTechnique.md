@@ -50,7 +50,7 @@ Those results demonstrate a physical mechanism by which poor technique can prese
 
 A test of the complete setup—dice, container, shaking procedure, settling, and reading rule—measures their combined final distribution. This is the distribution needed by the entropy formulas. Testing the dice under a different apparatus or using a different technique during secret generation weakens that connection.
 
-Physical-die and rolling-dynamics figures from different studies must not be multiplied, added, or reduced to their minimum as if they measured one joint setup. The [entropy analysis](DiceRollEntropyAnalysis.md) owns the formulas that map a justified aggregate final-outcome model into binary, base-4, and base-6 entropy.
+Physical-die and rolling-dynamics figures from different studies must not be multiplied, added, or reduced to their minimum as if they measured one joint setup. The [entropy analysis](DiceRollEntropyAnalysis.md) owns the formulas that map a justified aggregate final-outcome model into binary, variable-length, and base-6 entropy.
 
 ---
 
@@ -73,7 +73,7 @@ The source review reports the following representative results from the study's 
 
 These are conditional interpretations given the starting orientation, not measurements of the pooled final-face distribution produced by a shoe box or cup. The ideal single-face probability is $1/6\approx0.1667$. Their appropriate use here is comparative: low-energy drops preserve much more initial-state information than vigorous multi-bounce throws. They do not imply that every privately performed dead drop has exactly $0.868$ bits of final-outcome min-entropy, or that every vigorous roll has exactly $2.329$ bits.
 
-These figures must not be treated as certified bounds for an arbitrary real setup. They concern a specific mechanical model, initial-condition distribution, and interpretation of orientation persistence. In particular, they do not directly provide binary or base-4 output entropy. They are strong evidence for specifying the procedure, not a substitute for characterizing the procedure actually used.
+These figures must not be treated as certified bounds for an arbitrary real setup. They concern a specific mechanical model, initial-condition distribution, and interpretation of orientation persistence. In particular, they do not directly provide binary or variable-mapping output entropy. They are strong evidence for specifying the procedure, not a substitute for characterizing the procedure actually used.
 
 ### 2.3 Why hard surfaces and collisions help
 
@@ -87,7 +87,7 @@ Dice colliding with one another can add mixing, but a crowded small cup can rest
 
 ## 3. Required rolling protocol
 
-The following protocol is common to binary quantization, base-4 rejection, and base-6 recording.
+The following protocol is common to binary quantization, Oren's variable-length mapping, and base-6 recording.
 
 ### 3.1 Preferred lidded-box method
 

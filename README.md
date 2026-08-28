@@ -26,7 +26,7 @@ The analysis distinguishes between:
 - 24-word mnemonics with 256 independently generated entropy bits;
 - ideal and physically biased dice;
 - physical dice and rolling technique as two contributors to the final-outcome distribution;
-- binary quantization, base-4 rejection, and base-6 conversion;
+- binary quantization, the variable-length mapping, and base-6 conversion;
 - Shannon entropy and conservative min-entropy;
 - mathematical security and practical generation risks.
 
@@ -34,7 +34,7 @@ The analysis distinguishes between:
 
 The documents are intended to be read in this order:
 
-1. [Entropy from ideal and real dice](analysis_and_derivation/DiceRollEntropyAnalysis.md) develops the statistical model and compares the entropy produced by binary, base-4, and base-6 methods under several dice-bias models.
+1. [Entropy from ideal and real dice](analysis_and_derivation/DiceRollEntropyAnalysis.md) develops the statistical model and compares the entropy produced by binary, variable-length, and base-6 methods under several dice-bias models.
 2. [Expected performance of real dice](analysis_and_derivation/ExpectedDicePerformace.md) reviews available evidence about physical dice, explains plausible bias assumptions, and discusses how difficult those assumptions are to validate experimentally.
 3. [Rolling technique and throw dynamics](analysis_and_derivation/RollingTechnique.md) explains how handling, agitation, collisions, and settling affect the final outcomes and derives the common rolling protocol required by every encoding method.
 4. [Attacker capabilities versus mnemonic entropy](analysis_and_derivation/AttackerCapabilties.md) relates the resulting min-entropy values to classical brute-force capabilities and realistic cryptocurrency threat actors.

@@ -120,7 +120,7 @@ $$
 H_{\infty,6}=-\log_2(0.1688)\approx2.567
 $$
 
-raw bits per result, compared with the ideal $2.585$. The high-face probability corresponds to approximately $\varepsilon=0.013$ as a point estimate. It is not a simultaneous bound for every face of every die, and raw six-face min-entropy does not determine binary-group or base-4 entropy by itself.
+raw bits per result, compared with the ideal $2.585$. The high-face probability corresponds to approximately $\varepsilon=0.013$ as a point estimate. It is not a simultaneous bound for every face of every die, and raw six-face min-entropy does not determine binary-group or variable-mapping output entropy by itself.
 
 Labby measured the 1--6 axis as approximately $0.2\%$ shorter than the other axes, consistent with the two largest faces being favored by a small shape error. The cast sequence's reported autocorrelation and spectrum showed no evident serial structure under the machine's strong agitation. This is useful evidence about that set and apparatus, not a product-class guarantee or a study of a low-energy hand drop.
 
@@ -360,7 +360,7 @@ This section owns the statistical inference. The process-control requirement—u
 
 ## 6. Handoff to the conversion analysis
 
-This document produces evidence-based or hypothetical inputs such as a full face-probability vector, a per-die upper confidence bound, or a scenario value of $\varepsilon$. It does not own the entropy formulas for binary, base-4, or base-6 conversion. Those consequences—including the canonical tables—are calculated in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#5-results).
+This document produces evidence-based or hypothetical inputs such as a full face-probability vector, a per-die upper confidence bound, or a scenario value of $\varepsilon$. It does not own the entropy formulas for binary, variable-length, or base-6 conversion. Those consequences—including the canonical tables—are calculated in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#5-results).
 
 ---
 

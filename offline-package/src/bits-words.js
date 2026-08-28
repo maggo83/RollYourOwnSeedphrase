@@ -6,6 +6,13 @@
     if (value) bytes[bitPosition >>> 3] |= 1 << (7 - (bitPosition & 7));
   }
 
+  function bitsFromFace(encoding, face) {
+    if (encoding === 'variable') {
+      return [[0, 0], [0, 1], [1, 0], [1, 1], [0], [1]][face - 1] || null;
+    }
+    return face >= 1 && face <= 6 ? [face <= 3 ? 0 : 1] : null;
+  }
+
   function deriveFinalWord(previousBits, prefix, mnemonicLength, wordList, hashFunction) {
     if (mnemonicLength !== 12 && mnemonicLength !== 24) throw new Error('Select a 12- or 24-word phrase.');
     const prefixLength = mnemonicLength === 12 ? 7 : 3;
@@ -39,7 +46,7 @@
     return { checksumBits: checksumBits, index: index, word: word };
   }
 
-  root.OfflineBitsWordsCore = Object.freeze({ deriveFinalWord: deriveFinalWord });
+  root.OfflineBitsWordsCore = Object.freeze({ deriveFinalWord: deriveFinalWord, bitsFromFace: bitsFromFace });
 
   const table = typeof document === 'object' ? document.querySelector('[data-bw-table]') : null;
   if (!table) return;
@@ -199,37 +206,21 @@
     });
   }
 
-  function bitsFromFace(face) {
-    const enc = document.body.dataset.encoding || 'base4';
-    if (enc === 'base4') {
-      if (face === 1) return [0, 0];
-      if (face === 2) return [0, 1];
-      if (face === 3) return [1, 0];
-      if (face === 4) return [1, 1];
-      return null;
-    }
-    return face <= 3 ? [0] : [1];
-  }
-
-  function flashDieButton(face, ok) {
+  function flashDieButton(face) {
     const btn = document.querySelector('.die-btn[data-face="' + face + '"]');
     if (!btn) return;
-    const cls = ok ? 'die-flash-ok' : 'die-flash-skip';
-    btn.classList.remove('die-flash-ok', 'die-flash-skip');
+    btn.classList.remove('die-flash-ok');
     void btn.offsetWidth;
-    btn.classList.add(cls);
-    setTimeout(function() { btn.classList.remove(cls); }, 450);
+    btn.classList.add('die-flash-ok');
+    setTimeout(function() { btn.classList.remove('die-flash-ok'); }, 450);
   }
 
   function updateDieButtonStyles() {
-    const enc = document.body.dataset.encoding || 'base4';
-    document.querySelectorAll('.die-btn').forEach(function(btn) {
-      btn.classList.toggle('is-skip', enc === 'base4' && Number(btn.dataset.face) >= 5);
-    });
+    const enc = document.body.dataset.encoding || 'variable';
     const note = document.querySelector('[data-die-encoding-note]');
-    if (note) note.textContent = enc === 'base4'
-      ? '1→00 · 2→01 · 3→10 · 4→11 · 5 and 6 are skipped'
-      : '1–3 → 0 · 4–6 → 1';
+    if (note) note.textContent = enc === 'variable'
+      ? root.GUIDE_LOCALE_TEXT.variableCaption
+      : root.GUIDE_LOCALE_TEXT.binaryCaption;
   }
 
   function updateDieProgress() {
@@ -242,9 +233,9 @@
   }
 
   function enterFace(face) {
-    const bits = bitsFromFace(face);
-    flashDieButton(face, bits !== null);
+    const bits = bitsFromFace(document.body.dataset.encoding || 'variable', face);
     if (bits === null) return;
+    flashDieButton(face);
     const placements = [];
     let remaining = bits.slice();
     for (let i = 0; i < rows.length && remaining.length > 0; i++) {

@@ -390,8 +390,8 @@
       },
       "text-12": {
         "kind": "text",
-        "en": "Recommended: base-4",
-        "de": "Empfohlen: Basis 4"
+        "en": "Recommended: Oren's variable-length mapping",
+        "de": "Empfohlen: Oren's variable-length mapping"
       },
       "text-13": {
         "kind": "text",
@@ -400,23 +400,18 @@
       },
       "text-14": {
         "kind": "text",
-        "en": "Base-4 rejection sampling",
-        "de": "Basis-4-Ablehnungsverfahren"
+        "en": "Oren's variable-length mapping",
+        "de": "Oren's variable-length mapping"
       },
       "text-15": {
         "kind": "text",
-        "en": " gives two bits from each accepted roll. Faces 5 and 6 are ignored.",
-        "de": " erzeugt aus jedem akzeptierten Wurf zwei Bits. Die Seiten 5 und 6 werden ignoriert."
+        "en": " uses every face: 1–4 produce two bits; 5–6 produce one.",
+        "de": " nutzt jede Seite: 1–4 erzeugen zwei Bits; 5–6 erzeugen eines."
       },
       "text-16": {
         "kind": "text",
-        "en": "You will collect ",
-        "de": "Du sammelst "
-      },
-      "text-17": {
-        "kind": "text",
-        "en": " accepted results. Expect about ",
-        "de": " akzeptierte Ergebnisse. Rechne im Mittel mit etwa "
+        "en": "Expect about ",
+        "de": "Rechne im Mittel mit etwa "
       },
       "text-18": {
         "kind": "text",
@@ -450,8 +445,8 @@
       },
       "text-26": {
         "kind": "text",
-        "en": "I filled the worksheet Identifier with a non-secret name.",
-        "de": "Ich habe im Feld Bezeichnung einen nicht geheimen Namen eingetragen."
+        "en": "I entered a name in the Identifier field.",
+        "de": "Ich habe im Feld Bezeichnung einen Namen eingetragen."
       },
       "attr-03": {
         "kind": "attr",
@@ -459,15 +454,10 @@
         "de": "Visualisierung der gewählten Würfelkodierung",
         "name": "aria-label"
       },
-      "text-27": {
-        "kind": "text",
-        "en": "skip",
-        "de": "ignorieren"
-      },
       "text-28": {
         "kind": "text",
-        "en": "Base-4: 1–4 become bits; 5–6 are skipped.",
-        "de": "Basis 4: 1–4 werden zu Bits; 5–6 werden ignoriert."
+        "en": "Faces 1–4 add two bits; faces 5–6 add one.",
+        "de": "Die Seiten 1–4 liefern zwei Bits; 5–6 liefern eines."
       },
       "text-29": {
         "kind": "text",
@@ -508,18 +498,8 @@
       },
       "text-06": {
         "kind": "text",
-        "en": " Write ",
-        "de": " Schreibe "
-      },
-      "text-07": {
-        "kind": "text",
-        "en": "bits",
-        "de": "Bits"
-      },
-      "text-08": {
-        "kind": "text",
-        "en": "the next free boxes",
-        "de": "die nächsten freien Kästchen"
+        "en": " Enter the resulting bit(s) in the next boxes; discard any that would cross the checksum boundary.",
+        "de": " Trage die erzeugten Bits in die nächsten Kästchen ein; verwirf Bits, falls sie die Prüfsummengrenze überschreiten würden."
       },
       "text-09": {
         "kind": "text",
@@ -548,8 +528,8 @@
       },
       "text-14": {
         "kind": "text",
-        "en": " steps 1-4, until you reach the stopping boundary in the last word.",
-        "de": " die Schritte 1-4, bis du die Grenze im letzten Wort erreichst."
+        "en": " steps 1-4, until you reach the checksum boundary in the last word.",
+        "de": " die Schritte 1-4, bis du die Prüfsummengrenze im letzten Wort erreichst."
       },
       "text-15": {
         "kind": "text",
@@ -591,16 +571,6 @@
         "kind": "text",
         "en": "Convert the face value",
         "de": "Augenzahl umwandeln"
-      },
-      "text-22": {
-        "kind": "text",
-        "en": "skip",
-        "de": ""
-      },
-      "text-23": {
-        "kind": "text",
-        "en": " in ",
-        "de": " in "
       }
     },
     "shared/40-step-04-lookup.html": {
@@ -1043,9 +1013,9 @@
       "en": "the next free box",
       "de": "das nächste freie Kästchen"
     },
-    "base4Caption": {
-      "en": "Base-4: 1–4 become bits; 5–6 are skipped.",
-      "de": "Basis 4: 1–4 werden zu Bits; 5–6 werden ignoriert."
+    "variableCaption": {
+      "en": "Faces 1–4 add two bits; faces 5–6 add one.",
+      "de": "Die Seiten 1–4 liefern zwei Bits; 5–6 liefern eines."
     },
     "binaryCaption": {
       "en": "Binary: 1–3 become 0; 4–6 become 1.",

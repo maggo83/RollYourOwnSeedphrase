@@ -20,9 +20,9 @@ The comparison uses $\varepsilon=0.01$ for casino-grade precision dice and $\var
 
 The default recommendation is:
 
-> Use base-4 rejection: map faces 1–4 to 00, 01, 10, and 11; discard faces 5–6; retain exactly 64 accepted symbols for 12 words or 128 for 24 words.
+> Use Oren's variable-length mapping: map faces 1–4 to 00, 01, 10, and 11 and faces 5–6 to 0 and 1; stop after filling exactly 128 bits for 12 words or 256 for 24 words.
 
-Base-4 rejection is preferred because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses fewer expected physical results than binary quantization. Under the central consumer scenario, a 12-word result retains 121.157 bits of min-entropy.
+Oren's variable-length mapping is preferred because it is transparent, manually auditable, directly compatible with the supplied bit-grouping and BIP-39 lookup sheets, and uses every result. Ideal dice need about 77 rolls for 12 words or 154 for 24. Under the central consumer scenario, the conservative recurrence gives a 12-word min-entropy lower bound of 122.566 bits.
 
 Ordinary binary quantization is the simplest no-rejection alternative. It always uses exactly 128 or 256 physical results. Under the central consumer scenario, a 12-word result retains 118.990 bits of min-entropy.
 
@@ -58,9 +58,9 @@ The synthesis applies those inputs in this order:
 
 Binary quantization emits one bit per die result and rejects nothing. Its [workflow](#61-binary-workflow) is the simplest fixed-length option. Its 12-word result meets the 112-bit objective under both central scenarios: 126.163 bits for precision dice and 118.990 bits for well-made consumer dice.
 
-### 2.2 Base-4 rejection
+### 2.2 Oren's variable-length mapping
 
-Base-4 rejection emits two bits from each accepted result and discards faces 5 and 6. Its [workflow](#7-default-base-4-rejection-procedure) is manually simple and never invalidates earlier accepted work, but completion time is variable.
+Oren's variable-length mapping emits two bits for faces 1–4 and one bit for faces 5–6. Its [workflow](#7-default-orens-variable-length-mapping-procedure) is manually simple and never rejects a result, but completion time is variable.
 
 ### 2.3 Full base 6 with global modulo conversion
 
@@ -100,12 +100,12 @@ Range rejection can produce exactly uniform output from ideal dice, but a comple
 | Target | Procedure | Retained die results | Rejection risk | Main operational burden |
 | ---: | --- | ---: | --- | --- |
 | 12 words | Binary | 128 | None | Many manual results |
-| 12 words | Base-4 rejection | 64 accepted; about 96 physical | 5–6 discarded individually | Simple bit-pair recording; variable completion time |
+| 12 words | Oren's variable-length mapping | About 77 | None | Direct bit recording; variable completion time |
 | 12 words | Base-6 global modulo | 50 | None | Direct wallet support or verified big-integer converter |
 | 12 words | Base-6 per-word modulo | 58 | None | Repeated small-integer arithmetic and checking |
 | 12 words | Base-6 rejection | 50 per attempt | 15.8% per complete attempt | Conversion plus possible complete retry |
 | 24 words | Binary | 256 | None | Many manual results |
-| 24 words | Base-4 rejection | 128 accepted; about 192 physical | 5–6 discarded individually | Simple bit-pair recording; variable completion time |
+| 24 words | Oren's variable-length mapping | About 154 | None | Direct bit recording; variable completion time |
 | 24 words | Base-6 global modulo | 100 | None | Direct wallet support or verified big-integer converter |
 | 24 words | Base-6 per-word modulo | 117 | None | Repeated small-integer arithmetic and checking |
 | 24 words | Base-6 rejection | 100 per attempt | 11.4% per complete attempt | Conversion plus possible complete retry |
@@ -118,14 +118,14 @@ The canonical quantitative comparison is in [Entropy from ideal and real dice](D
 
 | Situation | Recommended action |
 | --- | --- |
-| Central consumer scenario $\varepsilon\le0.05$ is credibly supported | Either 12- or 24-word output is acceptable for binary, base-4 rejection, global base-6 modulo, or manual per-word base 6 |
-| Only the consumer stress scenario $\varepsilon\le0.10$ is supported | Base-4 remains above 112 bits for 12 words; binary needs 24 words to meet that policy objective |
+| Central consumer scenario $\varepsilon\le0.05$ is credibly supported | Either 12- or 24-word output is acceptable for binary, Oren's variable-length mapping, global base-6 modulo, or manual per-word base 6 |
+| Only the consumer stress scenario $\varepsilon\le0.10$ is supported | Oren's variable-length mapping remains above 112 bits for 12 words under its conservative bound; binary needs 24 words to meet that policy objective |
 | Consumer-dice performance is unknown | Do not claim a numerical guarantee; use the [statistical methodology](ExpectedDicePerformace.md#5-testing-five-identified-dice) to establish a bound or use a better-supported assumption |
-| Maximum manual simplicity is preferred | Use base-4 rejection |
+| Maximum manual simplicity with fewer rolls is preferred | Use Oren's variable-length mapping |
 | Fixed completion length with no rejected results is essential | Use binary only when its canonical entropy result clears the selected objective |
 | Minimum result count is preferred and a reviewed converter exists | Use global base-6 modulo |
 | Paper-only base conversion with fewer results is preferred | Use manual per-word base 6 and independently check every group |
-| No reviewed converter is available | Use base 4 or binary rather than improvised base conversion |
+| No reviewed converter is available | Use Oren's variable-length mapping or binary rather than improvised base conversion |
 
 ---
 
@@ -203,7 +203,7 @@ This procedure never rejects a die result or a complete series. Its disadvantage
 
 ---
 
-## 7. Default base-4 rejection procedure
+## 7. Default Oren's variable-length mapping procedure
 
 This procedure uses the same bit sheets, word lookup, checksum process, and ordinary BIP-39 hardware-wallet entry as binary quantization.
 
@@ -215,26 +215,25 @@ This procedure uses the same bit sheets, word lookup, checksum process, and ordi
 | 2 | 01 |
 | 3 | 10 |
 | 4 | 11 |
-| 5 or 6 | Nothing; reject this result |
+| 5 | 0 |
+| 6 | 1 |
 
 ### 7.2 Procedure with one or more dice
 
 1. Complete the common preparation in Section 4.3 using dice whose applicable aggregate bound has credible support.
 2. Prepare 128 numbered entropy-bit positions for 12 words or 256 positions for 24 words. Do not fill the checksum positions yet.
 3. Follow the rolling and ordering protocol in Section 4.1.
-4. Inspect every die in the predetermined order:
-   - for face 1–4, write its two-bit pair into the next two empty positions;
-   - for face 5 or 6, write nothing and continue to the next die.
-5. Roll the full batch again. Previously accepted dice are not removed; every die may supply another symbol on every batch.
-6. Continue until exactly 64 accepted symbols have filled 128 bits, or 128 accepted symbols have filled 256 bits.
-7. In the final batch, process accepted results in the predetermined order only until the bit sheet is full. Ignore all later dice, regardless of their values.
+4. Inspect every die in the predetermined order and write its mapped bit or bit pair into the next empty positions.
+5. Roll the full batch again. Every die may supply another bit string on every batch.
+6. Continue until 128 bits for 12 words or 256 bits for 24 words have been filled.
+7. If only one position remains and the final face maps to two bits, write the first bit and discard the second. Ignore all later dice in the batch regardless of their values.
 8. Complete Sections 4.2 and 4.3.
 
 ### 7.3 Batch expectations
 
 The canonical ideal and bounded-model expectations are in [Entropy from ideal and real dice](DiceRollEntropyAnalysis.md#34-batch-count). The operational comparison in Section 2.6 lists the result counts used by this synthesis.
 
-Rejecting a result does not mean physically rerolling that die in isolation before reading the rest of the batch. Simply ignore its 5 or 6, finish processing the batch, and then roll the full set again. Rolling only the rejected dice would also work if die identities and order were handled consistently, but rerolling the full batch is simpler and less error-prone.
+With ideal dice, each roll produces $5/3$ bits on average. Including the possible one-bit overshoot at the boundary, the exact expected counts are 77.04 rolls for 128 bits and 153.84 for 256 bits. Whole-die batches can add unused results at the end; never inspect those results and then choose which ones to retain.
 
 ---
 
@@ -337,7 +336,7 @@ Its disadvantages are:
 - the checksum still cannot realistically be calculated without trusted SHA-256 support;
 - the procedure is not a standard hardware-wallet input workflow and should be tested using public test data before real entropy is generated.
 
-The base-4 procedure therefore remains the default compromise. Binary is the simplest no-rejection method, while manual base 6 is a reasonable roll-saving alternative for a careful user who independently verifies every group.
+Oren's variable-length mapping therefore remains the default compromise. Binary has the simplest fixed output per roll, while manual base 6 is a reasonable roll-saving alternative for a careful user who independently verifies every group.
 
 ---
 

@@ -2,9 +2,9 @@
 
 > **Status: source implementation only.** Automated verification is present, but no GPG-signed offline edition has been released and the implementation has not received independent security review. Do not enter seed material into source files or locally generated builds. This README defines the access, verification, and startup instructions that must accompany the first release candidate.
 
-The offline edition is a self-contained version of the visual guide for 12- and 24-word English BIP39 mnemonics only. It does not generate entropy or support other languages, BIP85, SLIP-39, passphrases, wallets, address derivation, or seed import/export. In Step 3, each accepted dice result is converted to bits, each complete 11-bit group is mapped to its BIP39 word, and the deterministic checksum completes the final word. The checksum adds no entropy.
+The offline edition is a self-contained version of the visual guide for 12- and 24-word English BIP39 mnemonics only. It does not generate entropy or support other languages, BIP85, SLIP-39, passphrases, wallets, address derivation, or seed import/export. In Step 3, each dice result is converted to bits, each complete 11-bit group is mapped to its BIP39 word, and the deterministic checksum completes the final word. The checksum adds no entropy.
 
-You enter each physical die result in the fixed reading order. Faces are converted according to the selected base-4 or binary method, and bits fill the word rows automatically. For the final word, only 7 (or 3) bits come from dice; the remaining 4 (or 8) checksum bits are appended from the SHA-256 hash of the full entropy. All entered results, bits, and words stay in page memory only, are never logged or transmitted, and are cleared when you navigate away from Step 3 or close the guide.
+You enter each physical die result in the fixed reading order. Faces are converted according to Oren's variable-length mapping or the binary method, and bits fill the word rows automatically. For the final word, only 7 (or 3) bits come from dice; the remaining 4 (or 8) checksum bits are appended from the SHA-256 hash of the full entropy. All entered results, bits, and words stay in page memory only, are never logged or transmitted, and are cleared when you navigate away from Step 3 or close the guide.
 
 For source review with **dummy data only**, run `python3 build-guides.py offline` from the repository root and open `dist/offline/index.html` directly in a browser. No server or installation is required. This development build is unsigned and must not receive real seed material.
 
@@ -119,7 +119,7 @@ The offline checks are authoritative: the trusted GPG installation authenticates
 2. Open `index.html` directly in a locally installed browser. No web server, extension, installation, or network connection is required.
 3. Confirm that the address begins with `file:` and that the browser shows no request to enable networking, install an extension, download a component, or grant unusual permissions.
 4. Read and acknowledge Step 0. If every Step 0 condition is not true, close the guide without entering anything.
-5. Follow the visual guide. In Step 3, select each die face in the fixed reading order; accepted results fill the bit rows and derive each BIP39 word automatically.
+5. Follow the visual guide. In Step 3, select each die face in the fixed reading order; results fill the bit rows and derive each BIP39 word automatically.
 6. Verify every displayed bit group and word against your paper worksheet. After recording the result, click "Clear all" and confirm every bit and word disappears before leaving the page.
 
 Do not use browser developer tools, translation, spell-check, synchronization, password-manager, accessibility-cloud, AI-assistant, or other extensions while handling seed material. The release is designed not to persist input, but the browser and operating system remain part of the trusted computing base.
